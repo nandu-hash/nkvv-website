@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Send, CheckCircle2, MapPin, Building, Mail, Phone, User, MessageSquare, AlertCircle } from 'lucide-react';
+import { Send, CheckCircle2, MapPin, Building, Mail, Phone, User, MessageSquare, AlertCircle, Loader2 } from 'lucide-react';
 import { SITE_CONFIG } from '@/config/site';
 
 const HELP_OPTIONS = [
@@ -31,16 +31,54 @@ export const ContactForm: React.FC = () => {
     phone: '',
     needHelpWith: 'HR Operations',
     message: '',
+    hp_website: '', // Honeypot field (spam protection)
   });
 
+  const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+
+  const validateForm = () => {
+    const errors: { [key: string]: string } = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!formData.name.trim()) {
+      errors.name = 'Full name is required.';
+    } else if (formData.name.trim().length < 2) {
+      errors.name = 'Please enter your full name.';
+    }
+
+    if (!formData.email.trim()) {
+      errors.email = 'Work email is required.';
+    } else if (!emailRegex.test(formData.email.trim())) {
+      errors.email = 'Please enter a valid work email address.';
+    }
+
+    if (!formData.company.trim()) {
+      errors.company = 'Company name is required.';
+    }
+
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
+
+    // Prevent double submission if already submitting
+    if (isSubmitting) return;
+
     setErrorMessage('');
+    setSuccessMessage('');
+
+    if (!validateForm()) {
+      return;
+    }
+
+    // Lock button state immediately
+    setIsSubmitting(true);
 
     try {
       const response = await fetch('/api/contact', {
@@ -51,15 +89,29 @@ export const ContactForm: React.FC = () => {
 
       const resData = await response.json();
 
-      if (!response.ok) {
-        throw new Error(resData.error || 'Failed to submit request.');
+      if (!response.ok || !resData.success) {
+        throw new Error(resData.error || "We couldn't submit your enquiry right now. Please try again or contact us directly.");
       }
 
+      // Success
+      setSuccessMessage(resData.message || "Thank you. Your enquiry has been received. We'll get back to you shortly.");
       setSubmitted(true);
+
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        company: '',
+        companySize: '30–75 employees',
+        phone: '',
+        needHelpWith: 'HR Operations',
+        message: '',
+        hp_website: '',
+      });
+      setFieldErrors({});
     } catch (err: any) {
       console.error('Submission error:', err);
-      // Even if API fails due to unconfigured SMTP credentials, show friendly confirmation and record locally
-      setSubmitted(true);
+      setErrorMessage(err.message || "We couldn't submit your enquiry right now. Please try again or contact us directly.");
     } finally {
       setIsSubmitting(false);
     }
@@ -74,36 +126,45 @@ export const ContactForm: React.FC = () => {
           </div>
           
           <h3 className="text-2xl font-bold text-navy-deep">
-            Thank you for reaching out!
+            Enquiry Received
           </h3>
           
-          <p className="text-muted text-sm max-w-md mx-auto leading-relaxed">
-            Your discovery request has been received by our principal consulting team and forwarded to <strong>hr.nandukumar@gmail.com</strong>. Your inquiry details have also been logged into our Excel records. We will respond within 24 hours.
+          <p className="text-muted text-sm max-w-md mx-auto leading-relaxed font-medium">
+            {successMessage || "Thank you. Your enquiry has been received. We'll get back to you shortly."}
           </p>
 
-          <button
-            onClick={() => {
-              setSubmitted(false);
-              setFormData({
-                name: '',
-                email: '',
-                company: '',
-                companySize: '30–75 employees',
-                phone: '',
-                needHelpWith: 'HR Operations',
-                message: '',
-              });
-            }}
-            className="px-6 py-2.5 rounded-lg bg-navy-primary text-white text-xs font-mono font-bold hover:bg-navy-deep transition-colors"
-          >
-            Submit Another Request
-          </button>
+          <div className="pt-2">
+            <button
+              onClick={() => {
+                setSubmitted(false);
+                setSuccessMessage('');
+              }}
+              className="px-6 py-2.5 rounded-lg bg-navy-primary text-white text-xs font-mono font-bold hover:bg-navy-deep transition-colors"
+            >
+              Submit Another Enquiry
+            </button>
+          </div>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+          {/* Honeypot Spam Protection Field */}
+          <div style={{ display: 'none' }} aria-hidden="true">
+            <label htmlFor="hp_website">Leave this field blank</label>
+            <input
+              type="text"
+              id="hp_website"
+              name="hp_website"
+              tabIndex={-1}
+              autoComplete="off"
+              value={formData.hp_website}
+              onChange={(e) => setFormData({ ...formData, hp_website: e.target.value })}
+            />
+          </div>
+
+          {/* Top Error Alert */}
           {errorMessage && (
-            <div className="p-4 rounded-lg bg-red-50 text-red-700 border border-red-200 text-xs flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0" />
+            <div className="p-4 rounded-lg bg-red-50 text-red-700 border border-red-200 text-xs flex items-center gap-2 font-medium">
+              <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
               <span>{errorMessage}</span>
             </div>
           )}
@@ -121,10 +182,22 @@ export const ContactForm: React.FC = () => {
                   required
                   placeholder="e.g. Rahul Sharma"
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent text-sm text-dark placeholder:text-gray-400"
+                  onChange={(e) => {
+                    setFormData({ ...formData, name: e.target.value });
+                    if (fieldErrors.name) setFieldErrors({ ...fieldErrors, name: '' });
+                  }}
+                  className={`w-full pl-10 pr-4 py-3 rounded-lg border text-sm text-dark placeholder:text-gray-400 focus:outline-none focus:ring-2 ${
+                    fieldErrors.name
+                      ? 'border-red-400 focus:ring-red-300'
+                      : 'border-gray-300 focus:ring-gold focus:border-transparent'
+                  }`}
                 />
               </div>
+              {fieldErrors.name && (
+                <span className="text-[11px] font-semibold text-red-600 mt-1 block">
+                  {fieldErrors.name}
+                </span>
+              )}
             </div>
 
             {/* Work Email */}
@@ -139,10 +212,22 @@ export const ContactForm: React.FC = () => {
                   required
                   placeholder="name@company.com"
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent text-sm text-dark placeholder:text-gray-400"
+                  onChange={(e) => {
+                    setFormData({ ...formData, email: e.target.value });
+                    if (fieldErrors.email) setFieldErrors({ ...fieldErrors, email: '' });
+                  }}
+                  className={`w-full pl-10 pr-4 py-3 rounded-lg border text-sm text-dark placeholder:text-gray-400 focus:outline-none focus:ring-2 ${
+                    fieldErrors.email
+                      ? 'border-red-400 focus:ring-red-300'
+                      : 'border-gray-300 focus:ring-gold focus:border-transparent'
+                  }`}
                 />
               </div>
+              {fieldErrors.email && (
+                <span className="text-[11px] font-semibold text-red-600 mt-1 block">
+                  {fieldErrors.email}
+                </span>
+              )}
             </div>
           </div>
 
@@ -159,10 +244,22 @@ export const ContactForm: React.FC = () => {
                   required
                   placeholder="Acme Tech"
                   value={formData.company}
-                  onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                  className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent text-sm text-dark placeholder:text-gray-400"
+                  onChange={(e) => {
+                    setFormData({ ...formData, company: e.target.value });
+                    if (fieldErrors.company) setFieldErrors({ ...fieldErrors, company: '' });
+                  }}
+                  className={`w-full pl-10 pr-4 py-3 rounded-lg border text-sm text-dark placeholder:text-gray-400 focus:outline-none focus:ring-2 ${
+                    fieldErrors.company
+                      ? 'border-red-400 focus:ring-red-300'
+                      : 'border-gray-300 focus:ring-gold focus:border-transparent'
+                  }`}
                 />
               </div>
+              {fieldErrors.company && (
+                <span className="text-[11px] font-semibold text-red-600 mt-1 block">
+                  {fieldErrors.company}
+                </span>
+              )}
             </div>
 
             {/* Company Size */}
@@ -239,10 +336,15 @@ export const ContactForm: React.FC = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-4 rounded-xl text-base font-bold text-navy-deep bg-gold hover:bg-gold-light transition-all shadow-lg shadow-gold/10 flex items-center justify-center gap-2"
+            className={`w-full py-4 rounded-xl text-base font-bold text-navy-deep bg-gold hover:bg-gold-light transition-all shadow-lg shadow-gold/10 flex items-center justify-center gap-2 ${
+              isSubmitting ? 'opacity-80 cursor-not-allowed' : ''
+            }`}
           >
             {isSubmitting ? (
-              <span>Logging Lead & Triggering Notification...</span>
+              <>
+                <Loader2 className="w-5 h-5 animate-spin" />
+                <span>Submitting enquiry...</span>
+              </>
             ) : (
               <>
                 <Send className="w-5 h-5" />
