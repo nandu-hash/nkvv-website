@@ -5,22 +5,31 @@
  */
 
 function doPost(e) {
+  // Safety guard if function is run manually via the "Run" button in Apps Script editor
+  if (!e) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ 
+        status: 'notice', 
+        message: 'doPost(e) must be triggered via an HTTP POST request from your website, not manually via the Run button.' 
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
   var lock = LockService.getScriptLock();
-  // Acquire lock for 10s to prevent concurrent row write collisions
   lock.tryLock(10000);
 
   try {
-    var rawContents = e.postData ? e.postData.contents : '';
+    var rawContents = (e && e.postData && e.postData.contents) ? e.postData.contents : '';
     var data = {};
 
     if (rawContents) {
       try {
         data = JSON.parse(rawContents);
       } catch (jsonErr) {
-        data = e.parameter || {};
+        data = (e && e.parameter) ? e.parameter : {};
       }
     } else {
-      data = e.parameter || {};
+      data = (e && e.parameter) ? e.parameter : {};
     }
 
     // 1. SPAM PROTECTION: Honeypot check
