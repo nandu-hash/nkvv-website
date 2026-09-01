@@ -3,7 +3,7 @@ import ExcelJS from 'exceljs';
 import fs from 'fs';
 import path from 'path';
 
-const GOOGLE_SHEET_ID = '1_zM2Y-tY6pVDcJDg7mJu-dMMBM9PPbA2m2OmD1epTMM';
+const GOOGLE_SHEET_ID = '1GhSVSUxR44iIWxCpKKHmbUT-G-zSxICoev_zKa43Bpc';
 const NOTIFICATION_EMAIL = 'hello@nkvelora.co.in';
 
 // Ensure data directory exists for local Excel backup storage
@@ -129,17 +129,25 @@ export async function POST(request: Request) {
       spreadsheetId: GOOGLE_SHEET_ID,
     };
 
-    // Google Apps Script Web App Webhook URL
-    const webhookUrl = process.env.NEXT_PUBLIC_GOOGLE_SHEETS_WEBHOOK_URL || process.env.GOOGLE_SHEETS_WEBHOOK_URL;
+    // Deployed Google Apps Script Web App Endpoint
+    const webhookUrl =
+      process.env.NEXT_PUBLIC_GOOGLE_SHEETS_WEBHOOK_URL ||
+      process.env.GOOGLE_SHEETS_WEBHOOK_URL ||
+      'https://script.google.com/a/macros/nkvelora.co.in/s/AKfycbzRKxPWa-PYqTaecN6W2RfNVxzpvflom5Bx2tzmqHD2nJB0jhxJY9dXrwjgLaEoA7fG_g/exec';
 
     if (webhookUrl) {
       const googleRes = await fetch(webhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
+        redirect: 'follow',
       });
 
       if (!googleRes.ok) {
+        console.error(`Google Apps Script HTTP Error ${googleRes.status}`);
+        if (googleRes.status === 401) {
+          throw new Error('Google Apps Script Web App returned HTTP 401 (Access Restricted). Please set "Who has access" to "Anyone" in Apps Script deployment settings.');
+        }
         throw new Error(`Google Apps Script returned HTTP status ${googleRes.status}`);
       }
 
@@ -147,8 +155,6 @@ export async function POST(request: Request) {
       if (googleData.status === 'error') {
         throw new Error(googleData.error || 'Google Sheet update failed');
       }
-    } else {
-      console.warn('NEXT_PUBLIC_GOOGLE_SHEETS_WEBHOOK_URL environment variable is not configured.');
     }
 
     // Log to local Excel backup
@@ -163,7 +169,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         success: false,
-        error: "We couldn't submit your enquiry right now. Please try again or contact us directly.",
+        error: error.message || "We couldn't submit your enquiry right now. Please try again or contact us directly.",
       },
       { status: 500 }
     );
