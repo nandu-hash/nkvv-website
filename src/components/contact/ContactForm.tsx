@@ -31,7 +31,7 @@ export const ContactForm: React.FC = () => {
     phone: '',
     needHelpWith: 'HR Operations',
     message: '',
-    hp_website: '', // Honeypot field (spam protection)
+    hp_website: '', // Honeypot field for spam protection
   });
 
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
@@ -67,7 +67,7 @@ export const ContactForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Prevent double submission if already submitting
+    // Prevent accidental duplicate submissions
     if (isSubmitting) return;
 
     setErrorMessage('');
@@ -77,7 +77,7 @@ export const ContactForm: React.FC = () => {
       return;
     }
 
-    // Lock button state immediately
+    // Disable button immediately
     setIsSubmitting(true);
 
     try {
@@ -280,7 +280,7 @@ export const ContactForm: React.FC = () => {
               </select>
             </div>
 
-            {/* Phone */}
+            {/* Phone (Optional) */}
             <div>
               <label className="block text-xs font-bold text-navy-deep uppercase tracking-wider mb-2">
                 Phone Number
@@ -343,7 +343,7 @@ export const ContactForm: React.FC = () => {
             {isSubmitting ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
-                <span>Submitting enquiry...</span>
+                <span>Submitting...</span>
               </>
             ) : (
               <>
@@ -361,7 +361,7 @@ export const ContactForm: React.FC = () => {
           <MapPin className="w-4 h-4 text-gold" />
           <span>{SITE_CONFIG.location}</span>
         </div>
-        <span>Directly notified to <strong>hr.nandukumar@gmail.com</strong></span>
+        <span>Directly notified to <strong>{SITE_CONFIG.emails.enquiry}</strong></span>
       </div>
     </div>
   );

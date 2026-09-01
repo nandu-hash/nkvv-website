@@ -3,8 +3,8 @@ import ExcelJS from 'exceljs';
 import fs from 'fs';
 import path from 'path';
 
-const GOOGLE_SHEET_ID = '1GhSVSUxR44iIWxCpKKHmbUT-G-zSxICoev_zKa43Bpc';
-const TARGET_EMAIL = 'hr.nandukumar@gmail.com';
+const GOOGLE_SHEET_ID = '1_zM2Y-tY6pVDcJDg7mJu-dMMBM9PPbA2m2OmD1epTMM';
+const NOTIFICATION_EMAIL = 'hello@nkvelora.co.in';
 
 // Ensure data directory exists for local Excel backup storage
 const dataDir = path.join(process.cwd(), 'data');
@@ -67,11 +67,11 @@ async function appendToLocalExcelBackup(lead: {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, company, companySize, phone, needHelpWith, message, hp_website } = body;
+    const { name, email, company, companySize, phone, needHelpWith, message, hp_website, b_hp_field } = body;
 
     // 1. SPAM PROTECTION: Honeypot Check
-    if (hp_website) {
-      return NextResponse.json({ success: true, message: 'Enquiry received' });
+    if (hp_website || b_hp_field) {
+      return NextResponse.json({ success: true, message: 'Enquiry processed' });
     }
 
     // 2. Field Validation
@@ -125,6 +125,8 @@ export async function POST(request: Request) {
       message: (message || '').trim(),
       source: 'NKVV Website',
       status: 'New',
+      targetEmail: NOTIFICATION_EMAIL,
+      spreadsheetId: GOOGLE_SHEET_ID,
     };
 
     // Google Apps Script Web App Webhook URL
@@ -138,7 +140,7 @@ export async function POST(request: Request) {
       });
 
       if (!googleRes.ok) {
-        throw new Error(`Google Apps Script returned status ${googleRes.status}`);
+        throw new Error(`Google Apps Script returned HTTP status ${googleRes.status}`);
       }
 
       const googleData = await googleRes.json().catch(() => ({ status: 'success' }));
@@ -146,8 +148,7 @@ export async function POST(request: Request) {
         throw new Error(googleData.error || 'Google Sheet update failed');
       }
     } else {
-      // If Webhook URL is not configured yet, throw descriptive error for failure state test
-      console.warn('NEXT_PUBLIC_GOOGLE_SHEETS_WEBHOOK_URL is not set in environment.');
+      console.warn('NEXT_PUBLIC_GOOGLE_SHEETS_WEBHOOK_URL environment variable is not configured.');
     }
 
     // Log to local Excel backup

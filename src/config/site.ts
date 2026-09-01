@@ -4,9 +4,13 @@ export const SITE_CONFIG = {
   tagline: 'HR Operations & Automation Transformation',
   philosophy: 'Transform. Automate. Elevate.',
   coreIdea: 'NKVV helps growing businesses transform fragmented, manual HR operations into structured, technology-enabled and scalable systems.',
-  url: 'https://nkvv.in', // Production placeholder
+  url: 'https://nkvelora.co.in',
   location: 'Bengaluru, Karnataka, India',
   targetAudience: 'Startups & SMEs (30–300 employees focus)',
+  emails: {
+    founder: 'nandu@nkvelora.co.in',
+    enquiry: 'hello@nkvelora.co.in',
+  },
   hero: {
     headline: 'Transform HR Operations. Automate the Work. Build for Scale.',
     subheadline: 'NKVV helps startups and growing businesses transform fragmented HR operations into structured, technology-enabled systems that are easier to manage, measure and scale.',
