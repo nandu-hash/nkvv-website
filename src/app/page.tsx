@@ -19,23 +19,23 @@ export default function HomePage() {
       {/* 2. Problem Section */}
       <ProblemSection />
 
-      {/* 3. NKVV Framework */}
-      <FrameworkSection />
-
-      {/* 4. Services Overview */}
-      <ServicesSection />
-
-      {/* 5. Solutions Spotlight */}
+      {/* 3. Solutions Spotlight (Moved Up) */}
       <SolutionsSection />
 
-      {/* 6. Who We Serve */}
-      <WhoWeServe />
+      {/* 4. Services Overview (Moved Up) */}
+      <ServicesSection />
 
-      {/* 7. How We Work */}
+      {/* 5. NKVV Framework */}
+      <FrameworkSection />
+
+      {/* 6. How We Work */}
       <HowWeWork />
 
-      {/* 8. Target Outcomes */}
+      {/* 7. Target Outcomes */}
       <OutcomesSection />
+
+      {/* 8. Who We Serve */}
+      <WhoWeServe />
 
       {/* 9. Why NKVV */}
       <WhyNKVV />

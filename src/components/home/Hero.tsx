@@ -6,66 +6,63 @@ import { ArrowRight, PhoneCall, Layers } from 'lucide-react';
 
 export const Hero: React.FC = () => {
   return (
-    <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 bg-gradient-to-b from-navy-deep via-navy-primary to-navy-deep text-white overflow-hidden">
-      {/* Background ambient lighting accents */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gold/10 blur-[120px] rounded-full pointer-events-none" />
-      
+    <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 bg-navy-dark text-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           
           {/* Left Column: Copy & Actions */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="lg:col-span-6 space-y-8">
             
             {/* Tagline Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-navy-surface/80 border border-gold/40 text-gold-light text-xs font-mono font-semibold uppercase tracking-wider">
-              <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-sm border border-gold/30 bg-transparent text-gold-bright text-[10px] sm:text-xs font-mono font-bold uppercase tracking-[0.2em]">
+              <span className="w-1.5 h-1.5 rounded-sm bg-gold" />
               {SITE_CONFIG.tagline}
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-extrabold tracking-tight text-white leading-[1.15]">
-              Transform HR Operations.{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold via-gold-light to-amber-200">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.1] font-sans">
+              Transform Operations.<br/>
+              <span className="text-gold-bright">
                 Automate the Work.
-              </span>{' '}
+              </span><br/>
               Build for Scale.
             </h1>
 
             {/* Supporting Copy */}
-            <p className="text-base sm:text-lg text-gray-300 leading-relaxed max-w-2xl font-normal">
+            <p className="text-base sm:text-lg text-gray-400 leading-relaxed max-w-lg font-light tracking-wide">
               {SITE_CONFIG.hero.subheadline}
             </p>
 
             {/* CTAs */}
-            <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+            <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-base font-bold text-navy-deep bg-gold hover:bg-gold-light transition-all duration-200 shadow-lg shadow-gold/20 transform hover:-translate-y-0.5"
+                className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-sm text-sm font-bold uppercase tracking-wider text-navy-deep bg-gold hover:bg-gold-light transition-all duration-300"
               >
-                <PhoneCall className="w-5 h-5" />
+                <PhoneCall className="w-4 h-4" />
                 <span>{SITE_CONFIG.hero.primaryCta}</span>
-                <ArrowRight className="w-5 h-5 ml-1" />
+                <ArrowRight className="w-4 h-4" />
               </Link>
 
               <Link
                 href="/solutions"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-base font-semibold text-white bg-navy-surface/80 hover:bg-navy-light border border-navy-light/60 hover:border-gold/50 transition-all duration-200"
+                className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-sm text-sm font-bold uppercase tracking-wider text-white bg-transparent border border-border-subtle/20 hover:border-gold/50 transition-all duration-300"
               >
-                <Layers className="w-5 h-5 text-gold" />
+                <Layers className="w-4 h-4 text-gold-bright" />
                 <span>{SITE_CONFIG.hero.secondaryCta}</span>
               </Link>
             </div>
 
             {/* Credibility Statement Bar */}
-            <div className="pt-6 border-t border-navy-surface/80">
-              <p className="text-xs font-mono tracking-wider uppercase text-gray-400">
+            <div className="pt-8 mt-8 border-t border-border-subtle/10">
+              <p className="text-[10px] font-mono font-bold uppercase tracking-[0.15em] text-gray-500">
                 {SITE_CONFIG.hero.credibilityBar}
               </p>
             </div>
           </div>
 
           {/* Right Column: Interactive System Architecture Visual */}
-          <div className="lg:col-span-5 w-full">
+          <div className="lg:col-span-6 w-full">
             <HeroVisual />
           </div>
 

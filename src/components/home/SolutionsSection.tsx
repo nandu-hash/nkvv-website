@@ -3,131 +3,136 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { SOLUTIONS_DATA } from '@/config/solutions';
-import { HelpCircle, CheckCircle2, ArrowRight, PhoneCall, Sparkles } from 'lucide-react';
+import { HelpCircle, Check, ArrowRight, PhoneCall, LayoutGrid } from 'lucide-react';
 
 export const SolutionsSection: React.FC = () => {
   const [selectedSolutionId, setSelectedSolutionId] = useState<string>(SOLUTIONS_DATA[0].id);
-
   const currentSolution = SOLUTIONS_DATA.find((s) => s.id === selectedSolutionId) || SOLUTIONS_DATA[0];
 
   return (
-    <section className="py-20 md:py-28 bg-offwhite text-dark border-t border-b border-border-subtle relative">
+    <section className="py-24 bg-white text-dark border-b border-border-subtle">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-navy-primary/10 text-navy-primary text-xs font-mono font-bold uppercase tracking-wider">
-            Problem-Led Solutions
+        <div className="max-w-3xl mb-16 space-y-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-gray-light text-navy-primary text-xs font-mono font-bold uppercase tracking-wider">
+            Problem-Led Architecture
           </div>
 
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-navy-deep tracking-tight">
-            What is currently stalling your people operations?
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-navy-deep tracking-tight uppercase">
+            What is stalling your operations?
           </h2>
 
-          <p className="text-base text-muted leading-relaxed">
-            Select the operational challenge your business is currently facing to see how NKVV architects a solution.
+          <p className="text-base text-muted font-light leading-relaxed max-w-2xl">
+            Select the specific operational challenge your business is facing to see the corresponding NKVV system architecture.
           </p>
         </div>
 
         {/* Interactive Selector Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 border border-border-subtle bg-border-subtle">
           
           {/* Left Column: Problem Buttons List */}
-          <div className="lg:col-span-5 space-y-3">
-            <h3 className="text-xs font-mono font-bold text-muted uppercase tracking-wider mb-2">
-              Common Leadership Pain Points:
-            </h3>
+          <div className="lg:col-span-5 bg-gray-light/30">
+            <div className="p-6 border-b border-border-subtle bg-white">
+              <h3 className="text-[10px] font-mono font-bold text-gray-500 uppercase tracking-widest">
+                Business Problems
+              </h3>
+            </div>
 
-            {SOLUTIONS_DATA.map((item) => {
-              const isSelected = item.id === selectedSolutionId;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => setSelectedSolutionId(item.id)}
-                  className={`w-full text-left p-4 rounded-xl transition-all duration-200 border flex items-center justify-between group ${
-                    isSelected
-                      ? 'bg-navy-deep text-white border-gold shadow-lg shadow-navy-deep/20 font-bold'
-                      : 'bg-white text-navy-deep border-border-subtle hover:border-gold/50 hover:bg-gray-50'
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <HelpCircle className={`w-5 h-5 shrink-0 ${isSelected ? 'text-gold' : 'text-muted'}`} />
-                    <span className="text-sm font-semibold">
-                      &quot;{item.problemStatement}&quot;
-                    </span>
-                  </div>
-
-                  <ArrowRight
-                    className={`w-4 h-4 transition-transform ${
-                      isSelected ? 'text-gold translate-x-1' : 'text-gray-300 opacity-0 group-hover:opacity-100'
+            <div className="flex flex-col">
+              {SOLUTIONS_DATA.map((item) => {
+                const isSelected = item.id === selectedSolutionId;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => setSelectedSolutionId(item.id)}
+                    className={`w-full text-left p-6 transition-all duration-300 border-b border-border-subtle flex items-center justify-between group ${
+                      isSelected
+                        ? 'bg-navy-dark text-white'
+                        : 'bg-white text-navy-deep hover:bg-gray-light'
                     }`}
-                  />
-                </button>
-              );
-            })}
+                  >
+                    <div className="flex items-center gap-4">
+                      <HelpCircle className={`w-4 h-4 shrink-0 ${isSelected ? 'text-gold' : 'text-gray-400'}`} />
+                      <span className="text-sm font-semibold tracking-wide">
+                        &quot;{item.problemStatement}&quot;
+                      </span>
+                    </div>
+
+                    <ArrowRight
+                      className={`w-4 h-4 transition-transform ${
+                        isSelected ? 'text-gold translate-x-1' : 'text-gray-300 opacity-0 group-hover:opacity-100'
+                      }`}
+                    />
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* Right Column: Solution Architecture Card */}
-          <div className="lg:col-span-7 bg-white p-8 rounded-2xl border border-gold/40 shadow-xl space-y-6 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-40 h-40 bg-gold/5 rounded-full blur-3xl pointer-events-none" />
-
-            <div className="space-y-2">
-              <span className="text-xs font-mono font-bold text-navy-primary uppercase tracking-wider bg-navy-primary/10 px-3 py-1 rounded">
-                Recommended Solution Architecture
-              </span>
-              <h3 className="text-2xl font-extrabold text-navy-deep pt-2">
-                {currentSolution.solutionTitle}
-              </h3>
-              <p className="text-sm text-muted leading-relaxed">
-                {currentSolution.description}
-              </p>
-            </div>
-
-            {/* Key Interventions */}
-            <div className="space-y-3">
-              <h4 className="text-xs font-mono font-bold text-navy-deep uppercase tracking-wider flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-gold" />
-                Targeted NKVV Interventions:
-              </h4>
-
-              <div className="space-y-2">
-                {currentSolution.keyInterventions.map((interv) => (
-                  <div key={interv} className="flex items-start gap-2.5 text-sm text-gray-800 bg-offwhite p-3 rounded-lg border border-gray-200">
-                    <CheckCircle2 className="w-4 h-4 text-navy-primary shrink-0 mt-0.5" />
-                    <span>{interv}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Expected Impact */}
-            <div className="pt-2">
-              <h4 className="text-xs font-mono font-bold text-navy-deep uppercase tracking-wider mb-2">
-                Expected Business Outcomes:
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {currentSolution.expectedImpact.map((impact) => (
-                  <span
-                    key={impact}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-emerald-50 text-emerald-800 text-xs font-semibold border border-emerald-200"
-                  >
-                    <span>✓ {impact}</span>
+          <div className="lg:col-span-7 bg-white p-8 lg:p-12 flex flex-col justify-between">
+            <div className="space-y-10">
+              <div className="space-y-4">
+                <div className="inline-flex items-center gap-2">
+                  <LayoutGrid className="w-4 h-4 text-gold-bright" />
+                  <span className="text-[10px] font-mono font-bold text-navy-primary uppercase tracking-[0.2em]">
+                    Solution Architecture
                   </span>
-                ))}
+                </div>
+                <h3 className="text-2xl font-bold text-navy-deep uppercase tracking-widest">
+                  {currentSolution.solutionTitle}
+                </h3>
+                <p className="text-sm text-muted leading-relaxed font-light">
+                  {currentSolution.description}
+                </p>
+              </div>
+
+              {/* Key Interventions */}
+              <div className="space-y-4">
+                <h4 className="text-[10px] font-mono font-bold text-gray-400 uppercase tracking-widest">
+                  System Interventions
+                </h4>
+
+                <div className="space-y-3">
+                  {currentSolution.keyInterventions.map((interv) => (
+                    <div key={interv} className="flex items-start gap-3 text-sm text-dark bg-white border border-border-subtle p-4">
+                      <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" />
+                      <span className="font-light">{interv}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Expected Impact */}
+              <div className="pt-2">
+                <h4 className="text-[10px] font-mono font-bold text-gray-400 uppercase tracking-widest mb-3">
+                  Expected Impact
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {currentSolution.expectedImpact.map((impact) => (
+                    <span
+                      key={impact}
+                      className="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-light border border-border-subtle text-dark text-xs font-semibold"
+                    >
+                      <span className="text-gold-bright text-[10px]">■</span> {impact}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
 
             {/* Direct CTA */}
-            <div className="pt-4 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <span className="text-xs font-semibold text-navy-primary">
-                Facing a customized operational bottleneck?
+            <div className="mt-12 pt-6 border-t border-border-subtle flex flex-col sm:flex-row items-center justify-between gap-6">
+              <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">
+                Facing a unique bottleneck?
               </span>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gold hover:bg-gold-light text-navy-deep text-sm font-bold transition-all shadow-md"
+                className="inline-flex items-center gap-3 px-6 py-3 border border-border-subtle hover:border-gold bg-white hover:bg-gray-light text-navy-deep text-xs font-bold uppercase tracking-widest transition-all"
               >
-                <PhoneCall className="w-4 h-4" />
-                <span>Tell us what is breaking</span>
+                <PhoneCall className="w-4 h-4 text-gold" />
+                <span>Tell us what's breaking</span>
               </Link>
             </div>
 

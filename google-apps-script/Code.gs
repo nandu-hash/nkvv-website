@@ -1,6 +1,5 @@
 /**
  * NK Velora Ventures (NKVV) — Production Google Apps Script Web App
- * Spreadsheet ID: 1_zM2Y-tY6pVDcJDg7mJu-dMMBM9PPbA2m2OmD1epTMM (gid=0)
  * Official Public Enquiry Email: hello@nkvelora.co.in
  */
 
@@ -10,7 +9,7 @@ function doPost(e) {
     return ContentService
       .createTextOutput(JSON.stringify({ 
         status: 'notice', 
-        message: 'doPost(e) must be triggered via an HTTP POST request from your website, not manually via the Run button.' 
+        message: 'doPost(e) must be triggered via an HTTP POST request from your website.' 
       }))
       .setMimeType(ContentService.MimeType.JSON);
   }
@@ -56,8 +55,19 @@ function doPost(e) {
         .setMimeType(ContentService.MimeType.JSON);
     }
 
-    // 3. Open Spreadsheet ID and Target Sheet (gid=0 / Sheet1)
-    var ss = SpreadsheetApp.openById('1_zM2Y-tY6pVDcJDg7mJu-dMMBM9PPbA2m2OmD1epTMM');
+    // 3. Open Container Sheet or Fallback by ID
+    var ss;
+    try {
+      ss = SpreadsheetApp.getActiveSpreadsheet();
+    } catch (sErr) {
+      ss = null;
+    }
+
+    if (!ss) {
+      var sheetId = data.spreadsheetId || '1GhSVSUxR44iIWxCpKKHmbUT-G-zSxICoev_zKa43Bpc';
+      ss = SpreadsheetApp.openById(sheetId);
+    }
+
     var sheet = ss.getSheets()[0];
 
     // 4. Format Indian Standard Time (IST) Timestamp

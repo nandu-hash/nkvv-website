@@ -2,45 +2,42 @@
 
 import React, { useState } from 'react';
 import { NKVV_FRAMEWORK } from '@/config/framework';
-import { Stethoscope, Compass, Workflow, TrendingUp, CheckCircle, ArrowRight } from 'lucide-react';
+import { Search, PenTool, Users, Zap, TrendingUp, Check, ArrowRight } from 'lucide-react';
 
-const STAGE_ICONS = [Stethoscope, Compass, Workflow, TrendingUp];
+const STAGE_ICONS = [Search, PenTool, Users, Zap, TrendingUp];
 
 export const FrameworkSection: React.FC = () => {
   const [activeStep, setActiveStep] = useState<number>(0);
 
   return (
-    <section className="py-20 md:py-28 bg-navy-deep text-white relative overflow-hidden">
-      {/* Background ambient lighting */}
-      <div className="absolute bottom-0 right-0 w-[500px] h-[300px] bg-gold/10 blur-[140px] pointer-events-none" />
-
+    <section className="py-24 bg-navy-dark text-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-navy-surface border border-gold/40 text-gold-light text-xs font-mono font-bold uppercase tracking-wider">
+        <div className="max-w-3xl mb-20 space-y-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-border-subtle/10 border border-border-subtle/20 text-gold-bright text-xs font-mono font-bold uppercase tracking-wider">
             Methodology
           </div>
           
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            The NKVV Transformation Framework
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight uppercase">
+            Transformation Framework
           </h2>
           
-          <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
-            A structured, 4-stage operating journey connecting People, Process, and Technology for sustainable business scale.
+          <p className="text-base text-gray-400 font-light max-w-2xl leading-relaxed">
+            A structured, 5-stage operating journey connecting People, Process, and Technology for sustainable business scale.
           </p>
         </div>
 
         {/* Connected Stage Timeline (Desktop / Tablet) */}
-        <div className="relative mb-12">
-          {/* Horizontal Connecting Pipeline Line */}
-          <div className="hidden md:block absolute top-1/2 left-0 right-0 h-1 bg-navy-surface -translate-y-1/2 z-0" />
+        <div className="relative mb-16">
+          {/* Thin Gold Line */}
+          <div className="hidden lg:block absolute top-[44px] left-10 right-10 h-px bg-border-subtle/20 z-0" />
           <div
-            className="hidden md:block absolute top-1/2 left-0 h-1 bg-gold -translate-y-1/2 transition-all duration-500 z-0"
-            style={{ width: `${((activeStep + 1) / NKVV_FRAMEWORK.length) * 100}%` }}
+            className="hidden lg:block absolute top-[44px] left-10 h-px bg-gold transition-all duration-700 ease-in-out z-0"
+            style={{ width: `calc(${((activeStep) / (NKVV_FRAMEWORK.length - 1)) * 100}% - 20px)` }}
           />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 relative z-10">
             {NKVV_FRAMEWORK.map((step, idx) => {
               const Icon = STAGE_ICONS[idx];
               const isActive = activeStep === idx;
@@ -50,39 +47,29 @@ export const FrameworkSection: React.FC = () => {
                 <div
                   key={step.number}
                   onClick={() => setActiveStep(idx)}
-                  className={`cursor-pointer p-6 rounded-2xl transition-all duration-300 border flex flex-col justify-between ${
+                  className={`group cursor-pointer bg-navy-primary p-6 transition-all duration-300 border flex flex-col items-start ${
                     isActive
-                      ? 'bg-navy-surface border-gold shadow-xl shadow-gold/10 scale-105'
+                      ? 'border-gold bg-navy-primary'
                       : isPassed
-                      ? 'bg-navy-primary/90 border-navy-light text-gray-200 hover:border-gold/50'
-                      : 'bg-navy-primary/50 border-navy-surface text-gray-400 hover:bg-navy-primary/80'
+                      ? 'border-gold/30 hover:border-gold/60'
+                      : 'border-border-subtle/10 hover:border-border-subtle/30'
                   }`}
                 >
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <span className={`text-sm font-mono font-bold ${isActive ? 'text-gold' : 'text-gray-400'}`}>
-                        STAGE {step.number}
-                      </span>
-                      <div className={`p-2 rounded-xl ${isActive ? 'bg-gold text-navy-deep' : 'bg-navy-deep text-gold'}`}>
-                        <Icon className="w-5 h-5" />
-                      </div>
-                    </div>
-
-                    <h3 className="text-xl font-bold text-white">
-                      {step.title}
-                    </h3>
-
-                    <p className="text-xs text-gray-300 leading-relaxed font-medium">
-                      {step.tagline}
-                    </p>
+                  <div className={`w-10 h-10 mb-6 flex items-center justify-center border transition-colors duration-300 ${isActive ? 'bg-gold border-gold text-navy-dark' : 'bg-navy-dark border-border-subtle/20 text-gold'}`}>
+                    <Icon className="w-4 h-4" />
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-navy-light/40 flex items-center justify-between text-xs font-mono">
-                    <span className={isActive ? 'text-gold font-bold' : 'text-gray-400'}>
-                      {isActive ? 'Active Stage' : 'Click to inspect'}
-                    </span>
-                    <ArrowRight className={`w-4 h-4 transition-transform ${isActive ? 'translate-x-1 text-gold' : 'text-gray-500'}`} />
-                  </div>
+                  <span className={`text-[10px] font-mono uppercase tracking-[0.2em] mb-2 ${isActive ? 'text-gold-bright' : 'text-gray-500'}`}>
+                    Stage {step.number}
+                  </span>
+
+                  <h3 className="text-lg font-bold text-white uppercase tracking-wider mb-2">
+                    {step.title}
+                  </h3>
+
+                  <p className="text-xs text-gray-400 font-light leading-relaxed">
+                    {step.tagline}
+                  </p>
                 </div>
               );
             })}
@@ -90,34 +77,34 @@ export const FrameworkSection: React.FC = () => {
         </div>
 
         {/* Detailed Stage Breakdown Box */}
-        <div className="p-8 rounded-2xl bg-navy-surface/90 border border-gold/30 backdrop-blur-md shadow-2xl">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="bg-navy-primary border border-border-subtle/20 p-8 lg:p-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             
-            <div className="lg:col-span-7 space-y-4">
-              <div className="flex items-center gap-3">
-                <span className="text-xs font-mono font-bold text-navy-deep bg-gold px-3 py-1 rounded">
-                  STAGE {NKVV_FRAMEWORK[activeStep].number}
+            <div className="lg:col-span-7 space-y-6">
+              <div className="flex items-center gap-4">
+                <span className="text-[10px] font-mono tracking-widest text-navy-dark bg-gold px-2 py-1 uppercase">
+                  Stage {NKVV_FRAMEWORK[activeStep].number}
                 </span>
-                <h4 className="text-2xl font-bold text-white">
-                  {NKVV_FRAMEWORK[activeStep].title} Phase
+                <h4 className="text-2xl font-bold text-white uppercase tracking-widest">
+                  {NKVV_FRAMEWORK[activeStep].title}
                 </h4>
               </div>
 
-              <p className="text-gray-300 text-base leading-relaxed">
+              <p className="text-gray-400 text-base font-light leading-relaxed">
                 {NKVV_FRAMEWORK[activeStep].description}
               </p>
             </div>
 
-            <div className="lg:col-span-5 bg-navy-deep p-6 rounded-xl border border-navy-light space-y-3">
-              <h5 className="text-xs font-mono uppercase tracking-wider text-gold font-bold">
-                Stage Key Deliverables:
+            <div className="lg:col-span-5 bg-navy-dark p-8 border border-border-subtle/10 space-y-6">
+              <h5 className="text-[10px] font-mono uppercase tracking-[0.2em] text-gold-bright">
+                Deliverables
               </h5>
 
-              <div className="space-y-2">
+              <div className="space-y-4">
                 {NKVV_FRAMEWORK[activeStep].keyOutputs.map((output) => (
-                  <div key={output} className="flex items-center gap-3 text-sm text-gray-200">
-                    <CheckCircle className="w-4 h-4 text-gold shrink-0" />
-                    <span>{output}</span>
+                  <div key={output} className="flex items-start gap-3">
+                    <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" />
+                    <span className="text-sm font-light text-gray-300">{output}</span>
                   </div>
                 ))}
               </div>

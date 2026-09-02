@@ -13,99 +13,101 @@ interface EngagementStep {
 const ENGAGEMENT_STEPS: EngagementStep[] = [
   {
     step: '01',
-    title: 'Discovery',
+    title: 'Discover',
     icon: Search,
     summary: 'Deep-dive conversation to understand business goals, workforce structure, and current operational friction.',
-    deliverable: 'Initial Scoping & Transformation Objectives',
+    deliverable: 'Initial Scoping & Objectives',
   },
   {
     step: '02',
     title: 'Audit',
     icon: Map,
     summary: 'Comprehensive audit mapping existing processes, software tools, shadow spreadsheets, and operational bottlenecks.',
-    deliverable: 'Process Bottleneck & Tech Audit Report',
+    deliverable: 'Process & Tech Audit Report',
   },
   {
     step: '03',
-    title: 'Blueprint',
+    title: 'Architect',
     icon: Compass,
     summary: 'Design of future-state process architecture, revised SOPs, SLA definitions, and HR tech integration maps.',
-    deliverable: 'Target Operating Model Blueprint & SOP Package',
+    deliverable: 'Target Operating Model Blueprint',
   },
   {
     step: '04',
     title: 'Implement',
     icon: Cpu,
     summary: 'Deployment of structured workflows, software reconfiguration, data migration, and custom automation triggers.',
-    deliverable: 'Configured HRIS & Automated Workflows',
+    deliverable: 'Configured HRIS & Workflows',
   },
   {
     step: '05',
     title: 'Enable',
     icon: GraduationCap,
     summary: 'Hands-on team training, role-based responsibility handovers, and documentation to ensure internal ownership.',
-    deliverable: 'Team Enablement & SOP Training Sessions',
+    deliverable: 'Team Enablement Training',
   },
   {
     step: '06',
     title: 'Measure',
     icon: LineChart,
     summary: 'Establishment of executive dashboards, KPI tracking rhythms, and ongoing process optimization.',
-    deliverable: 'Executive Dashboard & KPI Cadence',
+    deliverable: 'Executive Dashboard Cadence',
   },
 ];
 
 export const HowWeWork: React.FC = () => {
   return (
-    <section className="py-20 md:py-28 bg-navy-deep text-white relative">
+    <section className="py-24 bg-navy-dark text-white border-t border-border-subtle/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-navy-surface border border-gold/40 text-gold-light text-xs font-mono font-bold uppercase tracking-wider">
+        <div className="text-center max-w-3xl mx-auto mb-20 space-y-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-border-subtle/10 border border-border-subtle/20 text-gold-bright text-xs font-mono font-bold uppercase tracking-wider">
             Consulting Roadmap
           </div>
 
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight uppercase">
             How We Work With You
           </h2>
 
-          <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
+          <p className="text-base text-gray-400 font-light leading-relaxed">
             A disciplined, 6-step consulting process ensuring predictable outcomes, clear deliverables, and smooth internal adoption.
           </p>
         </div>
 
         {/* 6 Steps Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border border-border-subtle/20">
           {ENGAGEMENT_STEPS.map((item) => {
             const Icon = item.icon;
             return (
               <div
                 key={item.step}
-                className="bg-navy-primary/80 p-7 rounded-2xl border border-navy-light/60 hover:border-gold/60 transition-all duration-300 flex flex-col justify-between group hover:bg-navy-surface/80"
+                className="bg-navy-primary p-8 border border-border-subtle/10 hover:bg-navy-dark transition-colors duration-300 flex flex-col justify-between group"
               >
-                <div className="space-y-4">
+                <div className="space-y-6">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono font-bold text-gold px-2.5 py-1 bg-navy-deep rounded border border-gold/30">
-                      STEP {item.step}
+                    <span className="text-[10px] font-mono font-bold text-gray-500 uppercase tracking-widest">
+                      Phase {item.step}
                     </span>
-                    <div className="p-2 rounded-xl bg-navy-deep text-gold group-hover:bg-gold group-hover:text-navy-deep transition-colors">
-                      <Icon className="w-5 h-5" />
+                    <div className="w-10 h-10 border border-border-subtle/20 bg-navy-dark text-gold group-hover:border-gold transition-colors flex items-center justify-center">
+                      <Icon className="w-4 h-4" />
                     </div>
                   </div>
 
-                  <h3 className="text-xl font-bold text-white group-hover:text-gold-light transition-colors">
+                  <h3 className="text-xl font-bold text-white uppercase tracking-widest">
                     {item.title}
                   </h3>
 
-                  <p className="text-sm text-gray-300 leading-relaxed">
+                  <p className="text-sm text-gray-400 font-light leading-relaxed">
                     {item.summary}
                   </p>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-navy-light/40 text-xs font-mono text-gold-light flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gold shrink-0" />
-                  <span>Output: {item.deliverable}</span>
+                <div className="mt-8 pt-6 border-t border-border-subtle/20 flex flex-col gap-2">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-gold-bright">
+                    Key Deliverable
+                  </span>
+                  <span className="text-sm text-gray-300 font-light">{item.deliverable}</span>
                 </div>
               </div>
             );
@@ -113,14 +115,14 @@ export const HowWeWork: React.FC = () => {
         </div>
 
         {/* CTA */}
-        <div className="mt-16 text-center">
+        <div className="mt-20 text-center">
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gold hover:bg-gold-light text-navy-deep font-bold text-base transition-all shadow-xl shadow-gold/10 hover:shadow-gold/20 transform hover:-translate-y-0.5"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-gold hover:bg-gold-light text-navy-deep font-bold text-sm uppercase tracking-widest transition-colors"
           >
-            <PhoneCall className="w-5 h-5" />
+            <PhoneCall className="w-4 h-4" />
             <span>Start With a Discovery Conversation</span>
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
