@@ -1,123 +1,103 @@
 import React from 'react';
-import { ArrowRight, ShieldCheck, Zap, Clock, Lock, Sparkles, Check } from 'lucide-react';
+import { ArrowRight, Check } from 'lucide-react';
 
 interface OutcomeShift {
   from: string;
   to: string;
   description: string;
-  icon: React.ElementType;
 }
 
 const OUTCOME_SHIFTS: OutcomeShift[] = [
   {
     from: 'Manual Excel Tracking',
     to: 'Automated Workflows',
-    description: 'Elimination of repetitive administrative data entry, document chasing, and spreadsheet calculations.',
-    icon: Zap,
+    description: 'Elimination of repetitive data entry, offline attendance registers, and manual document chasing.',
   },
   {
     from: 'Fragmented Silos',
-    to: 'Connected Data',
-    description: 'Seamless data flow connecting recruitment, HRIS, attendance registers, and payroll systems.',
-    icon: ShieldCheck,
+    to: 'Connected Single Source',
+    description: 'Unified employee data connecting recruitment, HRIS platforms, leaves, and payroll.',
   },
   {
     from: 'Reactive Firefighting',
     to: 'Structured SOPs',
-    description: 'Documented policies, clear SLA ownership, and predictable employee lifecycle processes.',
-    icon: Clock,
+    description: 'Clearly documented policies, transparent SLA ownership, and predictable operating cadences.',
   },
   {
     from: 'Founder Dependency',
-    to: 'Scalable Systems',
-    description: 'People operations that function reliably regardless of individual staff turnover or founder availability.',
-    icon: Lock,
+    to: 'Autonomous Systems',
+    description: 'People operations that function reliably without requiring founder intervention for routine decisions.',
   },
 ];
 
 const TARGET_OUTCOMES = [
-  'Eliminated manual administration',
-  'Accelerated onboarding velocity',
-  '100% HR data fidelity & accuracy',
-  'Clear process SLA accountability',
-  'Bulletproof statutory compliance',
-  'Elevated candidate experience',
-  'Decentralized process ownership',
-  'Real-time executive dashboards',
-  'Infrastructure scaled for 300+ staff',
+  'Eliminated manual administrative tasks',
+  'Accelerated onboarding velocity & conversion',
+  'Higher data integrity & compliance audit readiness',
+  'Clear process SLA ownership across leadership',
+  'Real-time executive metrics and workforce dashboards',
+  'Scalable infrastructure engineered for 30 to 300+ staff',
 ];
 
 export const OutcomesSection: React.FC = () => {
   return (
-    <section className="py-24 bg-white text-dark border-t border-border-subtle">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+    <section className="py-24 bg-white text-navy-deep border-b border-border-subtle">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         {/* Section Header */}
-        <div className="max-w-3xl mb-16 space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-gray-light text-navy-primary text-xs font-mono font-bold uppercase tracking-wider">
+        <div className="border-b border-border-subtle pb-8 mb-16 max-w-3xl">
+          <span className="text-[10px] font-mono tracking-[0.25em] text-gold uppercase font-bold">
             Transformation Impact
-          </div>
-
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-navy-deep tracking-tight uppercase">
-            Measurable Outcomes
+          </span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-normal text-navy-deep tracking-tight mt-3">
+            Measurable Operational Shifts
           </h2>
-
-          <p className="text-base text-muted leading-relaxed font-light">
-            We measure success by the tangible operational shifts created within your organization.
+          <p className="text-sm text-gray-500 font-light mt-3 leading-relaxed">
+            We measure value by the tangible organizational transitions created inside your day-to-day operations.
           </p>
         </div>
 
         {/* 4 Shift Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-border-subtle bg-border-subtle mb-16">
-          {OUTCOME_SHIFTS.map((shift) => {
-            const Icon = shift.icon;
-            return (
-              <div
-                key={shift.from}
-                className="bg-white p-8 group hover:bg-gray-light transition-all duration-300 flex flex-col justify-between"
-              >
-                <div className="space-y-8">
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-4 text-sm font-bold tracking-widest uppercase">
-                    <span className="text-gray-400 line-through decoration-red-400/50">
-                      {shift.from}
-                    </span>
-                    <ArrowRight className="w-5 h-5 text-gold shrink-0 hidden sm:block" />
-                    <span className="text-navy-deep decoration-gold underline-offset-4 border-b-2 border-gold pb-1 inline-block w-fit">
-                      {shift.to}
-                    </span>
-                  </div>
-
-                  <p className="text-sm text-muted leading-relaxed font-light">
-                    {shift.description}
-                  </p>
-                </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          {OUTCOME_SHIFTS.map((shift) => (
+            <div
+              key={shift.from}
+              className="p-8 border border-border-subtle bg-white flex flex-col justify-between space-y-4 hover:border-gold transition-colors duration-200"
+            >
+              <div className="flex items-center gap-4 text-sm font-serif">
+                <span className="text-gray-400 line-through decoration-red-400/60">
+                  {shift.from}
+                </span>
+                <ArrowRight className="w-4 h-4 text-gold shrink-0" />
+                <span className="text-navy-deep font-semibold border-b border-gold pb-0.5">
+                  {shift.to}
+                </span>
               </div>
-            );
-          })}
+
+              <p className="text-xs text-gray-600 font-light leading-relaxed">
+                {shift.description}
+              </p>
+            </div>
+          ))}
         </div>
 
-        {/* 9 Core Outcomes List Grid */}
-        <div className="bg-navy-dark p-8 lg:p-12 text-white border border-border-subtle/20 space-y-10">
-          <div className="flex items-center gap-4">
-            <Sparkles className="w-6 h-6 text-gold" />
-            <h3 className="text-xl sm:text-2xl font-bold tracking-widest uppercase text-white">
-              Systematic Advantages
-            </h3>
-          </div>
+        {/* Outcomes Checklist in Minimalist Banner */}
+        <div className="p-8 lg:p-12 border border-border-subtle bg-gray-50/70">
+          <span className="text-[10px] font-mono tracking-widest uppercase text-gold font-bold mb-4 block">
+            Systemic Advantages
+          </span>
+          <h3 className="text-2xl font-serif font-normal text-navy-deep mb-8">
+            What Changes When You Build Systems With NKVV
+          </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {TARGET_OUTCOMES.map((outc) => (
-              <div
-                key={outc}
-                className="flex items-start gap-4 p-4 border border-border-subtle/10 bg-navy-primary text-sm text-gray-300"
-              >
+              <div key={outc} className="flex items-start gap-3 text-xs text-gray-700">
                 <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" />
                 <span className="font-light">{outc}</span>
               </div>
             ))}
           </div>
         </div>
-
       </div>
     </section>
   );

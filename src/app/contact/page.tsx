@@ -15,13 +15,13 @@ export default function ContactPage() {
       <section className="bg-navy-deep text-white py-16 md:py-20 border-b border-navy-surface relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-4 text-center max-w-3xl">
           <span className="text-xs font-mono font-bold text-gold uppercase tracking-wider bg-navy-surface px-3.5 py-1.5 rounded-full border border-gold/30">
-            Book a Discovery Call
+            Start a Discovery
           </span>
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight">
-            {SITE_CONFIG.contact.headline}
+            Tell us where your people operations are becoming difficult to manage.
           </h1>
           <p className="text-gray-300 text-base sm:text-lg leading-relaxed">
-            Tell us about your current workforce operations, technology tools, or process bottlenecks. We will architect a solution built for scale.
+            Tell us where your HR operations are slowing the business down. We&apos;ll identify the friction, map the underlying process and determine what should be redesigned, enabled or automated.
           </p>
         </div>
       </section>

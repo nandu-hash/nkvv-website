@@ -12,6 +12,7 @@
   --color-dark: #101828;
   --color-muted: #667085;
   --color-border-subtle: #D9DEE7;
+  --font-serif: var(--font-serif), Georgia, Cambria, 'Times New Roman', Times, serif;
 }
 
 :root {
@@ -60,14 +61,27 @@ body {
   animation: pulseGlow 4s infinite ease-in-out;
 }
 
-/* Node flow line animation */
-@keyframes dashFlow {
-  to {
-    stroke-dashoffset: -40;
-  }
+/* Subtle Architectural Grid & System Pattern */
+.bg-grid-architectural {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(7, 26, 51, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(7, 26, 51, 0.035) 1px, transparent 1px);
 }
 
-.animate-dash-flow {
-  stroke-dasharray: 8 6;
-  animation: dashFlow 2s linear infinite;
+.bg-grid-architectural-dark {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+}
+
+.bg-dot-architectural {
+  background-size: 24px 24px;
+  background-image: radial-gradient(rgba(7, 26, 51, 0.08) 1px, transparent 1px);
+}
+
+.bg-dot-architectural-gold {
+  background-size: 24px 24px;
+  background-image: radial-gradient(rgba(201, 151, 43, 0.15) 1px, transparent 1px);
 }

@@ -12,15 +12,15 @@ export default function SolutionsPage() {
   return (
     <main className="pt-28 pb-20 bg-offwhite min-h-screen">
       {/* Page Header */}
-      <section className="bg-navy-deep text-white py-16 md:py-20 border-b border-navy-surface relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-4 text-center max-w-3xl">
-          <span className="text-xs font-mono font-bold text-gold uppercase tracking-wider bg-navy-surface px-3.5 py-1.5 rounded-full border border-gold/30">
+      <section className="bg-navy-deep text-white py-20 md:py-28 border-b border-navy-surface relative overflow-hidden bg-grid-architectural-dark">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10 space-y-5 text-center max-w-4xl">
+          <span className="text-xs font-mono font-bold text-gold uppercase tracking-[0.25em] bg-navy-primary px-4 py-1.5 border border-gold/30">
             Problem-Led Architecture
           </span>
-          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-normal tracking-tight text-white leading-[1.1]">
             Solutions Designed Around Real Business Bottlenecks
           </h1>
-          <p className="text-gray-300 text-base sm:text-lg leading-relaxed">
+          <p className="text-gray-300 text-base sm:text-lg leading-relaxed font-light max-w-3xl mx-auto">
             We don&apos;t talk in abstract HR jargon. We diagnose what is breaking in your operational machinery and design the system to fix it.
           </p>
         </div>

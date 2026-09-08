@@ -8,32 +8,31 @@ interface LogoProps {
   showTagline?: boolean;
 }
 
-export const Logo: React.FC<LogoProps> = ({ variant = 'light', className = '', showTagline = true }) => {
+export const Logo: React.FC<LogoProps> = ({ variant = 'dark', className = '', showTagline = false }) => {
   return (
-    <Link href="/" className={`flex items-center gap-3 group focus:outline-none ${className}`}>
-      {/* Official NKVV Logo Image */}
-      <div className="relative h-10 w-10 overflow-hidden rounded bg-white p-0.5 shadow-sm border border-gold/30 transition-transform duration-300 group-hover:scale-105">
+    <Link href="/" className={`inline-flex items-center gap-3.5 group focus:outline-none ${className}`}>
+      {/* Official NKVV Logo Artwork */}
+      <div className="relative h-10 w-auto flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
         <Image
           src="/logo.jpg"
           alt="NK Velora Ventures Logo"
-          width={80}
-          height={80}
-          className="object-contain w-full h-full"
+          width={120}
+          height={48}
+          className="object-contain h-10 w-auto"
           priority
         />
       </div>
 
       <div className="flex flex-col">
-        <div className="flex items-center gap-1.5 font-bold tracking-tight text-lg leading-none">
+        <div className="flex items-center gap-1.5 font-bold tracking-tight text-lg leading-tight font-serif">
           <span className={variant === 'light' ? 'text-white' : 'text-navy-deep'}>
-            NK VELORA
+            NK Velora Ventures
           </span>
-          <span className="text-gold">VENTURES</span>
         </div>
         {showTagline && (
           <span
-            className={`text-[10px] tracking-widest uppercase font-semibold mt-1 transition-colors ${
-              variant === 'light' ? 'text-gold-light/90' : 'text-gold'
+            className={`text-[9px] tracking-[0.2em] uppercase font-semibold font-mono ${
+              variant === 'light' ? 'text-gold-light' : 'text-gold'
             }`}
           >
             Transform • Automate • Elevate

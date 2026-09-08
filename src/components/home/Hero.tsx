@@ -1,72 +1,70 @@
 import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
-import { HeroVisual } from './HeroVisual';
-import { SITE_CONFIG } from '@/config/site';
-import { ArrowRight, PhoneCall, Layers } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 export const Hero: React.FC = () => {
   return (
-    <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 bg-navy-dark text-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          
-          {/* Left Column: Copy & Actions */}
-          <div className="lg:col-span-6 space-y-8">
-            
-            {/* Tagline Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-sm border border-gold/30 bg-transparent text-gold-bright text-[10px] sm:text-xs font-mono font-bold uppercase tracking-[0.2em]">
-              <span className="w-1.5 h-1.5 rounded-sm bg-gold" />
-              {SITE_CONFIG.tagline}
-            </div>
+    <section className="relative min-h-[92vh] sm:min-h-screen flex flex-col justify-between items-center text-center px-6 pt-36 pb-10 sm:pt-44 sm:pb-14 overflow-hidden bg-navy-deep">
+      {/* Background Image: Alpine Mountain Peaks & Sea of Clouds */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/images/hero-bg.jpg"
+          alt="NK Velora Ventures Alpine Mountain Horizon"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center pointer-events-none"
+        />
+        {/* Cinematic Vignette Overlay matching reference mood */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-navy-deep/45 to-navy-deep/85 mix-blend-multiply pointer-events-none" />
+        <div className="absolute inset-0 bg-navy-deep/30 pointer-events-none" />
+      </div>
 
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.1] font-sans">
-              Transform Operations.<br/>
-              <span className="text-gold-bright">
-                Automate the Work.
-              </span><br/>
-              Build for Scale.
-            </h1>
+      {/* Top spacer to balance vertical layout */}
+      <div className="w-full max-w-7xl mx-auto z-10" />
 
-            {/* Supporting Copy */}
-            <p className="text-base sm:text-lg text-gray-400 leading-relaxed max-w-lg font-light tracking-wide">
-              {SITE_CONFIG.hero.subheadline}
-            </p>
+      {/* Center Main Stage Content */}
+      <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center justify-center my-auto">
+        {/* Eyebrow: Uppercase Spaced Brand Tagline */}
+        <p className="text-xs sm:text-sm font-mono uppercase tracking-[0.35em] text-white/80 font-semibold mb-6 drop-shadow-sm">
+          NK VELORA VENTURES
+        </p>
 
-            {/* CTAs */}
-            <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-sm text-sm font-bold uppercase tracking-wider text-navy-deep bg-gold hover:bg-gold-light transition-all duration-300"
-              >
-                <PhoneCall className="w-4 h-4" />
-                <span>{SITE_CONFIG.hero.primaryCta}</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+        {/* Primary Headline: Bold Serif + Italic Serif Contrast */}
+        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold text-white tracking-tight leading-[1.05] drop-shadow-md">
+          Transforming Operations
+          <span className="block italic font-serif font-normal text-white drop-shadow-lg mt-1 sm:mt-2">
+            Architecting Scale
+          </span>
+        </h1>
 
-              <Link
-                href="/solutions"
-                className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-sm text-sm font-bold uppercase tracking-wider text-white bg-transparent border border-border-subtle/20 hover:border-gold/50 transition-all duration-300"
-              >
-                <Layers className="w-4 h-4 text-gold-bright" />
-                <span>{SITE_CONFIG.hero.secondaryCta}</span>
-              </Link>
-            </div>
+        {/* Gold Horizontal Divider Accent */}
+        <div className="w-14 sm:w-16 h-[2px] bg-gold mx-auto my-7 rounded-full shadow-sm" />
 
-            {/* Credibility Statement Bar */}
-            <div className="pt-8 mt-8 border-t border-border-subtle/10">
-              <p className="text-[10px] font-mono font-bold uppercase tracking-[0.15em] text-gray-500">
-                {SITE_CONFIG.hero.credibilityBar}
-              </p>
-            </div>
-          </div>
+        {/* Subtitle Paragraph */}
+        <p className="max-w-xl mx-auto text-base sm:text-lg text-white/90 font-light leading-relaxed drop-shadow-sm mb-10 px-4">
+          Fine art process architecture and HR workflow automation that transforms fragmented operations into structured, scalable systems.
+        </p>
 
-          {/* Right Column: Interactive System Architecture Visual */}
-          <div className="lg:col-span-6 w-full">
-            <HeroVisual />
-          </div>
+        {/* Pill CTA Button */}
+        <Link
+          href="/solutions"
+          className="inline-flex items-center justify-center rounded-full border border-white/45 bg-white/10 hover:bg-white hover:text-navy-deep text-white px-8 sm:px-10 py-3.5 text-xs sm:text-sm font-semibold tracking-widest uppercase backdrop-blur-md transition-all duration-300 shadow-xl group"
+        >
+          <span>View Solutions</span>
+        </Link>
+      </div>
 
-        </div>
+      {/* Bottom Scroll Indicator Arrow */}
+      <div className="relative z-10 pt-8 pb-2 flex flex-col items-center">
+        <a
+          href="#business-flow"
+          aria-label="Scroll down to explore operations"
+          className="text-white/60 hover:text-white transition-colors duration-200 p-2 focus:outline-none"
+        >
+          <ChevronDown className="w-6 h-6 animate-bounce" />
+        </a>
       </div>
     </section>
   );

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Hero } from '@/components/home/Hero';
+import { BusinessFlowBar } from '@/components/home/BusinessFlowBar';
 import { ProblemSection } from '@/components/home/ProblemSection';
+import { NkvvFlowSection } from '@/components/home/NkvvFlowSection';
 import { FrameworkSection } from '@/components/home/FrameworkSection';
 import { ServicesSection } from '@/components/home/ServicesSection';
 import { SolutionsSection } from '@/components/home/SolutionsSection';
@@ -16,31 +18,37 @@ export default function HomePage() {
       {/* 1. Hero Section */}
       <Hero />
 
-      {/* 2. Problem Section */}
+      {/* 2. 3-Second Business Flow Bar */}
+      <BusinessFlowBar />
+
+      {/* 3. Problem Section */}
       <ProblemSection />
 
-      {/* 3. Solutions Spotlight (Moved Up) */}
-      <SolutionsSection />
+      {/* 4. Signature NKVV Flow (Navy Visual Contrast) */}
+      <NkvvFlowSection />
 
-      {/* 4. Services Overview (Moved Up) */}
+      {/* 5. Services Overview */}
       <ServicesSection />
 
-      {/* 5. NKVV Framework */}
+      {/* 6. Solutions Spotlight */}
+      <SolutionsSection />
+
+      {/* 7. Detailed NKVV Operating System */}
       <FrameworkSection />
 
-      {/* 6. How We Work */}
+      {/* 8. How We Work */}
       <HowWeWork />
 
-      {/* 7. Target Outcomes */}
+      {/* 9. Target Outcomes */}
       <OutcomesSection />
 
-      {/* 8. Who We Serve */}
+      {/* 10. Who We Serve */}
       <WhoWeServe />
 
-      {/* 9. Why NKVV */}
+      {/* 11. Why NKVV */}
       <WhyNKVV />
 
-      {/* 10. Final CTA */}
+      {/* 12. Final Conversion CTA */}
       <FinalCta />
     </main>
   );

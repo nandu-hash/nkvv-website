@@ -3,9 +3,16 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { MAIN_NAV_ITEMS } from '@/config/navigation';
 import { Logo } from '@/components/ui/Logo';
-import { Menu, X, ArrowRight, PhoneCall } from 'lucide-react';
+import { Menu, X, Moon } from 'lucide-react';
+
+const NAV_LINKS = [
+  { label: 'About', href: '/about' },
+  { label: 'Services', href: '/services' },
+  { label: 'Solutions', href: '/solutions' },
+  { label: 'How We Work', href: '/how-we-work' },
+  { label: 'Contact', href: '/contact' },
+];
 
 export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -14,7 +21,7 @@ export const Navbar: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
+      if (window.scrollY > 10) {
         setScrolled(true);
       } else {
         setScrolled(false);
@@ -30,29 +37,27 @@ export const Navbar: React.FC = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-navy-deep/95 backdrop-blur-md py-3 shadow-xl border-b border-navy-surface/80'
-          : 'bg-navy-deep py-4 border-b border-navy-surface/50'
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/95 backdrop-blur-md ${
+        scrolled ? 'py-4 shadow-sm border-b border-gray-100' : 'py-6 border-b border-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <div className="flex items-center justify-between">
-          {/* Brand Logo */}
-          <Logo variant="light" showTagline={true} />
+          {/* Brand Logo & Title */}
+          <Logo variant="dark" showTagline={false} />
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
-            {MAIN_NAV_ITEMS.map((item) => {
+          {/* Centered Minimalist Editorial Nav */}
+          <nav className="hidden lg:flex items-center space-x-8">
+            {NAV_LINKS.map((item) => {
               const isActive = pathname === item.href;
               return (
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                  className={`text-sm tracking-wide transition-colors duration-200 ${
                     isActive
-                      ? 'text-gold bg-navy-surface font-semibold border-b-2 border-gold'
-                      : 'text-gray-300 hover:text-white hover:bg-navy-primary/60'
+                      ? 'text-navy-deep font-bold underline underline-offset-8 decoration-gold decoration-2'
+                      : 'text-gray-600 hover:text-navy-deep'
                   }`}
                 >
                   {item.label}
@@ -61,46 +66,56 @@ export const Navbar: React.FC = () => {
             })}
           </nav>
 
-          {/* Right CTA Button */}
-          <div className="hidden lg:flex items-center space-x-4">
+          {/* Right Action: Theme toggle + Pill button */}
+          <div className="hidden sm:flex items-center space-x-4">
+            <button
+              type="button"
+              aria-label="Toggle dark mode"
+              className="p-2 text-gray-600 hover:text-navy-deep transition-colors focus:outline-none rounded-full hover:bg-gray-100"
+            >
+              <Moon className="w-4 h-4" />
+            </button>
+
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-navy-deep bg-gold hover:bg-gold-light transition-all duration-200 shadow-md shadow-gold/10 hover:shadow-gold/20 transform hover:-translate-y-0.5"
+              className="inline-flex items-center px-6 py-2 text-xs font-semibold uppercase tracking-widest text-navy-deep border border-navy-deep rounded-full hover:bg-navy-deep hover:text-white transition-all duration-300"
             >
-              <PhoneCall className="w-4 h-4" />
-              <span>Book a Discovery Call</span>
-              <ArrowRight className="w-4 h-4 ml-0.5" />
+              Book a Session
             </Link>
           </div>
 
-          {/* Mobile Hamburger Toggle */}
-          <div className="flex md:hidden">
+          {/* Mobile Menu Toggle */}
+          <div className="flex lg:hidden items-center space-x-3">
+            <button
+              type="button"
+              aria-label="Toggle dark mode"
+              className="p-1.5 text-gray-600 hover:text-navy-deep focus:outline-none sm:hidden"
+            >
+              <Moon className="w-4 h-4" />
+            </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-gray-300 hover:text-white hover:bg-navy-primary focus:outline-none"
+              className="p-2 text-gray-800 hover:text-navy-deep focus:outline-none"
               aria-label="Toggle navigation menu"
-              aria-expanded={mobileMenuOpen}
             >
-              {mobileMenuOpen ? <X className="w-6 h-6 text-gold" /> : <Menu className="w-6 h-6 text-white" />}
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-navy-deep border-b border-navy-surface px-4 pt-3 pb-6 space-y-3 animate-in slide-in-from-top duration-200">
-          <div className="flex flex-col space-y-1">
-            {MAIN_NAV_ITEMS.map((item) => {
+        <div className="md:hidden bg-white border-b border-gray-100 px-6 py-6 space-y-4 animate-in slide-in-from-top duration-200 shadow-lg">
+          <div className="flex flex-col space-y-3">
+            {NAV_LINKS.map((item) => {
               const isActive = pathname === item.href;
               return (
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`px-4 py-3 rounded-md text-base font-medium transition-colors ${
-                    isActive
-                      ? 'text-gold bg-navy-surface font-semibold border-l-4 border-gold'
-                      : 'text-gray-300 hover:text-white hover:bg-navy-primary'
+                  className={`text-base font-medium transition-colors ${
+                    isActive ? 'text-navy-deep font-bold underline decoration-gold' : 'text-gray-700 hover:text-navy-deep'
                   }`}
                 >
                   {item.label}
@@ -108,13 +123,12 @@ export const Navbar: React.FC = () => {
               );
             })}
           </div>
-          <div className="pt-3 border-t border-navy-surface/80">
+          <div className="pt-4 border-t border-gray-100">
             <Link
               href="/contact"
-              className="w-full flex items-center justify-center gap-2 px-5 py-3 rounded-lg text-base font-semibold text-navy-deep bg-gold hover:bg-gold-light transition-all shadow-md"
+              className="w-full flex items-center justify-center px-5 py-3 text-xs font-semibold uppercase tracking-wider text-white bg-navy-deep hover:bg-gold hover:text-navy-deep transition-colors rounded-full"
             >
-              <PhoneCall className="w-4 h-4" />
-              <span>Book a Discovery Call</span>
+              Book a Session
             </Link>
           </div>
         </div>

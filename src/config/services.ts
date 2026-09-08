@@ -37,9 +37,9 @@ export const SERVICES_DATA: ServiceCategory[] = [
       },
       {
         title: 'Payroll Process Optimization',
-        problem: 'Monthly payroll calculations depend on manual data collection and complex spreadsheets prone to delay.',
-        intervention: 'Standardization of attendance, leave, benefit, and tax inputs into a streamlined pre-payroll verification engine.',
-        outcome: 'Zero-error payroll cycles completed in hours rather than days, with full audit trail compliance.',
+        problem: 'Monthly payroll calculations depend on manual data collection, offline spreadsheets, and disconnected inputs.',
+        intervention: 'Standardization of attendance, leave, variable pay, and tax inputs into a streamlined pre-payroll verification engine.',
+        outcome: 'Predictable, structured payroll cycles with strong audit trails and compliance readiness.',
         features: [
           'Payroll workflow mapping',
           'Attendance & leave integration',
@@ -59,7 +59,7 @@ export const SERVICES_DATA: ServiceCategory[] = [
         title: 'HRMS Selection & End-to-End Implementation',
         problem: 'Companies select HRMS software based on generic feature lists rather than actual operational requirements.',
         intervention: 'Vendor-agnostic evaluation based on business needs, followed by structured data migration and workflow setup.',
-        outcome: 'Rapid software adoption, clean data architecture, and high employee engagement from day one.',
+        outcome: 'Smooth software adoption, clean data architecture, and clear user permissions from day one.',
         features: [
           'HR technology selection',
           'HRMS implementation',
@@ -72,7 +72,7 @@ export const SERVICES_DATA: ServiceCategory[] = [
         title: 'HRMS Optimization & System Integration',
         problem: 'Existing HRMS is underutilized, leaving teams relying on parallel offline spreadsheets.',
         intervention: 'Re-architecting existing module configurations, automating custom triggers, and integrating APIs across tools.',
-        outcome: 'Unified single-source-of-truth HR platform with 100% data syncing across recruitment, payroll, and Slack/Teams.',
+        outcome: 'Unified single source of truth for employee data with reliable synchronization across payroll and communications.',
         features: [
           'HRMS optimization',
           'API system integrations',
@@ -90,9 +90,9 @@ export const SERVICES_DATA: ServiceCategory[] = [
     items: [
       {
         title: 'Recruitment & Pre-boarding Automation',
-        problem: 'Recruiters spend 70% of their day sending candidate status emails, collecting documents, and tracking offer letters.',
-        intervention: 'Automated candidate communication triggers via WhatsApp/email, smart document upload links, and automated pre-boarding check-ins.',
-        outcome: '80% drop in candidate drop-off prior to day one, with zero manual document chasing.',
+        problem: 'Recruiters spend significant time manually sending status emails, chasing documents, and tracking offer statuses.',
+        intervention: 'Automated candidate communication triggers via WhatsApp/email, digital document upload links, and automated pre-boarding check-ins.',
+        outcome: 'Structured, responsive candidate journey with minimized document latency and reduced administrative chasing.',
         features: [
           'Recruitment automation',
           'Pre-boarding automation',
@@ -104,7 +104,7 @@ export const SERVICES_DATA: ServiceCategory[] = [
         title: 'Lifecycle & Repetitive Task Automation',
         problem: 'Attendance exceptions, leave approvals, probation reminders, and exit clearances stall in email threads.',
         intervention: 'Custom multi-channel automation workflows connecting HRMS, communication tools (Slack/Teams/WhatsApp), and databases.',
-        outcome: 'Instant task resolution, automated reminder escalation, and seamless administrative cadence.',
+        outcome: 'Consistent task execution, automated escalation reminders, and reliable administrative cadence.',
         features: [
           'Attendance workflows',
           'Payroll workflows',
@@ -124,7 +124,7 @@ export const SERVICES_DATA: ServiceCategory[] = [
         title: 'Workforce Operations & KPI Frameworks',
         problem: 'Leadership lacks real-time insight into headcount costs, attrition drivers, and HR team productivity.',
         intervention: 'Creation of standard HR KPI metrics, custom executive reporting dashboards, and weekly operational rhythms.',
-        outcome: 'Real-time strategic decision-making powered by clean, reliable workforce analytics.',
+        outcome: 'Informed strategic decisions powered by clean, reliable workforce operations data.',
         features: [
           'Process audits',
           'Workforce operations',

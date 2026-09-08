@@ -19,7 +19,7 @@ export const SOLUTIONS_DATA: SolutionItem[] = [
       'Structured 30-60-90 day onboarding templates & buddy assignment systems',
     ],
     expectedImpact: [
-      '50% faster time-to-hire',
+      'Faster, more structured hiring workflows',
       'Reduced candidate drop-off before joining',
       'Consistent, high-touch employee onboarding experience',
     ],
@@ -43,7 +43,7 @@ export const SOLUTIONS_DATA: SolutionItem[] = [
   {
     id: 'hrms-spreadsheets',
     problemStatement: 'We have an HRMS but still use spreadsheets.',
-    solutionTitle: 'HRIS Optimization & Automation',
+    solutionTitle: 'HRIS Optimization',
     description: 'Software alone does not fix broken workflows. Poorly configured HRIS platforms force HR teams back into manual Excel tracking.',
     keyInterventions: [
       'Audit of existing HRIS configuration and custom field mapping',
@@ -51,9 +51,9 @@ export const SOLUTIONS_DATA: SolutionItem[] = [
       'API integrations connecting HRIS with Slack, email, and payroll tools',
     ],
     expectedImpact: [
-      '100% data fidelity in the central HR system',
+      'Higher data integrity and audit readiness',
       'Elimination of parallel shadow spreadsheets',
-      'Maximum ROI on software license investments',
+      'Improved utilization of software investments',
     ],
   },
   {
@@ -62,36 +62,36 @@ export const SOLUTIONS_DATA: SolutionItem[] = [
     solutionTitle: 'Payroll Process Transformation',
     description: 'Consolidating leave, attendance, overtime, variable pay, and tax declarations manually every month leads to errors and stressful deadline rushes.',
     keyInterventions: [
-      'Standardized pre-payroll data validation engine',
+      'Standardized pre-payroll data validation controls',
       'Automated leave and attendance cutoff reconciliation',
       'Direct integration templates between HRIS, attendance registers, and payroll software',
     ],
     expectedImpact: [
-      'Zero-error payroll processing',
-      'Processing time reduced from 5 days to 4 hours',
-      'Seamless audit trails for tax and statutory requirements',
+      'Substantially reduced payroll cycle time',
+      'Elimination of manual calculation errors',
+      'Seamless audit trails for statutory and tax requirements',
     ],
   },
   {
     id: 'repetitive-tasks',
     problemStatement: 'Our HR team spends too much time on repetitive tasks.',
     solutionTitle: 'HR Automation',
-    description: 'HR professionals trapped in manual document generation, status tracking, and query resolution have zero time left for strategic talent initiatives.',
+    description: 'HR professionals trapped in manual document generation, status tracking, and query resolution have little time left for strategic talent initiatives.',
     keyInterventions: [
       'Automated offer letter and employment agreement generator',
-      'WhatsApp/Email bots for common employee FAQ query routing',
+      'Workflow triggers for common employee FAQ and query routing',
       'Automated probation, performance, and anniversary reminder workflows',
     ],
     expectedImpact: [
-      '70% reduction in manual HR administrative workload',
-      'Instant resolution for routine employee requests',
-      'Higher HR team satisfaction and strategic focus',
+      'Reduced repetitive administrative work',
+      'Faster response times for routine employee requests',
+      'Higher internal operational productivity',
     ],
   },
   {
     id: 'leadership-visibility',
     problemStatement: "Leadership doesn't have visibility into people operations.",
-    solutionTitle: 'HR Analytics & Management Reporting',
+    solutionTitle: 'HR Analytics & Visibility',
     description: 'Founders and executive leaders lack accurate visibility into attrition trends, hiring pipelines, headcount costs, and HR operational performance.',
     keyInterventions: [
       'Definition of core HR KPI metrics aligned with business objectives',
@@ -99,9 +99,9 @@ export const SOLUTIONS_DATA: SolutionItem[] = [
       'Standardized headcount forecasting and cost modeling templates',
     ],
     expectedImpact: [
-      'Real-time workforce data for strategic planning',
-      'Proactive identification of attrition and productivity risks',
-      'Data-backed board and leadership reporting',
+      'Improved operational visibility for leadership',
+      'Proactive identification of attrition and capacity bottlenecks',
+      'Data-backed management and board reporting',
     ],
   },
 ];

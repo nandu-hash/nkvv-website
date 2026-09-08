@@ -34,15 +34,15 @@ export default function AboutPage() {
   return (
     <main className="pt-28 pb-20 bg-offwhite min-h-screen">
       {/* Page Header */}
-      <section className="bg-navy-deep text-white py-16 md:py-20 border-b border-navy-surface relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-4 text-center max-w-3xl">
-          <span className="text-xs font-mono font-bold text-gold uppercase tracking-wider bg-navy-surface px-3.5 py-1.5 rounded-full border border-gold/30">
+      <section className="bg-navy-deep text-white py-20 md:py-28 border-b border-navy-surface relative overflow-hidden bg-grid-architectural-dark">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10 space-y-5 text-center max-w-4xl">
+          <span className="text-xs font-mono font-bold text-gold uppercase tracking-[0.25em] bg-navy-primary px-4 py-1.5 border border-gold/30">
             About NK Velora Ventures
           </span>
-          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-normal tracking-tight text-white leading-[1.1]">
             A Practical Transformation Partner for Growing Businesses
           </h1>
-          <p className="text-gray-300 text-base sm:text-lg leading-relaxed">
+          <p className="text-gray-300 text-base sm:text-lg leading-relaxed font-light max-w-3xl mx-auto">
             We help organizations that have outgrown fragmented HR operations build structured, automated, and scalable people operating systems.
           </p>
         </div>
@@ -62,6 +62,10 @@ export default function AboutPage() {
               <p className="text-gray-700 leading-relaxed">
                 NKVV does not simply recommend software. Software alone cannot fix a flawed operating model. We understand the underlying business process, redesign it for clarity and compliance, select or optimize the technology stack, and then build a resilient operating system around it.
               </p>
+              
+              <div className="p-4 bg-offwhite border-l-2 border-gold text-sm font-serif text-navy-deep italic">
+                &ldquo;I started NKVV around a simple observation: growing businesses don&apos;t usually have an HR problem first. They have an operating-system problem.&rdquo;
+              </div>
             </div>
 
             {/* 3 Pillars Visual */}
@@ -106,29 +110,65 @@ export default function AboutPage() {
           <div className="bg-navy-deep rounded-2xl p-8 sm:p-12 text-white border border-navy-surface shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             <div className="lg:col-span-4 flex flex-col items-center text-center space-y-4">
-              <div className="w-24 h-24 rounded-full bg-navy-surface border-2 border-gold flex items-center justify-center text-gold shadow-inner">
+              <div className="w-24 h-24 rounded-full bg-navy-primary border-2 border-gold flex items-center justify-center text-gold shadow-md">
                 <UserCheck className="w-12 h-12" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-white">
-                  Founder & Principal Consultant
+                <h3 className="text-2xl font-serif font-bold text-white tracking-tight">
+                  Nandu Kumar
                 </h3>
-                <span className="text-xs font-mono text-gold block mt-1">
+                <span className="text-xs font-mono font-semibold uppercase tracking-widest text-gold block mt-1">
+                  Founder &amp; Principal Consultant
+                </span>
+                <span className="text-xs text-gray-400 block mt-0.5">
                   NK Velora Ventures
                 </span>
               </div>
             </div>
 
-            <div className="lg:col-span-8 space-y-4 border-t lg:border-t-0 lg:border-l border-navy-surface pt-6 lg:pt-0 lg:pl-8">
-              <div className="inline-block px-3 py-1 rounded bg-navy-surface border border-gold/30 text-gold-light text-xs font-mono font-bold">
+            <div className="lg:col-span-8 space-y-5 border-t lg:border-t-0 lg:border-l border-navy-surface pt-6 lg:pt-0 lg:pl-8">
+              <div className="inline-block px-3 py-1 rounded bg-navy-primary border border-gold/30 text-gold-light text-xs font-mono font-bold uppercase tracking-wider">
                 Founder Leadership
               </div>
               
-              <div className="p-6 rounded-xl bg-navy-primary/70 border border-navy-light/50 text-gray-300 italic text-sm leading-relaxed">
-                [Founder biography to be added]
+              <div className="space-y-4 text-gray-200 text-sm sm:text-base leading-relaxed font-light">
+                <p>
+                  I work at the intersection of HR operations, business processes, technology and automation.
+                </p>
+                <p>
+                  As the Founder &amp; Principal Consultant at NK Velora Ventures (NKVV), I am building a business focused on helping growing organizations transform fragmented HR operations into structured, technology-enabled systems.
+                </p>
+                <p>
+                  My focus is on HR Operations Transformation, HR Technology &amp; HRIS, Process Design, Workflow Automation, and compliance-focused HR process diagnosis.
+                </p>
+                
+                {/* Method Framework Highlight */}
+                <div className="py-3 px-4 bg-navy-primary/90 border border-gold/30 rounded-lg space-y-1.5">
+                  <span className="text-[11px] font-mono font-semibold uppercase tracking-widest text-gold block">
+                    Practical Framework
+                  </span>
+                  <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm font-mono font-semibold text-white">
+                    <span>Diagnose</span>
+                    <span className="text-gold">→</span>
+                    <span>Design</span>
+                    <span className="text-gold">→</span>
+                    <span>Enable</span>
+                    <span className="text-gold">→</span>
+                    <span>Automate</span>
+                    <span className="text-gold">→</span>
+                    <span>Scale</span>
+                  </div>
+                </div>
+
+                <p>
+                  The objective is simple: help businesses move from manual and fragmented HR processes to structured, connected and scalable operating systems.
+                </p>
+                <p className="text-gray-300 text-xs sm:text-sm pt-1 border-t border-navy-surface/80">
+                  I am also developing <strong className="text-gold font-semibold">VELORA</strong> as NKVV&apos;s product direction for HR operations and compliance diagnosis.
+                </p>
               </div>
 
-              <p className="text-xs text-gray-400 leading-relaxed">
+              <p className="text-xs text-gray-400 leading-relaxed font-light pt-2">
                 NKVV is a founder-led consulting practice built on direct engagement, technical rigor, and practical business execution for startups and growing enterprises across India.
               </p>
             </div>
