@@ -17,10 +17,14 @@ export default function ContactPage() {
           <span className="text-xs font-mono font-bold text-gold uppercase tracking-wider bg-navy-surface px-3.5 py-1.5 rounded-full border border-gold/30">
             Start a Discovery
           </span>
-          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight">
-            Tell us where your people operations are becoming difficult to manage.
+          <h1 className="text-3xl sm:text-5xl font-serif font-bold tracking-tight text-white leading-[1.15]">
+            Start a Discovery
+            <span className="block italic font-serif font-normal text-gold text-2xl sm:text-4xl mt-2">
+              Where Operations Need Structure
+            </span>
           </h1>
-          <p className="text-gray-300 text-base sm:text-lg leading-relaxed">
+          <div className="w-14 h-0.5 bg-gold mx-auto my-4 rounded-full" />
+          <p className="text-gray-300 text-base sm:text-lg leading-relaxed font-light max-w-2xl mx-auto">
             Tell us where your HR operations are slowing the business down. We&apos;ll identify the friction, map the underlying process and determine what should be redesigned, enabled or automated.
           </p>
         </div>

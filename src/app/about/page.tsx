@@ -35,15 +35,19 @@ export default function AboutPage() {
     <main className="pt-28 pb-20 bg-offwhite min-h-screen">
       {/* Page Header */}
       <section className="bg-navy-deep text-white py-20 md:py-28 border-b border-navy-surface relative overflow-hidden bg-grid-architectural-dark">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10 space-y-5 text-center max-w-4xl">
-          <span className="text-xs font-mono font-bold text-gold uppercase tracking-[0.25em] bg-navy-primary px-4 py-1.5 border border-gold/30">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10 space-y-4 text-center max-w-4xl">
+          <span className="text-xs font-mono font-bold text-gold uppercase tracking-[0.25em] bg-navy-primary px-4 py-1.5 border border-gold/30 rounded-full inline-block">
             About NK Velora Ventures
           </span>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-normal tracking-tight text-white leading-[1.1]">
-            A Practical Transformation Partner for Growing Businesses
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold tracking-tight text-white leading-[1.1]">
+            A Practical Transformation Partner
+            <span className="block italic font-serif font-normal text-gold text-3xl sm:text-4xl lg:text-5xl mt-2">
+              For Scaling Enterprises
+            </span>
           </h1>
+          <div className="w-14 h-0.5 bg-gold mx-auto my-4 rounded-full" />
           <p className="text-gray-300 text-base sm:text-lg leading-relaxed font-light max-w-3xl mx-auto">
-            We help organizations that have outgrown fragmented HR operations build structured, automated, and scalable people operating systems.
+            We exist to help ambitious organizations build disciplined operational foundations — transforming fragmented processes into structured, automated systems.
           </p>
         </div>
       </section>

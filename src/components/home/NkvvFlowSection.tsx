@@ -28,11 +28,15 @@ export const NkvvFlowSection: React.FC = () => {
           <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-gold font-bold">
             Methodology in Motion
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-normal text-white tracking-tight">
-            THE NKVV FLOW
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-white tracking-tight">
+            The NKVV Flow
+            <span className="block italic font-serif font-normal text-gold text-2xl sm:text-3xl lg:text-4xl mt-1">
+              Friction to Autonomous Scale
+            </span>
           </h2>
-          <p className="text-xs sm:text-sm text-gray-400 font-light tracking-wide">
-            Movement from operational friction to autonomous system scale.
+          <div className="w-14 h-0.5 bg-gold mx-auto my-4 rounded-full" />
+          <p className="text-xs sm:text-sm text-gray-300 font-light tracking-wide max-w-xl mx-auto">
+            Movement from operational friction to structured, repeatable systems.
           </p>
         </div>
 

@@ -51,9 +51,13 @@ export const ProblemSection: React.FC = () => {
             <span className="text-[10px] font-mono tracking-[0.25em] text-gold uppercase font-bold">
               Operational Reality
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-normal text-navy-deep tracking-tight">
-              Growth creates complexity. We turn complexity into systems.
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-navy-deep tracking-tight">
+              Growth creates complexity.
+              <span className="block italic font-serif font-normal text-gold text-2xl sm:text-3xl lg:text-4xl mt-1">
+                We turn complexity into systems.
+              </span>
             </h2>
+            <div className="w-12 h-0.5 bg-gold rounded-full my-3" />
           </div>
           <div className="lg:col-span-5 lg:pt-8 text-sm text-gray-600 font-light leading-relaxed">
             As companies scale past 30 employees, informal practices break down. Without deliberate system architecture, friction compounds silently across teams.

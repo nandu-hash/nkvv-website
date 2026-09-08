@@ -14,13 +14,17 @@ export const FrameworkSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         {/* Section Header */}
         <div className="border-b border-border-subtle pb-8 mb-16 max-w-4xl">
-          <span className="text-[10px] font-mono tracking-[0.25em] text-gold uppercase font-bold">
+          <span className="text-[10px] font-mono tracking-[0.25em] text-gold uppercase font-bold block mb-2">
             Signature Operating Model
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-normal text-navy-deep tracking-tight mt-3">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-navy-deep tracking-tight">
             The NKVV Operating System
+            <span className="block italic font-serif font-normal text-gold text-2xl sm:text-3xl lg:text-4xl mt-1">
+              From Diagnosis to Scalable Automation
+            </span>
           </h2>
-          <p className="text-sm text-gray-500 font-light mt-3 leading-relaxed">
+          <div className="w-12 h-0.5 bg-gold rounded-full my-3" />
+          <p className="text-sm text-gray-500 font-light mt-2 leading-relaxed">
             From operational diagnosis to scalable automation.
           </p>
           <div className="mt-6 p-4 bg-gray-50 border-l-2 border-gold text-sm font-serif text-navy-deep italic">

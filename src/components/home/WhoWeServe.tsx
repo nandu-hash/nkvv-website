@@ -31,21 +31,22 @@ const AUDIENCE_CATEGORIES: AudienceCategory[] = [
 
 export const WhoWeServe: React.FC = () => {
   return (
-    <section className="py-24 bg-white text-navy-deep border-b border-border-subtle">
+    <section className="py-24 bg-gray-50/70 text-navy-deep border-b border-border-subtle">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         {/* Section Header */}
         <div className="border-b border-border-subtle pb-8 mb-16 max-w-3xl">
-          <span className="text-[10px] font-mono tracking-[0.25em] text-gold uppercase font-bold">
+          <span className="text-[10px] font-mono tracking-[0.25em] text-gold uppercase font-bold block mb-2">
             Target Client Profile
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-normal text-navy-deep tracking-tight mt-3">
-            Designed for Businesses Experiencing Operational Growth
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-navy-deep tracking-tight">
+            Designed for Growing Businesses
+            <span className="block italic font-serif font-normal text-gold text-2xl sm:text-3xl lg:text-4xl mt-1">
+              Scaling Teams with 30 to 300+ People
+            </span>
           </h2>
-          <p className="text-sm text-gray-500 font-light mt-3 leading-relaxed">
-            Initial focus is centered on growing companies with approximately{' '}
-            <span className="text-navy-deep font-semibold underline decoration-gold underline-offset-4">
-              30–300 employees
-            </span>.
+          <div className="w-12 h-0.5 bg-gold rounded-full my-3" />
+          <p className="text-sm text-gray-500 font-light mt-2 leading-relaxed">
+            Tailored advisory for enterprises transitioning from ad-hoc operations to systematic clarity.
           </p>
         </div>
 

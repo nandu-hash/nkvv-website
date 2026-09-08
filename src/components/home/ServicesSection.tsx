@@ -10,19 +10,26 @@ export const ServicesSection: React.FC = () => {
         {/* Section Header */}
         <div className="border-b border-border-subtle pb-8 mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-normal text-navy-deep tracking-tight">
-              Our Core Consulting Services
+            <span className="text-[10px] font-mono tracking-[0.25em] text-gold uppercase font-bold block mb-2">
+              Capabilities & Practice Areas
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-navy-deep tracking-tight">
+              Core Consulting Services
+              <span className="block italic font-serif font-normal text-gold text-2xl sm:text-3xl lg:text-4xl mt-1">
+                Engineered for Scale
+              </span>
             </h2>
-            <p className="text-sm text-gray-500 font-light mt-3">
+            <div className="w-12 h-0.5 bg-gold rounded-full my-3" />
+            <p className="text-sm text-gray-500 font-light mt-2 max-w-2xl">
               Comprehensive operational infrastructure designed to scale alongside your organization.
             </p>
           </div>
           <Link
             href="/services"
-            className="text-xs font-semibold uppercase tracking-[0.2em] text-navy-deep hover:text-gold flex items-center gap-2 border-b border-navy-deep pb-1 w-fit transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-navy-deep text-xs font-semibold uppercase tracking-wider text-navy-deep hover:bg-navy-deep hover:text-white transition-all duration-300 w-fit shrink-0"
           >
             <span>All Capabilities</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="w-3.5 h-3.5 text-gold" />
           </Link>
         </div>
 
@@ -52,7 +59,7 @@ export const ServicesSection: React.FC = () => {
                   {cat.items[0]?.features.slice(0, 3).map((feat) => (
                     <span
                       key={feat}
-                      className="text-[11px] font-mono uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-0.5"
+                      className="text-[11px] font-mono uppercase tracking-wider text-gray-600 bg-gray-100 px-3 py-1 rounded-full"
                     >
                       {feat}
                     </span>

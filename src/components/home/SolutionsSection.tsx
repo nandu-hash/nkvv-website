@@ -14,13 +14,17 @@ export const SolutionsSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         {/* Section Header */}
         <div className="border-b border-border-subtle pb-8 mb-16 max-w-3xl">
-          <span className="text-[10px] font-mono tracking-[0.25em] text-gold uppercase font-bold">
+          <span className="text-[10px] font-mono tracking-[0.25em] text-gold uppercase font-bold block mb-2">
             Problem-Led Architecture
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-normal text-navy-deep tracking-tight mt-3">
-            What is currently stalling your people operations?
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-navy-deep tracking-tight">
+            What is currently stalling operations?
+            <span className="block italic font-serif font-normal text-gold text-2xl sm:text-3xl lg:text-4xl mt-1">
+              Targeted System Solutions
+            </span>
           </h2>
-          <p className="text-sm text-gray-500 font-light mt-3 leading-relaxed">
+          <div className="w-12 h-0.5 bg-gold rounded-full my-3" />
+          <p className="text-sm text-gray-500 font-light mt-2 leading-relaxed">
             Select a critical operational friction point to inspect how NKVV architects and deploys a system-level solution.
           </p>
         </div>
@@ -99,7 +103,7 @@ export const SolutionsSection: React.FC = () => {
                   {currentSolution.expectedImpact.map((impact) => (
                     <span
                       key={impact}
-                      className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-border-subtle text-navy-deep text-xs font-mono"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1 bg-white border border-border-subtle text-navy-deep text-xs font-mono rounded-full"
                     >
                       <span className="text-gold font-bold">✓</span> {impact}
                     </span>
@@ -115,7 +119,7 @@ export const SolutionsSection: React.FC = () => {
               </span>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-navy-deep hover:text-gold border-b border-navy-deep pb-0.5 transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-2 rounded-full border border-navy-deep text-xs font-semibold uppercase tracking-wider text-navy-deep hover:bg-navy-deep hover:text-white transition-all duration-300"
               >
                 <PhoneCall className="w-3.5 h-3.5 text-gold" />
                 <span>Discuss System Fix</span>

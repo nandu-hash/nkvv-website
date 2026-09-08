@@ -61,13 +61,17 @@ export const HowWeWork: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         {/* Section Header */}
         <div className="border-b border-border-subtle pb-8 mb-16 max-w-3xl">
-          <span className="text-[10px] font-mono tracking-[0.25em] text-gold uppercase font-bold">
+          <span className="text-[10px] font-mono tracking-[0.25em] text-gold uppercase font-bold block mb-2">
             Consulting Roadmap
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-normal text-navy-deep tracking-tight mt-3">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-navy-deep tracking-tight">
             How We Work With You
+            <span className="block italic font-serif font-normal text-gold text-2xl sm:text-3xl lg:text-4xl mt-1">
+              Disciplined 6-Phase Execution
+            </span>
           </h2>
-          <p className="text-sm text-gray-500 font-light mt-3 leading-relaxed">
+          <div className="w-12 h-0.5 bg-gold rounded-full my-3" />
+          <p className="text-sm text-gray-500 font-light mt-2 leading-relaxed">
             A disciplined, 6-step advisory framework ensuring predictable timelines, clear deliverables, and seamless organizational adoption.
           </p>
         </div>
@@ -113,7 +117,7 @@ export const HowWeWork: React.FC = () => {
         <div className="mt-16 text-center">
           <Link
             href="/contact"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-navy-deep hover:bg-gold text-white hover:text-navy-deep font-semibold text-xs uppercase tracking-[0.2em] transition-colors duration-300"
+            className="inline-flex items-center gap-3 px-8 py-3.5 bg-navy-deep hover:bg-gold text-white hover:text-navy-deep font-semibold text-xs uppercase tracking-[0.2em] rounded-full transition-all duration-300 shadow-md"
           >
             <span>Initiate Discovery Call</span>
             <ArrowRight className="w-4 h-4" />
