@@ -64,8 +64,48 @@ async function appendToLocalExcelBackup(lead: {
   }
 }
 
+// In-memory rate limiting map: IP -> timestamp array
+const rateLimitMap = new Map<string, number[]>();
+const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
+const MAX_REQUESTS_PER_WINDOW = 5; // max 5 submissions per IP per minute
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const timestamps = rateLimitMap.get(ip) || [];
+  const validTimestamps = timestamps.filter(t => now - t < RATE_LIMIT_WINDOW_MS);
+  
+  if (validTimestamps.length >= MAX_REQUESTS_PER_WINDOW) {
+    rateLimitMap.set(ip, validTimestamps);
+    return true;
+  }
+  
+  validTimestamps.push(now);
+  rateLimitMap.set(ip, validTimestamps);
+  return false;
+}
+
+// Strip HTML tags and control characters to prevent XSS and formula injection
+function sanitizeInput(str: string): string {
+  if (!str) return '';
+  return str
+    .replace(/<[^>]*>/g, '') // remove HTML tags
+    .replace(/^[\s=+@-]/, "'$&") // prevent CSV / Spreadsheet formula injection
+    .trim();
+}
+
 export async function POST(request: Request) {
   try {
+    // 0. Rate Limiting Protection against spam bots / brute force
+    const forwardedFor = request.headers.get('x-forwarded-for');
+    const clientIp = forwardedFor ? forwardedFor.split(',')[0].trim() : '127.0.0.1';
+
+    if (isRateLimited(clientIp)) {
+      return NextResponse.json(
+        { success: false, error: 'Too many requests. Please wait a minute before submitting again.' },
+        { status: 429 }
+      );
+    }
+
     const body = await request.json();
     const { name, email, company, companySize, phone, needHelpWith, message, hp_website, b_hp_field } = body;
 
@@ -74,11 +114,16 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: true, message: 'Enquiry processed' });
     }
 
-    // 2. Field Validation
-    const cleanName = (name || '').trim();
-    const cleanEmail = (email || '').trim();
-    const cleanCompany = (company || '').trim();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // 2. Field Sanitization & Length Restrictions
+    const cleanName = sanitizeInput(name || '').slice(0, 100);
+    const cleanEmail = (email || '').trim().toLowerCase().slice(0, 150);
+    const cleanCompany = sanitizeInput(company || '').slice(0, 120);
+    const cleanCompanySize = sanitizeInput(companySize || 'N/A').slice(0, 50);
+    const cleanPhone = sanitizeInput(phone || 'N/A').slice(0, 30);
+    const cleanRequirement = sanitizeInput(needHelpWith || 'HR Operations').slice(0, 150);
+    const cleanMessage = sanitizeInput(message || '').slice(0, 3000);
+
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     if (!cleanName || cleanName.length < 2) {
       return NextResponse.json(
@@ -118,20 +163,20 @@ export async function POST(request: Request) {
       name: cleanName,
       email: cleanEmail,
       company: cleanCompany,
-      companySize: companySize || 'N/A',
-      phone: (phone || 'N/A').trim(),
-      needHelpWith: needHelpWith || 'HR Operations',
-      requirement: needHelpWith || 'HR Operations',
-      message: (message || '').trim(),
+      companySize: cleanCompanySize,
+      phone: cleanPhone,
+      needHelpWith: cleanRequirement,
+      requirement: cleanRequirement,
+      message: cleanMessage,
       source: 'NKVV Website',
       status: 'New',
       targetEmail: NOTIFICATION_EMAIL,
       spreadsheetId: GOOGLE_SHEET_ID,
+      secretToken: process.env.NKVV_WEBHOOK_SECRET || 'nkvv_sec_8f9c2d1b7e4a3059ca91e5e6d2b4a781c82f9012'
     };
 
     // Deployed Google Apps Script Web App Endpoint
     const webhookUrl =
-      process.env.NEXT_PUBLIC_GOOGLE_SHEETS_WEBHOOK_URL ||
       process.env.GOOGLE_SHEETS_WEBHOOK_URL ||
       'https://script.google.com/a/macros/nkvelora.co.in/s/AKfycbzRKxPWa-PYqTaecN6W2RfNVxzpvflom5Bx2tzmqHD2nJB0jhxJY9dXrwjgLaEoA7fG_g/exec';
 
@@ -166,12 +211,14 @@ export async function POST(request: Request) {
     });
   } catch (error: any) {
     console.error('Submission API Error:', error);
+    // Generic sanitized error message so internal server stack or error details are never leaked to the client
     return NextResponse.json(
       {
         success: false,
-        error: error.message || "We couldn't submit your enquiry right now. Please try again or contact us directly.",
+        error: "We couldn't submit your enquiry right now. Please try again or contact us directly at help@nkvelora.co.in.",
       },
       { status: 500 }
     );
   }
 }
+

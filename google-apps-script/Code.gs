@@ -57,6 +57,15 @@ function doPost(e) {
       data = (e && e.parameter) ? e.parameter : {};
     }
 
+    // 3b. Shared Secret Token Authentication:
+    // Protects the webhook from unauthorized third-party spammers or direct malicious calls
+    var EXPECTED_SECRET = 'nkvv_sec_8f9c2d1b7e4a3059ca91e5e6d2b4a781c82f9012';
+    if (data.secretToken && data.secretToken !== EXPECTED_SECRET) {
+      return ContentService
+        .createTextOutput(JSON.stringify({ status: 'error', error: 'Unauthorized request.' }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
     // 4. Spam Honeypot protection
     if (data.hp_website || data.honeypot || data.b_hp_field) {
       return ContentService
