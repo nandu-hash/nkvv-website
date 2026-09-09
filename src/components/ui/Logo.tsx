@@ -15,15 +15,14 @@ export const Logo: React.FC<LogoProps> = ({ variant = 'light', className = '', s
       className={`inline-flex items-center gap-3 group focus:outline-none select-none ${className}`}
       aria-label="NK Velora Ventures (NKVV) Home"
     >
-      {/* Official NKVV Logo Artwork with upward arrow */}
-      <div className="relative h-8 sm:h-9 w-auto flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-[1.03]">
+      {/* Official Standard NKVV Circular Gold Emblem */}
+      <div className="relative h-9 w-9 sm:h-10 sm:w-10 rounded-full overflow-hidden flex items-center justify-center shrink-0 shadow-md border border-gold/40 transition-all duration-300 group-hover:scale-105 group-hover:border-gold">
         <Image
-          src={variant === 'light' ? '/nkvv-logo-light.png' : '/nkvv-logo-dark.png'}
-          alt="NKVV Brand Mark"
-          width={96}
-          height={36}
-          style={{ height: '32px', width: 'auto', maxHeight: '36px' }}
-          className="object-contain"
+          src="/nkvv-icon.png"
+          alt="NK Velora Ventures Standard Logo"
+          width={40}
+          height={40}
+          className="object-cover w-full h-full"
           priority
         />
       </div>
