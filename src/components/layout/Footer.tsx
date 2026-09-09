@@ -18,20 +18,28 @@ export const Footer: React.FC = () => {
           
           {/* Col 1: Brand Info */}
           <div className="lg:col-span-2 space-y-6">
-            <Logo variant="light" showTagline={false} />
+            <Logo variant="light" showTagline={true} />
             
             <div className="space-y-4 max-w-sm pt-2">
               <p className="text-gold font-bold text-xs uppercase tracking-widest">
-                Transform. Automate. Elevate.
+                Diagnose → Structure → Improve → Automate → Scale
               </p>
               <p className="text-gray-400 text-sm leading-relaxed font-light">
-                NKVV helps growing businesses transform fragmented and manual operations into structured, technology-enabled and scalable systems.
+                NK Velora Ventures (NKVV) bridges process architecture, labour compliance, and technology automation to transform complex business operations into scalable operating systems.
               </p>
             </div>
 
-            <div className="flex items-center gap-3 text-xs text-gray-400 pt-4">
-              <MapPin className="w-4 h-4 text-gold shrink-0" />
-              <span className="uppercase tracking-widest font-mono">Bengaluru, India</span>
+            <div className="space-y-2 pt-2">
+              <div className="flex items-center gap-3 text-xs text-gray-300">
+                <span className="font-mono text-gold">EMAIL:</span>
+                <a href="mailto:business@nkvelora.co.in" className="hover:text-gold transition-colors font-mono">
+                  business@nkvelora.co.in
+                </a>
+              </div>
+              <div className="flex items-center gap-3 text-xs text-gray-400">
+                <MapPin className="w-4 h-4 text-gold shrink-0" />
+                <span className="uppercase tracking-widest font-mono">Bengaluru, India</span>
+              </div>
             </div>
 
             <div className="pt-4">
@@ -64,12 +72,18 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Col 3: Solutions */}
+          {/* Col 3: Solutions & Products */}
           <div>
             <h4 className="text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-gray-500 mb-6">
-              Solutions
+              Solutions &amp; Products
             </h4>
             <ul className="space-y-3 text-sm font-light">
+              <li>
+                <Link href="/#velora-compliance" className="text-gold font-medium hover:text-gold-light transition-colors flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-gold inline-block" />
+                  <span>VELORA Compliance</span>
+                </Link>
+              </li>
               {FOOTER_NAV.solutions.map((item) => (
                 <li key={item.label}>
                   <Link href={item.href} className="text-gray-400 hover:text-gold transition-colors">
@@ -79,6 +93,7 @@ export const Footer: React.FC = () => {
               ))}
             </ul>
           </div>
+
 
           {/* Col 4: Company & Future Roadmap */}
           <div>

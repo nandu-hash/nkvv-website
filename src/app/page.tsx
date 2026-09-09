@@ -5,6 +5,7 @@ import { ProblemSection } from '@/components/home/ProblemSection';
 import { NkvvFlowSection } from '@/components/home/NkvvFlowSection';
 import { FrameworkSection } from '@/components/home/FrameworkSection';
 import { ServicesSection } from '@/components/home/ServicesSection';
+import { VeloraComplianceSection } from '@/components/home/VeloraComplianceSection';
 import { SolutionsSection } from '@/components/home/SolutionsSection';
 import { WhoWeServe } from '@/components/home/WhoWeServe';
 import { HowWeWork } from '@/components/home/HowWeWork';
@@ -30,7 +31,10 @@ export default function HomePage() {
       {/* 5. Services Overview */}
       <ServicesSection />
 
-      {/* 6. Solutions Spotlight */}
+      {/* 6. First Product Initiative: VELORA Compliance */}
+      <VeloraComplianceSection />
+
+      {/* 7. Solutions Spotlight */}
       <SolutionsSection />
 
       {/* 7. Detailed NKVV Operating System */}

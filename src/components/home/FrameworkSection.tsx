@@ -25,7 +25,7 @@ export const FrameworkSection: React.FC = () => {
           </h2>
           <div className="w-12 h-0.5 bg-gold rounded-full my-3" />
           <p className="text-sm text-gray-500 font-light mt-2 leading-relaxed">
-            From operational diagnosis to scalable automation.
+            Diagnose → Structure → Improve → Automate → Scale
           </p>
           <div className="mt-6 p-4 bg-gray-50 border-l-2 border-gold text-sm font-serif text-navy-deep italic">
             &ldquo;We don&apos;t automate broken processes. We fix the operating model first.&rdquo;
@@ -64,7 +64,7 @@ export const FrameworkSection: React.FC = () => {
           })}
         </div>
 
-        {/* Stage Detail Panel */}
+        {/* Stage Detail Panel with Golden Ratio 61.8% / 38.2% layout */}
         <div className="p-8 lg:p-12 border border-border-subtle bg-gray-50/60 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           <div className="lg:col-span-7 space-y-4">
             <span className="text-[10px] font-mono tracking-widest uppercase text-gold font-bold">
@@ -78,7 +78,7 @@ export const FrameworkSection: React.FC = () => {
             </p>
           </div>
 
-          <div className="lg:col-span-5 p-6 bg-white border border-border-subtle space-y-4">
+          <div className="lg:col-span-5 p-6 bg-white border border-border-subtle space-y-4 shadow-sm">
             <span className="text-[10px] font-mono uppercase tracking-widest text-navy-deep font-bold block">
               Core Deliverables
             </span>
@@ -96,3 +96,4 @@ export const FrameworkSection: React.FC = () => {
     </section>
   );
 };
+

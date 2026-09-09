@@ -2,11 +2,11 @@ import React from 'react';
 import { ArrowRight } from 'lucide-react';
 
 const NODES = [
-  { label: 'PROBLEM', desc: 'Friction identified' },
-  { label: 'PROCESS', desc: 'SOPs & workflows' },
-  { label: 'SYSTEM', desc: 'Tool architecture' },
-  { label: 'AUTOMATION', desc: 'Triggers active' },
-  { label: 'IMPACT', desc: 'Predictable scale' },
+  { label: 'DIAGNOSE', desc: 'Understand process' },
+  { label: 'IDENTIFY', desc: 'Find gaps & risk' },
+  { label: 'STRUCTURE', desc: 'Design SOPs & controls' },
+  { label: 'AUTOMATE', desc: 'Eliminate manual repetition' },
+  { label: 'IMPROVE', desc: 'Continuous resilience' },
 ];
 
 export const BusinessFlowBar: React.FC = () => {

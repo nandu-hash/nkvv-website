@@ -289,44 +289,36 @@ function doPost(e) {
     // 13. CLIENT ACKNOWLEDGEMENT to prospect's Work Email
     var clientAckSent = false;
     var clientAckError = null;
-    var clientAckSubject = 'Thank you for contacting NK Velora Ventures';
+    var clientAckSubject = 'Thank you for contacting NKVV';
 
     var clientTextBody =
-      'Dear ' + name + ',\n\n' +
-      'Thank you for reaching out to NK Velora Ventures (NKVV).\n\n' +
-      'We have received your enquiry and our team will review your requirements. We will get back to you shortly to discuss the next steps.\n\n' +
-      'Your enquiry\n\n' +
-      'Requirement: ' + requirement + '\n\n' +
-      'If your request is time-sensitive, you can also reply directly to this email.\n\n' +
-      'Regards,\n\n' +
+      'Thank you for contacting NKVV. We’ve received your enquiry and our team will review the information provided. We’ll get back to you with the appropriate next step.\n\n' +
+      'Regards,\n' +
+      'NKVV Business Team\n' +
       'NK Velora Ventures\n' +
-      'HR Operations × Technology × Automation\n' +
-      'help@nkvelora.co.in\n' +
-      'https://nkvelora.co.in\n\n' +
-      'Transform. Automate. Elevate.';
+      'business@nkvelora.co.in\n' +
+      'https://nkvelora.co.in';
 
     var clientHtmlBody =
       '<div style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #E2E8F0; border-radius: 8px; overflow: hidden; background-color: #FFFFFF;">' +
         '<div style="background-color: #071A33; color: #FFFFFF; padding: 24px; text-align: center;">' +
           '<h2 style="margin: 0; font-size: 20px; font-weight: bold; letter-spacing: 1px; color: #C9972B;">NK VELORA VENTURES</h2>' +
-          '<p style="margin: 6px 0 0 0; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #E2E8F0;">HR Operations × Technology × Automation</p>' +
+          '<p style="margin: 6px 0 0 0; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #E2E8F0;">Business Process Intelligence &amp; Automation</p>' +
         '</div>' +
         '<div style="padding: 28px; color: #1E293B; line-height: 1.6; font-size: 14px;">' +
           '<p style="margin: 0 0 16px 0;">Dear ' + name + ',</p>' +
-          '<p style="margin: 0 0 16px 0;">Thank you for reaching out to <strong>NK Velora Ventures (NKVV)</strong>.</p>' +
-          '<p style="margin: 0 0 20px 0;">We have received your enquiry and our team will review your requirements. We will get back to you shortly to discuss the next steps.</p>' +
+          '<p style="margin: 0 0 16px 0;">Thank you for contacting NKVV. We’ve received your enquiry and our team will review the information provided. We’ll get back to you with the appropriate next step.</p>' +
           '<div style="margin: 20px 0; padding: 16px 20px; background-color: #F8FAFC; border-left: 3px solid #C9972B; border-radius: 4px;">' +
-            '<p style="margin: 0 0 6px 0; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #64748B; font-weight: 600;">Your Enquiry</p>' +
+            '<p style="margin: 0 0 6px 0; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #64748B; font-weight: 600;">Enquiry Focus</p>' +
             '<p style="margin: 0; font-size: 14px; color: #071A33;"><strong>Requirement:</strong> ' + requirement + '</p>' +
           '</div>' +
-          '<p style="margin: 20px 0 24px 0; color: #475569; font-size: 13px;">If your request is time-sensitive, you can also reply directly to this email.</p>' +
           '<div style="border-top: 1px solid #E2E8F0; padding-top: 20px; margin-top: 24px;">' +
-            '<p style="margin: 0 0 4px 0; font-weight: 600; color: #071A33;">Regards,</p>' +
-            '<p style="margin: 0 0 2px 0; font-weight: 600; color: #071A33;">NK Velora Ventures</p>' +
-            '<p style="margin: 0 0 6px 0; font-size: 12px; color: #64748B;">HR Operations × Technology × Automation</p>' +
-            '<p style="margin: 0 0 2px 0; font-size: 12px;"><a href="mailto:help@nkvelora.co.in" style="color: #071A33; text-decoration: underline;">help@nkvelora.co.in</a></p>' +
+            '<p style="margin: 0 0 2px 0; font-weight: 600; color: #071A33;">Regards,</p>' +
+            '<p style="margin: 0 0 2px 0; font-weight: 600; color: #071A33;">NKVV Business Team</p>' +
+            '<p style="margin: 0 0 6px 0; font-size: 12px; color: #64748B;">NK Velora Ventures</p>' +
+            '<p style="margin: 0 0 2px 0; font-size: 12px;"><a href="mailto:business@nkvelora.co.in" style="color: #071A33; text-decoration: underline;">business@nkvelora.co.in</a></p>' +
             '<p style="margin: 0 0 12px 0; font-size: 12px;"><a href="https://nkvelora.co.in" style="color: #C9972B; text-decoration: underline;">https://nkvelora.co.in</a></p>' +
-            '<p style="margin: 0; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #C9972B;">Transform. Automate. Elevate.</p>' +
+            '<p style="margin: 0; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #C9972B;">Diagnose → Structure → Improve → Automate → Scale</p>' +
           '</div>' +
         '</div>' +
       '</div>';
@@ -334,8 +326,8 @@ function doPost(e) {
     try {
       if (typeof GmailApp !== 'undefined' && GmailApp.sendEmail) {
         GmailApp.sendEmail(email, clientAckSubject, clientTextBody, {
-          name: 'NK Velora Ventures',
-          replyTo: 'help@nkvelora.co.in',
+          name: 'NKVV Business Team',
+          replyTo: 'business@nkvelora.co.in',
           htmlBody: clientHtmlBody
         });
       } else {
@@ -344,8 +336,8 @@ function doPost(e) {
           subject: clientAckSubject,
           body: clientTextBody,
           htmlBody: clientHtmlBody,
-          name: 'NK Velora Ventures',
-          replyTo: 'help@nkvelora.co.in'
+          name: 'NKVV Business Team',
+          replyTo: 'business@nkvelora.co.in'
         });
       }
       clientAckSent = true;
@@ -353,6 +345,7 @@ function doPost(e) {
       clientAckError = ackErr.toString();
       Logger.log('Client acknowledgement delivery warning: ' + clientAckError);
     }
+
 
     // 14. Return structured response to website
     var responsePayload = {

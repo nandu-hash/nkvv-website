@@ -355,14 +355,15 @@ export const ContactForm: React.FC = () => {
         </form>
       )}
 
-      {/* Location Notice */}
+      {/* Location & Trust Notice */}
       <div className="mt-8 pt-6 border-t border-gray-100 flex items-center justify-between text-xs text-muted">
         <div className="flex items-center gap-2">
           <MapPin className="w-4 h-4 text-gold" />
           <span>{SITE_CONFIG.location}</span>
         </div>
-        <span>Directly notified to <strong>{SITE_CONFIG.emails.enquiry}</strong></span>
+        <span className="font-mono text-[11px]">NK Velora Ventures • Confidential Advisory</span>
       </div>
+
     </div>
   );
 };

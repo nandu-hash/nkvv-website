@@ -4,7 +4,8 @@ import fs from 'fs';
 import path from 'path';
 
 const GOOGLE_SHEET_ID = '1GhSVSUxR44iIWxCpKKHmbUT-G-zSxICoev_zKa43Bpc';
-const NOTIFICATION_EMAIL = 'nandu@nkvelora.co.in';
+const INTERNAL_NOTIFY_EMAILS = 'nandu@nkvelora.co.in, help@nkvelora.co.in';
+const BUSINESS_SENDER_EMAIL = 'business@nkvelora.co.in';
 
 // Ensure data directory exists for local Excel backup storage
 const dataDir = path.join(process.cwd(), 'data');
@@ -170,7 +171,8 @@ export async function POST(request: Request) {
       message: cleanMessage,
       source: 'NKVV Website',
       status: 'New',
-      targetEmail: NOTIFICATION_EMAIL,
+      targetEmail: INTERNAL_NOTIFY_EMAILS,
+      senderEmail: BUSINESS_SENDER_EMAIL,
       spreadsheetId: GOOGLE_SHEET_ID,
       secretToken: process.env.NKVV_WEBHOOK_SECRET || 'nkvv_sec_8f9c2d1b7e4a3059ca91e5e6d2b4a781c82f9012'
     };
