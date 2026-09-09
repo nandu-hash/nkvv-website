@@ -14,7 +14,7 @@
  * This triggers Google's authorization popup to grant permissions to send emails via Gmail/MailApp.
  */
 function testSendNotification() {
-  var testEmail = Session.getActiveUser().getEmail() || 'help@nkvelora.co.in';
+  var testEmail = Session.getActiveUser().getEmail() || 'nandu@nkvelora.co.in';
   Logger.log('Authorizing email permissions for ' + testEmail + '...');
   
   try {
@@ -215,10 +215,10 @@ function doPost(e) {
     sheet.appendRow(rowToAppend);
     SpreadsheetApp.flush();
 
-    // 12. INTERNAL NOTIFICATION to help@nkvelora.co.in
+    // 12. INTERNAL NOTIFICATION to nandu@nkvelora.co.in and help@nkvelora.co.in
     var internalEmailSent = false;
     var internalEmailError = null;
-    var internalEmailRecipient = 'help@nkvelora.co.in';
+    var internalEmailRecipient = 'nandu@nkvelora.co.in, help@nkvelora.co.in';
     var internalEmailSubject = '[NKVV] New Website Enquiry — ' + name;
 
     var internalTextBody = 
