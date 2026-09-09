@@ -7,10 +7,12 @@ import { Logo } from '@/components/ui/Logo';
 import { Menu, X, Moon } from 'lucide-react';
 
 const NAV_LINKS = [
-  { label: 'About', href: '/about' },
+  { label: 'Home', href: '/' },
   { label: 'Services', href: '/services' },
   { label: 'Solutions', href: '/solutions' },
   { label: 'How We Work', href: '/how-we-work' },
+  { label: 'About', href: '/about' },
+  { label: 'Insights', href: '/insights' },
   { label: 'Contact', href: '/contact' },
 ];
 
@@ -37,27 +39,29 @@ export const Navbar: React.FC = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/95 backdrop-blur-md ${
-        scrolled ? 'py-4 shadow-sm border-b border-gray-100' : 'py-6 border-b border-transparent'
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'bg-navy-deep/95 backdrop-blur-md py-3 shadow-xl border-b border-navy-surface/80'
+          : 'bg-navy-deep py-4 border-b border-white/10'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          {/* Brand Logo & Title */}
-          <Logo variant="dark" showTagline={false} />
+          {/* Brand Logo with Official NKVV Mark */}
+          <Logo variant="light" showTagline={false} />
 
-          {/* Centered Minimalist Editorial Nav */}
-          <nav className="hidden lg:flex items-center space-x-8">
+          {/* Desktop Navigation Links matching Image 2 */}
+          <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2">
             {NAV_LINKS.map((item) => {
               const isActive = pathname === item.href;
               return (
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`text-sm tracking-wide transition-colors duration-200 ${
+                  className={`px-3 py-2 text-sm font-medium transition-all duration-200 ${
                     isActive
-                      ? 'text-navy-deep font-bold underline underline-offset-8 decoration-gold decoration-2'
-                      : 'text-gray-600 hover:text-navy-deep'
+                      ? 'text-white font-semibold border-b-2 border-gold pb-1.5'
+                      : 'text-gray-300 hover:text-white hover:text-gold-light'
                   }`}
                 >
                   {item.label}
@@ -66,39 +70,24 @@ export const Navbar: React.FC = () => {
             })}
           </nav>
 
-          {/* Right Action: Theme toggle + Pill button */}
+          {/* Right Action: Book a Discovery Call matching Image 2 */}
           <div className="hidden sm:flex items-center space-x-4">
-            <button
-              type="button"
-              aria-label="Toggle dark mode"
-              className="p-2 text-gray-600 hover:text-navy-deep transition-colors focus:outline-none rounded-full hover:bg-gray-100"
-            >
-              <Moon className="w-4 h-4" />
-            </button>
-
             <Link
               href="/contact"
-              className="inline-flex items-center px-6 py-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-white bg-gold hover:bg-gold-bright transition-all duration-300 rounded-full shadow-sm hover:shadow-md active:scale-95"
+              className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold text-navy-deep bg-gold hover:bg-gold-light transition-all duration-200 shadow-md shadow-gold/10 hover:shadow-gold/20 active:scale-95"
             >
-              BOOK CALL
+              Book a Discovery Call
             </Link>
           </div>
 
           {/* Mobile Menu Toggle */}
-          <div className="flex lg:hidden items-center space-x-3">
-            <button
-              type="button"
-              aria-label="Toggle dark mode"
-              className="p-1.5 text-gray-600 hover:text-navy-deep focus:outline-none sm:hidden"
-            >
-              <Moon className="w-4 h-4" />
-            </button>
+          <div className="flex lg:hidden items-center space-x-2">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-gray-800 hover:text-navy-deep focus:outline-none"
+              className="p-2 text-gray-300 hover:text-white hover:bg-navy-surface/60 rounded-md focus:outline-none"
               aria-label="Toggle navigation menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-6 h-6 text-gold" /> : <Menu className="w-6 h-6 text-white" />}
             </button>
           </div>
         </div>
@@ -106,16 +95,18 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-b border-gray-100 px-6 py-6 space-y-4 animate-in slide-in-from-top duration-200 shadow-lg">
-          <div className="flex flex-col space-y-3">
+        <div className="lg:hidden bg-navy-deep/98 border-b border-navy-surface/80 px-6 py-6 space-y-4 animate-in slide-in-from-top duration-200 shadow-2xl backdrop-blur-md">
+          <div className="flex flex-col space-y-2">
             {NAV_LINKS.map((item) => {
               const isActive = pathname === item.href;
               return (
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`text-base font-medium transition-colors ${
-                    isActive ? 'text-navy-deep font-bold underline decoration-gold' : 'text-gray-700 hover:text-navy-deep'
+                  className={`px-3 py-2.5 rounded-md text-base font-medium transition-colors ${
+                    isActive
+                      ? 'text-gold bg-navy-surface font-semibold border-l-4 border-gold'
+                      : 'text-gray-200 hover:text-white hover:bg-navy-primary'
                   }`}
                 >
                   {item.label}
@@ -123,12 +114,12 @@ export const Navbar: React.FC = () => {
               );
             })}
           </div>
-          <div className="pt-4 border-t border-gray-100">
+          <div className="pt-4 border-t border-navy-surface/60">
             <Link
               href="/contact"
-              className="w-full flex items-center justify-center px-5 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-white bg-gold hover:bg-gold-bright transition-colors rounded-full shadow-sm"
+              className="w-full flex items-center justify-center px-5 py-3 text-sm font-semibold text-navy-deep bg-gold hover:bg-gold-light transition-colors rounded-lg shadow-md"
             >
-              BOOK CALL
+              Book a Discovery Call
             </Link>
           </div>
         </div>
