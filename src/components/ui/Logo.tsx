@@ -18,15 +18,16 @@ export const Logo: React.FC<LogoProps> = ({ variant = 'dark', className = '', sh
       {/* Official NKVV Logo Artwork with fixed aspect ratio box */}
       <div className="relative h-9 sm:h-10 w-auto flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-[1.03]">
         <Image
-          src="/logo.jpg"
-          alt="NKVV Brand Mark"
-          width={100}
-          height={40}
-          style={{ height: 'auto', maxHeight: '40px', width: 'auto' }}
-          className="object-contain rounded-xs"
+          src="/nkvv-mark.webp"
+          alt="NK Velora Ventures Logo"
+          width={110}
+          height={42}
+          style={{ height: 'auto', maxHeight: '42px', width: 'auto' }}
+          className="object-contain"
           priority
         />
       </div>
+
 
       <div className="flex flex-col justify-center">
         {/* Visually prioritize NKVV with NK Velora Ventures as formal identity */}

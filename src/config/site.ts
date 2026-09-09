@@ -14,13 +14,13 @@ export const SITE_CONFIG = {
     enquiry: 'business@nkvelora.co.in',
   },
   hero: {
-    eyebrow: 'BUSINESS PROCESS INTELLIGENCE & AUTOMATION',
-    headline: 'Structure Before Automation. Scale with Intelligence.',
-    subheadline: 'NKVV audits operational friction, architects resilient process models, and engineers smart workflows so modern businesses scale with precision.',
+    eyebrow: 'PEOPLE • PROCESS • TECHNOLOGY • AUTOMATION • SCALE',
+    headline: 'Transform HR Operations. Automate the Work. Build for Scale.',
+    subheadline: 'NKVV helps growing businesses transform fragmented, manual HR operations into structured, technology-enabled systems that are easier to manage, measure and scale.',
     targetAudienceNote: 'Built for founders, operations leads, and finance stakeholders transitioning from reactive work to engineered systems.',
     credibilityBar: 'Process Diagnosis • Operating Models • Labour Compliance • HR Technology • Workflow Automation',
-    primaryCta: 'Book a Consultation',
-    secondaryCta: 'Explore NKVV',
+    primaryCta: 'Book a Discovery Call',
+    secondaryCta: 'Explore Solutions',
   },
   product: {
     name: 'VELORA Compliance',

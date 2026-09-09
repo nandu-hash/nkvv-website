@@ -289,10 +289,10 @@ function doPost(e) {
     // 13. CLIENT ACKNOWLEDGEMENT to prospect's Work Email
     var clientAckSent = false;
     var clientAckError = null;
-    var clientAckSubject = 'Thank you for contacting NKVV';
+    var clientAckSubject = 'Thank you for contacting NK Velora Ventures';
 
     var clientTextBody =
-      'Thank you for contacting NKVV. We’ve received your enquiry and our team will review the information provided. We’ll get back to you with the appropriate next step.\n\n' +
+      'Thank you for contacting NK Velora Ventures. We’ve received your enquiry and our team will review the information provided. We’ll get back to you with the appropriate next step.\n\n' +
       'Regards,\n' +
       'NKVV Business Team\n' +
       'NK Velora Ventures\n' +
@@ -307,7 +307,7 @@ function doPost(e) {
         '</div>' +
         '<div style="padding: 28px; color: #1E293B; line-height: 1.6; font-size: 14px;">' +
           '<p style="margin: 0 0 16px 0;">Dear ' + name + ',</p>' +
-          '<p style="margin: 0 0 16px 0;">Thank you for contacting NKVV. We’ve received your enquiry and our team will review the information provided. We’ll get back to you with the appropriate next step.</p>' +
+          '<p style="margin: 0 0 16px 0;">Thank you for contacting NK Velora Ventures. We’ve received your enquiry and our team will review the information provided. We’ll get back to you with the appropriate next step.</p>' +
           '<div style="margin: 20px 0; padding: 16px 20px; background-color: #F8FAFC; border-left: 3px solid #C9972B; border-radius: 4px;">' +
             '<p style="margin: 0 0 6px 0; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #64748B; font-weight: 600;">Enquiry Focus</p>' +
             '<p style="margin: 0; font-size: 14px; color: #071A33;"><strong>Requirement:</strong> ' + requirement + '</p>' +
@@ -318,7 +318,7 @@ function doPost(e) {
             '<p style="margin: 0 0 6px 0; font-size: 12px; color: #64748B;">NK Velora Ventures</p>' +
             '<p style="margin: 0 0 2px 0; font-size: 12px;"><a href="mailto:business@nkvelora.co.in" style="color: #071A33; text-decoration: underline;">business@nkvelora.co.in</a></p>' +
             '<p style="margin: 0 0 12px 0; font-size: 12px;"><a href="https://nkvelora.co.in" style="color: #C9972B; text-decoration: underline;">https://nkvelora.co.in</a></p>' +
-            '<p style="margin: 0; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #C9972B;">Diagnose → Structure → Improve → Automate → Scale</p>' +
+            '<p style="margin: 0; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #C9972B;">DIAGNOSE &bull; DESIGN &bull; ENABLE &bull; AUTOMATE &bull; SCALE</p>' +
           '</div>' +
         '</div>' +
       '</div>';

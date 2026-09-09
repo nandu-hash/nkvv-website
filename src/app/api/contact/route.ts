@@ -58,7 +58,18 @@ async function appendToLocalExcelBackup(lead: {
       };
     }
 
-    worksheet.addRow(lead);
+    worksheet.addRow([
+      lead.timestamp,
+      lead.name,
+      lead.email,
+      lead.company,
+      lead.companySize,
+      lead.phone,
+      lead.needHelpWith,
+      lead.message,
+      lead.source,
+      lead.status,
+    ]);
     await workbook.xlsx.writeFile(excelFilePath);
   } catch (err) {
     console.error('Local Excel backup warning:', err);

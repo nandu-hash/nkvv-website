@@ -78,9 +78,9 @@ export const Navbar: React.FC = () => {
 
             <Link
               href="/contact"
-              className="inline-flex items-center px-6 py-2.5 text-xs font-semibold uppercase tracking-widest text-navy-deep border border-navy-deep rounded-full hover:bg-navy-deep hover:text-white transition-all duration-300 shadow-2xs"
+              className="inline-flex items-center px-6 py-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-white bg-gold hover:bg-gold-bright transition-all duration-300 rounded-full shadow-sm hover:shadow-md active:scale-95"
             >
-              Book a Consultation
+              BOOK CALL
             </Link>
           </div>
 
@@ -126,9 +126,9 @@ export const Navbar: React.FC = () => {
           <div className="pt-4 border-t border-gray-100">
             <Link
               href="/contact"
-              className="w-full flex items-center justify-center px-5 py-3 text-xs font-semibold uppercase tracking-wider text-white bg-navy-deep hover:bg-gold hover:text-navy-deep transition-colors rounded-full"
+              className="w-full flex items-center justify-center px-5 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-white bg-gold hover:bg-gold-bright transition-colors rounded-full shadow-sm"
             >
-              Book a Consultation
+              BOOK CALL
             </Link>
           </div>
         </div>
