@@ -8,6 +8,25 @@
  * Website (/api/contact) → Apps Script doPost(e) → Google Sheet → Internal Notification & Client Acknowledgement
  */
 
+/**
+ * ONE-CLICK AUTHORIZATION HELPER:
+ * In the Apps Script editor, select 'testSendNotification' from the function dropdown and click 'Run'.
+ * This triggers Google's authorization popup to grant permissions to send emails via Gmail/MailApp.
+ */
+function testSendNotification() {
+  var testEmail = Session.getActiveUser().getEmail() || 'help@nkvelora.co.in';
+  Logger.log('Authorizing email permissions for ' + testEmail + '...');
+  
+  try {
+    GmailApp.sendEmail(testEmail, '[NKVV Authorization Test] Apps Script Email Setup', 'Email permissions successfully granted for NK Velora Ventures enquiry workflow.');
+    Logger.log('SUCCESS: GmailApp authorized and test email sent to ' + testEmail);
+  } catch (err) {
+    Logger.log('GmailApp test notice: ' + err.toString());
+    MailApp.sendEmail(testEmail, '[NKVV Authorization Test] Apps Script Email Setup', 'Email permissions successfully granted for NK Velora Ventures enquiry workflow.');
+    Logger.log('SUCCESS: MailApp authorized and test email sent to ' + testEmail);
+  }
+}
+
 function doPost(e) {
   // 1. Safety guard if function is run manually via the "Run" button in Apps Script editor
   if (!e) {
