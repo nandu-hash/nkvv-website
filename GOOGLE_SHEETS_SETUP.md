@@ -1,6 +1,6 @@
 # NKVV Website — Google Sheets & Email Setup Guide
 
-This document explains step-by-step how to deploy the Google Apps Script backend to connect the NKVV website contact form with your Google Sheet and send email notifications to **`hello@nkvelora.co.in`**.
+This document explains step-by-step how to deploy the Google Apps Script backend to connect the NKVV website contact form with your Google Sheet, send internal email notifications to **`help@nkvelora.co.in`**, and dispatch client acknowledgement emails to the prospect's Work Email.
 
 ---
 
@@ -11,11 +11,12 @@ NKVV Website (https://nkvelora.co.in)
             ↓
   Next.js API Route (/api/contact)
             ↓ (POST Request)
-Google Apps Script Web App Endpoint
+Google Apps Script Web App Endpoint (doPost)
             ↓
 Google Sheet (ID: 1_zM2Y-tY6pVDcJDg7mJu-dMMBM9PPbA2m2OmD1epTMM, gid=0)
-            ↓
-Email Notification to hello@nkvelora.co.in
+            ├───────────────────────────────┐
+            ↓                               ↓
+Internal Notification (help@nkvelora.co.in)  Client Acknowledgement (Work Email)
 ```
 
 ---

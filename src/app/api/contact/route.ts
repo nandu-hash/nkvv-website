@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 
 const GOOGLE_SHEET_ID = '1GhSVSUxR44iIWxCpKKHmbUT-G-zSxICoev_zKa43Bpc';
-const NOTIFICATION_EMAIL = 'hello@nkvelora.co.in';
+const NOTIFICATION_EMAIL = 'help@nkvelora.co.in';
 
 // Ensure data directory exists for local Excel backup storage
 const dataDir = path.join(process.cwd(), 'data');

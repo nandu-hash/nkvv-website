@@ -9,7 +9,7 @@ export const SITE_CONFIG = {
   targetAudience: 'Startups & SMEs (30–300 employees focus)',
   emails: {
     founder: 'nandu@nkvelora.co.in',
-    enquiry: 'hello@nkvelora.co.in',
+    enquiry: 'help@nkvelora.co.in',
   },
   hero: {
     eyebrow: 'HR OPERATIONS × TECHNOLOGY × AUTOMATION',

@@ -1,10 +1,15 @@
 /**
  * NK Velora Ventures (NKVV) — Production Google Apps Script Web App
- * Official Public Enquiry Email: hello@nkvelora.co.in
+ * Handles website contact enquiries, records them to Google Sheets,
+ * sends internal notification to help@nkvelora.co.in,
+ * and sends client acknowledgement to prospect's Work Email.
+ *
+ * Architecture:
+ * Website (/api/contact) → Apps Script doPost(e) → Google Sheet → Internal Notification & Client Acknowledgement
  */
 
 function doPost(e) {
-  // Safety guard if function is run manually via the "Run" button in Apps Script editor
+  // 1. Safety guard if function is run manually via the "Run" button in Apps Script editor
   if (!e) {
     return ContentService
       .createTextOutput(JSON.stringify({ 
@@ -14,10 +19,12 @@ function doPost(e) {
       .setMimeType(ContentService.MimeType.JSON);
   }
 
+  // 2. Concurrency lock to prevent race conditions during concurrent form submissions
   var lock = LockService.getScriptLock();
-  lock.tryLock(10000);
+  var lockAcquired = lock.tryLock(15000); // Wait up to 15 seconds for lock
 
   try {
+    // 3. Parse payload from request
     var rawContents = (e && e.postData && e.postData.contents) ? e.postData.contents : '';
     var data = {};
 
@@ -31,14 +38,14 @@ function doPost(e) {
       data = (e && e.parameter) ? e.parameter : {};
     }
 
-    // 1. SPAM PROTECTION: Honeypot check
+    // 4. Spam Honeypot protection
     if (data.hp_website || data.honeypot || data.b_hp_field) {
       return ContentService
         .createTextOutput(JSON.stringify({ status: 'success', message: 'Enquiry processed' }))
         .setMimeType(ContentService.MimeType.JSON);
     }
 
-    // 2. Validate required fields
+    // 5. Extract and sanitize input fields
     var name = (data.name || '').toString().trim();
     var email = (data.email || '').toString().trim();
     var company = (data.company || '').toString().trim();
@@ -49,13 +56,28 @@ function doPost(e) {
     var source = (data.source || 'NKVV Website').toString().trim();
     var status = (data.status || 'New').toString().trim();
 
-    if (!name || !email || !company) {
+    // 6. Validation
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!name || name.length < 2) {
       return ContentService
-        .createTextOutput(JSON.stringify({ status: 'error', error: 'Missing required fields: Name, Email, and Company are required.' }))
+        .createTextOutput(JSON.stringify({ status: 'error', error: 'Validation failed: Name is required and must be at least 2 characters.' }))
         .setMimeType(ContentService.MimeType.JSON);
     }
 
-    // 3. Open Container Sheet or Fallback by ID
+    if (!email || !emailRegex.test(email)) {
+      return ContentService
+        .createTextOutput(JSON.stringify({ status: 'error', error: 'Validation failed: A valid client Work Email address is required.' }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    if (!company) {
+      return ContentService
+        .createTextOutput(JSON.stringify({ status: 'error', error: 'Validation failed: Company name is required.' }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    // 7. Open Google Sheet (Container-bound active sheet or fallback by ID)
     var ss;
     try {
       ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -70,10 +92,10 @@ function doPost(e) {
 
     var sheet = ss.getSheets()[0];
 
-    // 4. Format Indian Standard Time (IST) Timestamp
+    // 8. Format Indian Standard Time (IST) Timestamp
     var timestamp = Utilities.formatDate(new Date(), 'Asia/Kolkata', 'dd MMM yyyy, hh:mm:ss a') + ' IST';
 
-    // 5. Header Inspection & Data Preservation
+    // 9. Inspect headers & build row
     var lastRow = sheet.getLastRow();
     var headers = [];
 
@@ -95,8 +117,46 @@ function doPost(e) {
       headerRange.setFontWeight('bold');
       headerRange.setBackground('#071A33');
       headerRange.setFontColor('#FFFFFF');
+      lastRow = 1;
     } else {
       headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+    }
+
+    // 10. Duplicate submission check:
+    // Check if the previous row in the sheet matches the exact same email, company, and message
+    if (lastRow > 1) {
+      try {
+        var lastEntryValues = sheet.getRange(lastRow, 1, 1, sheet.getLastColumn()).getValues()[0];
+        var emailColIdx = -1;
+        var companyColIdx = -1;
+        var messageColIdx = -1;
+
+        for (var h = 0; h < headers.length; h++) {
+          var hName = headers[h].toString().trim().toLowerCase();
+          if (hName === 'work email' || hName === 'email') emailColIdx = h;
+          if (hName === 'company') companyColIdx = h;
+          if (hName === 'message') messageColIdx = h;
+        }
+
+        if (emailColIdx >= 0 && companyColIdx >= 0) {
+          var lastEmail = (lastEntryValues[emailColIdx] || '').toString().trim().toLowerCase();
+          var lastCompany = (lastEntryValues[companyColIdx] || '').toString().trim().toLowerCase();
+          var lastMsg = messageColIdx >= 0 ? (lastEntryValues[messageColIdx] || '').toString().trim() : '';
+
+          if (lastEmail === email.toLowerCase() && lastCompany === company.toLowerCase() && lastMsg === message) {
+            Logger.log('Duplicate submission detected from ' + email + '. Suppressing duplicate row and email dispatch.');
+            return ContentService
+              .createTextOutput(JSON.stringify({ 
+                status: 'success', 
+                message: 'Enquiry received previously. Duplicate suppressed.',
+                duplicateSuppressed: true 
+              }))
+              .setMimeType(ContentService.MimeType.JSON);
+          }
+        }
+      } catch (dupErr) {
+        Logger.log('Duplicate check warning: ' + dupErr.toString());
+      }
     }
 
     var fieldMap = {
@@ -123,76 +183,172 @@ function doPost(e) {
       rowToAppend = [timestamp, name, email, company, companySize, phone, requirement, message, source, status];
     }
 
-    // 6. Append Row to Google Sheet
+    // 11. Write row to Google Sheet and flush immediately to ensure persistence before email dispatch
     sheet.appendRow(rowToAppend);
+    SpreadsheetApp.flush();
 
-    // 7. Send Email Notification to hello@nkvelora.co.in
-    var notificationEmail = 'hello@nkvelora.co.in';
-    var emailSubject = '[NKVV] New Website Enquiry — ' + name;
+    // 12. INTERNAL NOTIFICATION to help@nkvelora.co.in
+    var internalEmailSent = false;
+    var internalEmailError = null;
+    var internalEmailRecipient = 'help@nkvelora.co.in';
+    var internalEmailSubject = '[NKVV] New Website Enquiry — ' + name;
 
-    var emailTextBody = 
+    var internalTextBody = 
       'New NKVV Website Enquiry\n\n' +
       '--------------------------------\n\n' +
-      'Name:\n' + name + '\n\n' +
-      'Work Email:\n' + email + '\n\n' +
-      'Company:\n' + company + '\n\n' +
-      'Company Size:\n' + companySize + '\n\n' +
-      'Phone:\n' + phone + '\n\n' +
-      'Requirement:\n' + requirement + '\n\n' +
-      'Message:\n' + (message || 'None provided') + '\n\n' +
-      'Submitted:\n' + timestamp + '\n\n' +
-      'Source:\n' + source + '\n\n' +
+      'Name: ' + name + '\n' +
+      'Work Email: ' + email + '\n' +
+      'Company: ' + company + '\n' +
+      'Company Size: ' + companySize + '\n' +
+      'Phone: ' + phone + '\n' +
+      'Service / Requirement: ' + requirement + '\n' +
+      'Message: ' + (message || 'None provided') + '\n\n' +
+      'Timestamp: ' + timestamp + '\n' +
+      'Source: ' + source + '\n' +
+      'Status: ' + status + '\n\n' +
       '--------------------------------\n\n' +
       'Please review this enquiry and follow up with the prospect.';
 
-    var emailHtmlBody = 
-      '<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #E2E8F0; border-radius: 8px; overflow: hidden;">' +
-        '<div style="background-color: #071A33; color: #FFFFFF; padding: 20px; text-align: center;">' +
-          '<h2 style="margin: 0; color: #C9972B;">NK VELORA VENTURES</h2>' +
-          '<p style="margin: 5px 0 0 0; font-size: 12px; color: #E0B44C;">New Website Discovery Enquiry</p>' +
+    var internalHtmlBody = 
+      '<div style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #E2E8F0; border-radius: 8px; overflow: hidden; background-color: #FFFFFF;">' +
+        '<div style="background-color: #071A33; color: #FFFFFF; padding: 24px; text-align: center;">' +
+          '<h2 style="margin: 0; font-size: 20px; font-weight: bold; letter-spacing: 1px; color: #C9972B;">NK VELORA VENTURES</h2>' +
+          '<p style="margin: 6px 0 0 0; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #E2E8F0;">New Website Discovery Enquiry</p>' +
         '</div>' +
-        '<div style="padding: 24px; background-color: #FFFFFF; color: #101828;">' +
-          '<h3 style="color: #0B2A4A; margin-top: 0;">New NKVV Website Enquiry</h3>' +
-          '<hr style="border: 0; border-top: 1px solid #E2E8F0; margin: 15px 0;" />' +
-          '<table style="width: 100%; border-collapse: collapse; font-size: 14px;">' +
-            '<tr style="border-bottom: 1px solid #F1F5F9;"><td style="padding: 8px 0; font-weight: bold; color: #0B2A4A; width: 35%;">Name:</td><td style="padding: 8px 0;">' + name + '</td></tr>' +
-            '<tr style="border-bottom: 1px solid #F1F5F9;"><td style="padding: 8px 0; font-weight: bold; color: #0B2A4A;">Work Email:</td><td style="padding: 8px 0;"><a href="mailto:' + email + '" style="color: #0B2A4A; font-weight: bold;">' + email + '</a></td></tr>' +
-            '<tr style="border-bottom: 1px solid #F1F5F9;"><td style="padding: 8px 0; font-weight: bold; color: #0B2A4A;">Company:</td><td style="padding: 8px 0;">' + company + '</td></tr>' +
-            '<tr style="border-bottom: 1px solid #F1F5F9;"><td style="padding: 8px 0; font-weight: bold; color: #0B2A4A;">Company Size:</td><td style="padding: 8px 0;">' + companySize + '</td></tr>' +
-            '<tr style="border-bottom: 1px solid #F1F5F9;"><td style="padding: 8px 0; font-weight: bold; color: #0B2A4A;">Phone:</td><td style="padding: 8px 0;">' + phone + '</td></tr>' +
-            '<tr style="border-bottom: 1px solid #F1F5F9;"><td style="padding: 8px 0; font-weight: bold; color: #0B2A4A;">Requirement:</td><td style="padding: 8px 0; color: #C9972B; font-weight: bold;">' + requirement + '</td></tr>' +
-            '<tr style="border-bottom: 1px solid #F1F5F9;"><td style="padding: 8px 0; font-weight: bold; color: #0B2A4A;">Submitted:</td><td style="padding: 8px 0;">' + timestamp + '</td></tr>' +
-            '<tr style="border-bottom: 1px solid #F1F5F9;"><td style="padding: 8px 0; font-weight: bold; color: #0B2A4A;">Source:</td><td style="padding: 8px 0;">' + source + '</td></tr>' +
-            '<tr><td style="padding: 8px 0; font-weight: bold; color: #0B2A4A; vertical-align: top;">Message:</td><td style="padding: 8px 0; white-space: pre-wrap;">' + (message || 'None provided') + '</td></tr>' +
+        '<div style="padding: 24px 28px; color: #101828;">' +
+          '<h3 style="color: #071A33; margin: 0 0 16px 0; font-size: 16px;">Enquiry Details</h3>' +
+          '<table style="width: 100%; border-collapse: collapse; font-size: 13px;">' +
+            '<tr style="border-bottom: 1px solid #F1F5F9;"><td style="padding: 10px 0; font-weight: 600; color: #071A33; width: 38%;">Name:</td><td style="padding: 10px 0; color: #1E293B;">' + name + '</td></tr>' +
+            '<tr style="border-bottom: 1px solid #F1F5F9;"><td style="padding: 10px 0; font-weight: 600; color: #071A33;">Work Email:</td><td style="padding: 10px 0;"><a href="mailto:' + email + '" style="color: #071A33; font-weight: 600; text-decoration: underline;">' + email + '</a></td></tr>' +
+            '<tr style="border-bottom: 1px solid #F1F5F9;"><td style="padding: 10px 0; font-weight: 600; color: #071A33;">Company:</td><td style="padding: 10px 0; color: #1E293B;">' + company + '</td></tr>' +
+            '<tr style="border-bottom: 1px solid #F1F5F9;"><td style="padding: 10px 0; font-weight: 600; color: #071A33;">Company Size:</td><td style="padding: 10px 0; color: #1E293B;">' + companySize + '</td></tr>' +
+            '<tr style="border-bottom: 1px solid #F1F5F9;"><td style="padding: 10px 0; font-weight: 600; color: #071A33;">Phone:</td><td style="padding: 10px 0; color: #1E293B;">' + phone + '</td></tr>' +
+            '<tr style="border-bottom: 1px solid #F1F5F9;"><td style="padding: 10px 0; font-weight: 600; color: #071A33;">Service / Requirement:</td><td style="padding: 10px 0; color: #C9972B; font-weight: 600;">' + requirement + '</td></tr>' +
+            '<tr style="border-bottom: 1px solid #F1F5F9;"><td style="padding: 10px 0; font-weight: 600; color: #071A33;">Timestamp:</td><td style="padding: 10px 0; color: #64748B;">' + timestamp + '</td></tr>' +
+            '<tr style="border-bottom: 1px solid #F1F5F9;"><td style="padding: 10px 0; font-weight: 600; color: #071A33;">Source:</td><td style="padding: 10px 0; color: #64748B;">' + source + '</td></tr>' +
+            '<tr style="border-bottom: 1px solid #F1F5F9;"><td style="padding: 10px 0; font-weight: 600; color: #071A33;">Status:</td><td style="padding: 10px 0; color: #059669; font-weight: 600;">' + status + '</td></tr>' +
+            '<tr><td style="padding: 10px 0; font-weight: 600; color: #071A33; vertical-align: top;">Message:</td><td style="padding: 10px 0; color: #334155; white-space: pre-wrap; line-height: 1.5;">' + (message || 'None provided') + '</td></tr>' +
           '</table>' +
-          '<hr style="border: 0; border-top: 1px solid #E2E8F0; margin: 15px 0;" />' +
-          '<div style="padding: 12px; background-color: #F7F8FA; border-left: 4px solid #C9972B; font-size: 13px; font-weight: bold; color: #071A33;">' +
-            'Please review this enquiry and follow up with the prospect.' +
+          '<div style="margin-top: 20px; padding: 14px 16px; background-color: #F8FAFC; border-left: 3px solid #C9972B; font-size: 12px; color: #071A33;">' +
+            '<strong>Action Required:</strong> Review this enquiry and follow up with the prospect.' +
           '</div>' +
         '</div>' +
       '</div>';
 
     try {
-      MailApp.sendEmail({
-        to: notificationEmail,
-        subject: emailSubject,
-        body: emailTextBody,
-        htmlBody: emailHtmlBody
-      });
-    } catch (emailErr) {
-      Logger.log('Email delivery warning: ' + emailErr.toString());
+      // Use GmailApp as required, falling back gracefully to MailApp if needed
+      if (typeof GmailApp !== 'undefined' && GmailApp.sendEmail) {
+        GmailApp.sendEmail(internalEmailRecipient, internalEmailSubject, internalTextBody, {
+          name: 'NKVV Website Enquiry',
+          replyTo: email,
+          htmlBody: internalHtmlBody
+        });
+      } else {
+        MailApp.sendEmail({
+          to: internalEmailRecipient,
+          subject: internalEmailSubject,
+          body: internalTextBody,
+          htmlBody: internalHtmlBody,
+          replyTo: email
+        });
+      }
+      internalEmailSent = true;
+    } catch (intErr) {
+      internalEmailError = intErr.toString();
+      Logger.log('Internal notification warning: ' + internalEmailError);
     }
 
+    // 13. CLIENT ACKNOWLEDGEMENT to prospect's Work Email
+    var clientAckSent = false;
+    var clientAckError = null;
+    var clientAckSubject = 'Thank you for contacting NK Velora Ventures';
+
+    var clientTextBody =
+      'Dear ' + name + ',\n\n' +
+      'Thank you for reaching out to NK Velora Ventures (NKVV).\n\n' +
+      'We have received your enquiry and our team will review your requirements. We will get back to you shortly to discuss the next steps.\n\n' +
+      'Your enquiry\n\n' +
+      'Requirement: ' + requirement + '\n\n' +
+      'If your request is time-sensitive, you can also reply directly to this email.\n\n' +
+      'Regards,\n\n' +
+      'NK Velora Ventures\n' +
+      'HR Operations × Technology × Automation\n' +
+      'help@nkvelora.co.in\n' +
+      'https://nkvelora.co.in\n\n' +
+      'Transform. Automate. Elevate.';
+
+    var clientHtmlBody =
+      '<div style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #E2E8F0; border-radius: 8px; overflow: hidden; background-color: #FFFFFF;">' +
+        '<div style="background-color: #071A33; color: #FFFFFF; padding: 24px; text-align: center;">' +
+          '<h2 style="margin: 0; font-size: 20px; font-weight: bold; letter-spacing: 1px; color: #C9972B;">NK VELORA VENTURES</h2>' +
+          '<p style="margin: 6px 0 0 0; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #E2E8F0;">HR Operations × Technology × Automation</p>' +
+        '</div>' +
+        '<div style="padding: 28px; color: #1E293B; line-height: 1.6; font-size: 14px;">' +
+          '<p style="margin: 0 0 16px 0;">Dear ' + name + ',</p>' +
+          '<p style="margin: 0 0 16px 0;">Thank you for reaching out to <strong>NK Velora Ventures (NKVV)</strong>.</p>' +
+          '<p style="margin: 0 0 20px 0;">We have received your enquiry and our team will review your requirements. We will get back to you shortly to discuss the next steps.</p>' +
+          '<div style="margin: 20px 0; padding: 16px 20px; background-color: #F8FAFC; border-left: 3px solid #C9972B; border-radius: 4px;">' +
+            '<p style="margin: 0 0 6px 0; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #64748B; font-weight: 600;">Your Enquiry</p>' +
+            '<p style="margin: 0; font-size: 14px; color: #071A33;"><strong>Requirement:</strong> ' + requirement + '</p>' +
+          '</div>' +
+          '<p style="margin: 20px 0 24px 0; color: #475569; font-size: 13px;">If your request is time-sensitive, you can also reply directly to this email.</p>' +
+          '<div style="border-top: 1px solid #E2E8F0; padding-top: 20px; margin-top: 24px;">' +
+            '<p style="margin: 0 0 4px 0; font-weight: 600; color: #071A33;">Regards,</p>' +
+            '<p style="margin: 0 0 2px 0; font-weight: 600; color: #071A33;">NK Velora Ventures</p>' +
+            '<p style="margin: 0 0 6px 0; font-size: 12px; color: #64748B;">HR Operations × Technology × Automation</p>' +
+            '<p style="margin: 0 0 2px 0; font-size: 12px;"><a href="mailto:help@nkvelora.co.in" style="color: #071A33; text-decoration: underline;">help@nkvelora.co.in</a></p>' +
+            '<p style="margin: 0 0 12px 0; font-size: 12px;"><a href="https://nkvelora.co.in" style="color: #C9972B; text-decoration: underline;">https://nkvelora.co.in</a></p>' +
+            '<p style="margin: 0; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #C9972B;">Transform. Automate. Elevate.</p>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+
+    try {
+      if (typeof GmailApp !== 'undefined' && GmailApp.sendEmail) {
+        GmailApp.sendEmail(email, clientAckSubject, clientTextBody, {
+          name: 'NK Velora Ventures',
+          replyTo: 'help@nkvelora.co.in',
+          htmlBody: clientHtmlBody
+        });
+      } else {
+        MailApp.sendEmail({
+          to: email,
+          subject: clientAckSubject,
+          body: clientTextBody,
+          htmlBody: clientHtmlBody,
+          name: 'NK Velora Ventures',
+          replyTo: 'help@nkvelora.co.in'
+        });
+      }
+      clientAckSent = true;
+    } catch (ackErr) {
+      clientAckError = ackErr.toString();
+      Logger.log('Client acknowledgement delivery warning: ' + clientAckError);
+    }
+
+    // 14. Return structured response to website
+    var responsePayload = {
+      status: 'success',
+      message: 'Enquiry recorded successfully',
+      sheetRow: lastRow + 1,
+      internalEmailSent: internalEmailSent,
+      internalEmailError: internalEmailError,
+      clientAckSent: clientAckSent,
+      clientAckError: clientAckError
+    };
+
     return ContentService
-      .createTextOutput(JSON.stringify({ status: 'success', message: 'Enquiry recorded successfully' }))
+      .createTextOutput(JSON.stringify(responsePayload))
       .setMimeType(ContentService.MimeType.JSON);
 
   } catch (err) {
-    Logger.log('Apps Script Error: ' + err.toString());
+    Logger.log('Apps Script Fatal Error: ' + err.toString());
     return ContentService
       .createTextOutput(JSON.stringify({ status: 'error', error: err.toString() }))
       .setMimeType(ContentService.MimeType.JSON);
   } finally {
-    lock.releaseLock();
+    if (lockAcquired) {
+      lock.releaseLock();
+    }
   }
 }
