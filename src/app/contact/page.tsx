@@ -2,6 +2,7 @@ import React from 'react';
 import { ContactForm } from '@/components/contact/ContactForm';
 import { SITE_CONFIG } from '@/config/site';
 import { MapPin, PhoneCall, ShieldCheck } from 'lucide-react';
+import { BorderGlow } from '@/components/ui/BorderGlow';
 
 export const metadata = {
   title: 'Contact Us | NK Velora Ventures',
@@ -37,46 +38,60 @@ export default function ContactPage() {
             
             {/* Left Info Col */}
             <div className="lg:col-span-4 space-y-8">
-              <div className="bg-white p-8 rounded-2xl border border-border-subtle shadow-md space-y-6">
-                <h3 className="text-xl font-bold text-navy-deep">
-                  Why Schedule a Call?
-                </h3>
+              <BorderGlow
+                backgroundColor="#ffffff"
+                borderRadius={20}
+                glowRadius={35}
+                className="shadow-md"
+              >
+                <div className="p-8 space-y-6">
+                  <h3 className="text-xl font-bold text-navy-deep">
+                    Why Schedule a Call?
+                  </h3>
 
-                <div className="space-y-4 text-sm text-gray-700">
-                  <div className="flex items-start gap-3">
-                    <ShieldCheck className="w-5 h-5 text-gold shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="text-navy-deep block">Direct Founder & Principal Engagement</strong>
-                      <span className="text-xs text-muted">You speak directly with strategic transformation leads, not junior account executives.</span>
+                  <div className="space-y-4 text-sm text-gray-700">
+                    <div className="flex items-start gap-3">
+                      <ShieldCheck className="w-5 h-5 text-gold shrink-0 mt-0.5" />
+                      <div>
+                        <strong className="text-navy-deep block">Direct Founder & Principal Engagement</strong>
+                        <span className="text-xs text-muted">You speak directly with strategic transformation leads, not junior account executives.</span>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="flex items-start gap-3">
-                    <PhoneCall className="w-5 h-5 text-gold shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="text-navy-deep block">Pragmatic Operational Audit</strong>
-                      <span className="text-xs text-muted">We evaluate real workflows, software utilization, and manual friction points.</span>
+                    <div className="flex items-start gap-3">
+                      <PhoneCall className="w-5 h-5 text-gold shrink-0 mt-0.5" />
+                      <div>
+                        <strong className="text-navy-deep block">Pragmatic Operational Audit</strong>
+                        <span className="text-xs text-muted">We evaluate real workflows, software utilization, and manual friction points.</span>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="flex items-start gap-3">
-                    <MapPin className="w-5 h-5 text-gold shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="text-navy-deep block">Location</strong>
-                      <span className="text-xs text-muted">{SITE_CONFIG.location}</span>
+                    <div className="flex items-start gap-3">
+                      <MapPin className="w-5 h-5 text-gold shrink-0 mt-0.5" />
+                      <div>
+                        <strong className="text-navy-deep block">Location</strong>
+                        <span className="text-xs text-muted">{SITE_CONFIG.location}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </BorderGlow>
 
-              <div className="bg-navy-deep p-6 rounded-2xl text-white border border-navy-surface space-y-3">
-                <h4 className="text-xs font-mono uppercase font-bold text-gold">
-                  Privacy & Professional Standards
-                </h4>
-                <p className="text-xs text-gray-300 leading-relaxed">
-                  All submitted business data and process descriptions remain strictly confidential under standard non-disclosure guidelines.
-                </p>
-              </div>
+              <BorderGlow
+                backgroundColor="#0A2240"
+                borderRadius={20}
+                glowRadius={30}
+                className="shadow-lg"
+              >
+                <div className="p-6 text-white space-y-3">
+                  <h4 className="text-xs font-mono uppercase font-bold text-gold">
+                    Privacy & Professional Standards
+                  </h4>
+                  <p className="text-xs text-gray-300 leading-relaxed">
+                    All submitted business data and process descriptions remain strictly confidential under standard non-disclosure guidelines.
+                  </p>
+                </div>
+              </BorderGlow>
             </div>
 
             {/* Right Form Col */}

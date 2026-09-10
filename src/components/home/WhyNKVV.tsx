@@ -1,4 +1,5 @@
 import React from 'react';
+import { BorderGlow } from '@/components/ui/BorderGlow';
 
 interface Differentiator {
   title: string;
@@ -51,30 +52,35 @@ export const WhyNKVV: React.FC = () => {
         </div>
 
         {/* 4 Differentiators in Minimalist Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border border-border-subtle divide-y md:divide-y-0 md:divide-x divide-border-subtle">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {DIFFERENTIATORS.map((item, idx) => (
-            <div
+            <BorderGlow
               key={item.title}
-              className="p-8 bg-white flex flex-col justify-between hover:bg-gray-50/50 transition-colors duration-200"
+              backgroundColor="#ffffff"
+              borderRadius={16}
+              glowRadius={30}
+              className="h-full shadow-sm hover:shadow-md transition-shadow"
             >
-              <div className="space-y-4">
-                <span className="text-[10px] font-mono text-gold uppercase tracking-widest font-bold">
-                  0{idx + 1}
-                </span>
+              <div className="p-8 flex flex-col justify-between h-full">
+                <div className="space-y-4">
+                  <span className="text-[10px] font-mono text-gold uppercase tracking-widest font-bold">
+                    0{idx + 1}
+                  </span>
 
-                <h3 className="text-xl font-serif font-medium text-navy-deep">
-                  {item.title}
-                </h3>
+                  <h3 className="text-xl font-serif font-medium text-navy-deep">
+                    {item.title}
+                  </h3>
 
-                <span className="text-xs font-serif italic text-gray-400 block">
-                  {item.tagline}
-                </span>
+                  <span className="text-xs font-serif italic text-gray-400 block">
+                    {item.tagline}
+                  </span>
 
-                <p className="text-xs text-gray-600 font-light leading-relaxed">
-                  {item.description}
-                </p>
+                  <p className="text-xs text-gray-600 font-light leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
               </div>
-            </div>
+            </BorderGlow>
           ))}
         </div>
       </div>

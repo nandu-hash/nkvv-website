@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Send, CheckCircle2, MapPin, Building, Mail, Phone, User, MessageSquare, AlertCircle, Loader2 } from 'lucide-react';
 import { SITE_CONFIG } from '@/config/site';
+import { BorderGlow } from '@/components/ui/BorderGlow';
 
 const HELP_OPTIONS = [
   'HR Operations',
@@ -124,7 +125,13 @@ export const ContactForm: React.FC = () => {
   };
 
   return (
-    <div className="bg-white p-8 sm:p-10 rounded-2xl border border-border-subtle shadow-xl">
+    <BorderGlow
+      backgroundColor="#ffffff"
+      borderRadius={20}
+      glowRadius={36}
+      className="shadow-xl"
+    >
+      <div className="p-8 sm:p-10">
       {submitted ? (
         <div className="text-center py-12 space-y-6 animate-in fade-in duration-300">
           <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-inner">
@@ -370,6 +377,7 @@ export const ContactForm: React.FC = () => {
         <span className="font-mono text-[11px]">NK Velora Ventures • Confidential Advisory</span>
       </div>
 
-    </div>
+      </div>
+    </BorderGlow>
   );
 };

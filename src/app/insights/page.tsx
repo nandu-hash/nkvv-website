@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { INSIGHT_CATEGORIES, INSIGHT_ARTICLES } from '@/config/insights';
 import { BookOpen, Clock, ArrowRight, Sparkles } from 'lucide-react';
+import { BorderGlow } from '@/components/ui/BorderGlow';
 
 export default function InsightsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('All Categories');
@@ -56,65 +57,79 @@ export default function InsightsPage() {
           {/* Article Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredArticles.map((article) => (
-              <div
+              <BorderGlow
                 key={article.id}
-                className="bg-white rounded-2xl p-7 border border-border-subtle shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group hover:border-gold/60 relative overflow-hidden"
+                backgroundColor="#ffffff"
+                borderRadius={18}
+                glowRadius={30}
+                className="h-full shadow-sm hover:shadow-md transition-shadow"
               >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono font-bold text-navy-primary bg-navy-primary/10 px-2.5 py-1 rounded">
-                      {article.category}
-                    </span>
+                <div
+                  className="p-7 flex flex-col justify-between h-full group relative overflow-hidden"
+                >
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-mono font-bold text-navy-primary bg-navy-primary/10 px-2.5 py-1 rounded">
+                        {article.category}
+                      </span>
 
-                    {/* Clear "Coming Soon" Badge */}
-                    <span className="inline-flex items-center gap-1.5 text-[11px] font-mono font-bold text-gold bg-navy-deep px-2.5 py-1 rounded border border-gold/30">
-                      <Sparkles className="w-3 h-3" />
-                      <span>{article.datePlaceholder}</span>
-                    </span>
+                      {/* Clear "Coming Soon" Badge */}
+                      <span className="inline-flex items-center gap-1.5 text-[11px] font-mono font-bold text-gold bg-navy-deep px-2.5 py-1 rounded border border-gold/30">
+                        <Sparkles className="w-3 h-3" />
+                        <span>{article.datePlaceholder}</span>
+                      </span>
+                    </div>
+
+                    <h2 className="text-xl font-bold text-navy-deep group-hover:text-navy-primary transition-colors leading-snug">
+                      {article.title}
+                    </h2>
+
+                    <p className="text-xs text-muted leading-relaxed">
+                      {article.summary}
+                    </p>
                   </div>
 
-                  <h2 className="text-xl font-bold text-navy-deep group-hover:text-navy-primary transition-colors leading-snug">
-                    {article.title}
-                  </h2>
+                  <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-muted">
+                    <div className="flex items-center gap-1.5 font-mono">
+                      <Clock className="w-3.5 h-3.5 text-gold" />
+                      <span>{article.readTime}</span>
+                    </div>
 
-                  <p className="text-xs text-muted leading-relaxed">
-                    {article.summary}
-                  </p>
-                </div>
-
-                <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-muted">
-                  <div className="flex items-center gap-1.5 font-mono">
-                    <Clock className="w-3.5 h-3.5 text-gold" />
-                    <span>{article.readTime}</span>
+                    <span className="text-xs font-bold text-navy-primary group-hover:text-gold flex items-center gap-1 transition-colors">
+                      <span>Upcoming Publication</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </span>
                   </div>
-
-                  <span className="text-xs font-bold text-navy-primary group-hover:text-gold flex items-center gap-1 transition-colors">
-                    <span>Upcoming Publication</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </span>
                 </div>
-              </div>
+              </BorderGlow>
             ))}
           </div>
 
-          {/* Newsletter / Publication Alert Box */}
-          <div className="bg-navy-deep p-8 rounded-2xl text-white text-center space-y-4 border border-navy-surface max-w-3xl mx-auto">
-            <BookOpen className="w-8 h-8 text-gold mx-auto" />
-            <h3 className="text-xl font-bold">
-              Want our upcoming HR Operations playbooks?
-            </h3>
-            <p className="text-xs text-gray-300 max-w-md mx-auto">
-              Our inaugural insights series launches Q3 2026. Contact us to request early access to our HR process audit templates.
-            </p>
-            <div>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-gold hover:bg-gold-light text-navy-deep font-bold text-xs transition-all"
-              >
-                <span>Request Early Access</span>
-              </Link>
+          {/* Newsletter / Publication Alert Box wrapped in BorderGlow */}
+          <BorderGlow
+            backgroundColor="#0A2240"
+            borderRadius={20}
+            glowRadius={36}
+            className="shadow-2xl max-w-3xl mx-auto"
+          >
+            <div className="p-8 text-white text-center space-y-4">
+              <BookOpen className="w-8 h-8 text-gold mx-auto" />
+              <h3 className="text-xl font-bold">
+                Want our upcoming HR Operations playbooks?
+              </h3>
+              <p className="text-xs text-gray-300 max-w-md mx-auto">
+                Our inaugural insights series launches Q3 2026. Contact us to request early access to our HR process audit templates.
+              </p>
+              <div>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-gold hover:bg-gold-light text-navy-deep font-bold text-xs transition-all"
+                >
+                  <span>Request Early Access</span>
+                </Link>
+              </div>
             </div>
-          </div>
+          </BorderGlow>
 
         </div>
       </section>

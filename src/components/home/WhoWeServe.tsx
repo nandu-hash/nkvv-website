@@ -1,5 +1,6 @@
 import React from 'react';
 import { Target } from 'lucide-react';
+import { BorderGlow } from '@/components/ui/BorderGlow';
 
 interface AudienceCategory {
   title: string;
@@ -51,33 +52,38 @@ export const WhoWeServe: React.FC = () => {
         </div>
 
         {/* 3 Audience Columns */}
-        <div className="grid grid-cols-1 md:grid-cols-3 border border-border-subtle divide-y md:divide-y-0 md:divide-x divide-border-subtle">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {AUDIENCE_CATEGORIES.map((aud) => (
-            <div
+            <BorderGlow
               key={aud.title}
-              className="p-8 bg-white flex flex-col justify-between hover:bg-gray-50/50 transition-colors duration-200"
+              backgroundColor="#ffffff"
+              borderRadius={16}
+              glowRadius={30}
+              className="h-full shadow-sm hover:shadow-md transition-shadow"
             >
-              <div className="space-y-4">
-                <span className="text-[10px] font-mono tracking-widest text-gold uppercase font-bold block">
-                  {aud.stage}
-                </span>
+              <div className="p-8 flex flex-col justify-between h-full">
+                <div className="space-y-4">
+                  <span className="text-[10px] font-mono tracking-widest text-gold uppercase font-bold block">
+                    {aud.stage}
+                  </span>
 
-                <h3 className="text-2xl font-serif font-normal text-navy-deep">
-                  {aud.title}
-                </h3>
+                  <h3 className="text-2xl font-serif font-normal text-navy-deep">
+                    {aud.title}
+                  </h3>
 
-                <p className="text-xs text-gray-600 font-light leading-relaxed">
-                  {aud.description}
-                </p>
+                  <p className="text-xs text-gray-600 font-light leading-relaxed">
+                    {aud.description}
+                  </p>
+                </div>
+
+                <div className="mt-8 pt-4 border-t border-gray-100 flex items-start gap-2 text-xs text-gray-700">
+                  <Target className="w-3.5 h-3.5 text-gold shrink-0 mt-0.5" />
+                  <span className="font-light">
+                    <strong className="font-semibold text-navy-deep">Primary Bottleneck:</strong> {aud.painPoint}
+                  </span>
+                </div>
               </div>
-
-              <div className="mt-8 pt-4 border-t border-gray-100 flex items-start gap-2 text-xs text-gray-700">
-                <Target className="w-3.5 h-3.5 text-gold shrink-0 mt-0.5" />
-                <span className="font-light">
-                  <strong className="font-semibold text-navy-deep">Primary Bottleneck:</strong> {aud.painPoint}
-                </span>
-              </div>
-            </div>
+            </BorderGlow>
           ))}
         </div>
       </div>

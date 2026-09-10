@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { SITE_CONFIG } from '@/config/site';
 import { GoldenSpiral } from '@/components/ui/GoldenSpiral';
 import { ShieldCheck, FileCheck, Layers, ArrowRight, Activity, CheckCircle2 } from 'lucide-react';
+import { BorderGlow } from '@/components/ui/BorderGlow';
 
 export const VeloraComplianceSection: React.FC = () => {
   return (
@@ -44,53 +45,81 @@ export const VeloraComplianceSection: React.FC = () => {
           <div className="lg:col-span-7 space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               
-              <div className="p-6 rounded-xl bg-navy-primary/60 border border-white/10 space-y-3 group hover:border-gold/50 transition-colors">
-                <div className="w-9 h-9 rounded-lg bg-gold/15 border border-gold/30 flex items-center justify-center text-gold">
-                  <Activity className="w-4 h-4" />
+              <BorderGlow
+                backgroundColor="#0A2240"
+                borderRadius={14}
+                glowRadius={25}
+                className="h-full"
+              >
+                <div className="p-6 space-y-3 h-full group">
+                  <div className="w-9 h-9 rounded-lg bg-gold/15 border border-gold/30 flex items-center justify-center text-gold">
+                    <Activity className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-base font-serif font-bold text-white">
+                    Compliance Assessment
+                  </h3>
+                  <p className="text-xs text-gray-300 leading-relaxed font-light">
+                    Systematic operational audit of employment agreements, statutory registrations, wage structures, and state labour rules.
+                  </p>
                 </div>
-                <h3 className="text-base font-serif font-bold text-white">
-                  Compliance Assessment
-                </h3>
-                <p className="text-xs text-gray-300 leading-relaxed font-light">
-                  Systematic operational audit of employment agreements, statutory registrations, wage structures, and state labour rules.
-                </p>
-              </div>
+              </BorderGlow>
 
-              <div className="p-6 rounded-xl bg-navy-primary/60 border border-white/10 space-y-3 group hover:border-gold/50 transition-colors">
-                <div className="w-9 h-9 rounded-lg bg-gold/15 border border-gold/30 flex items-center justify-center text-gold">
-                  <FileCheck className="w-4 h-4" />
+              <BorderGlow
+                backgroundColor="#0A2240"
+                borderRadius={14}
+                glowRadius={25}
+                className="h-full"
+              >
+                <div className="p-6 space-y-3 h-full group">
+                  <div className="w-9 h-9 rounded-lg bg-gold/15 border border-gold/30 flex items-center justify-center text-gold">
+                    <FileCheck className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-base font-serif font-bold text-white">
+                    Process Diagnosis
+                  </h3>
+                  <p className="text-xs text-gray-300 leading-relaxed font-light">
+                    Inspect manual touchpoints, payroll cutoff gaps, and attendance records where non-compliance silently manifests.
+                  </p>
                 </div>
-                <h3 className="text-base font-serif font-bold text-white">
-                  Process Diagnosis
-                </h3>
-                <p className="text-xs text-gray-300 leading-relaxed font-light">
-                  Inspect manual touchpoints, payroll cutoff gaps, and attendance records where non-compliance silently manifests.
-                </p>
-              </div>
+              </BorderGlow>
 
-              <div className="p-6 rounded-xl bg-navy-primary/60 border border-white/10 space-y-3 group hover:border-gold/50 transition-colors">
-                <div className="w-9 h-9 rounded-lg bg-gold/15 border border-gold/30 flex items-center justify-center text-gold">
-                  <Layers className="w-4 h-4" />
+              <BorderGlow
+                backgroundColor="#0A2240"
+                borderRadius={14}
+                glowRadius={25}
+                className="h-full"
+              >
+                <div className="p-6 space-y-3 h-full group">
+                  <div className="w-9 h-9 rounded-lg bg-gold/15 border border-gold/30 flex items-center justify-center text-gold">
+                    <Layers className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-base font-serif font-bold text-white">
+                    Workflow Structuring
+                  </h3>
+                  <p className="text-xs text-gray-300 leading-relaxed font-light">
+                    Establish documented Standard Operating Procedures (SOPs), registers, and policy frameworks so compliance is repeatable.
+                  </p>
                 </div>
-                <h3 className="text-base font-serif font-bold text-white">
-                  Workflow Structuring
-                </h3>
-                <p className="text-xs text-gray-300 leading-relaxed font-light">
-                  Establish documented Standard Operating Procedures (SOPs), registers, and policy frameworks so compliance is repeatable.
-                </p>
-              </div>
+              </BorderGlow>
 
-              <div className="p-6 rounded-xl bg-navy-primary/60 border border-white/10 space-y-3 group hover:border-gold/50 transition-colors">
-                <div className="w-9 h-9 rounded-lg bg-gold/15 border border-gold/30 flex items-center justify-center text-gold">
-                  <ShieldCheck className="w-4 h-4" />
+              <BorderGlow
+                backgroundColor="#0A2240"
+                borderRadius={14}
+                glowRadius={25}
+                className="h-full"
+              >
+                <div className="p-6 space-y-3 h-full group">
+                  <div className="w-9 h-9 rounded-lg bg-gold/15 border border-gold/30 flex items-center justify-center text-gold">
+                    <ShieldCheck className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-base font-serif font-bold text-white">
+                    Governance &amp; Controls
+                  </h3>
+                  <p className="text-xs text-gray-300 leading-relaxed font-light">
+                    Introduce automated reminders for filings, threshold changes, and periodic internal review controls.
+                  </p>
                 </div>
-                <h3 className="text-base font-serif font-bold text-white">
-                  Governance &amp; Controls
-                </h3>
-                <p className="text-xs text-gray-300 leading-relaxed font-light">
-                  Introduce automated reminders for filings, threshold changes, and periodic internal review controls.
-                </p>
-              </div>
+              </BorderGlow>
 
             </div>
 
@@ -103,41 +132,51 @@ export const VeloraComplianceSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column (38.2% / 5 cols): Transformation Pathway Card */}
-          <div className="lg:col-span-5 p-8 rounded-2xl bg-navy-deep border border-gold/30 shadow-2xl flex flex-col justify-between space-y-6">
-            <div className="space-y-4">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-gold font-bold block">
-                The Pathway to Compliance Automation
-              </span>
+          {/* Right Column (38.2% / 5 cols): Transformation Pathway Card wrapped in BorderGlow */}
+          <div className="lg:col-span-5">
+            <BorderGlow
+              backgroundColor="#071A33"
+              borderRadius={20}
+              glowRadius={36}
+              animated={true}
+              className="h-full shadow-2xl"
+            >
+              <div className="p-8 flex flex-col justify-between space-y-6 h-full">
+                <div className="space-y-4">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-gold font-bold block">
+                    The Pathway to Compliance Automation
+                  </span>
 
-              <h3 className="text-2xl font-serif font-normal text-white">
-                From Reactive Audits to Structured Oversight
-              </h3>
+                  <h3 className="text-2xl font-serif font-normal text-white">
+                    From Reactive Audits to Structured Oversight
+                  </h3>
 
-              <div className="space-y-3 pt-2">
-                {[
-                  'Identify statutory exposures across contracts and payroll',
-                  'Standardize employee registers and state-specific records',
-                  'Configure pre-payroll statutory verification checklists',
-                  'Build escalation triggers for license renewals and returns',
-                ].map((point) => (
-                  <div key={point} className="flex items-start gap-3 text-xs text-gray-200">
-                    <CheckCircle2 className="w-4 h-4 text-gold shrink-0 mt-0.5" />
-                    <span className="font-light leading-relaxed">{point}</span>
+                  <div className="space-y-3 pt-2">
+                    {[
+                      'Identify statutory exposures across contracts and payroll',
+                      'Standardize employee registers and state-specific records',
+                      'Configure pre-payroll statutory verification checklists',
+                      'Build escalation triggers for license renewals and returns',
+                    ].map((point) => (
+                      <div key={point} className="flex items-start gap-3 text-xs text-gray-200">
+                        <CheckCircle2 className="w-4 h-4 text-gold shrink-0 mt-0.5" />
+                        <span className="font-light leading-relaxed">{point}</span>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </div>
+                </div>
 
-            <div className="pt-6 border-t border-white/10">
-              <Link
-                href="/contact"
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-gold hover:bg-gold-bright text-navy-deep font-semibold text-xs uppercase tracking-widest transition-all duration-300 shadow-md group"
-              >
-                <span>Request Compliance Diagnosis</span>
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </div>
+                <div className="pt-6 border-t border-white/10">
+                  <Link
+                    href="/contact"
+                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-gold hover:bg-gold-bright text-navy-deep font-semibold text-xs uppercase tracking-widest transition-all duration-300 shadow-md group"
+                  >
+                    <span>Request Compliance Diagnosis</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                </div>
+              </div>
+            </BorderGlow>
           </div>
 
         </div>

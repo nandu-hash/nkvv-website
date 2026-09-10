@@ -3,6 +3,7 @@ import Metadata from 'next';
 import Link from 'next/link';
 import { SERVICES_DATA } from '@/config/services';
 import { CheckCircle2, ArrowRight, PhoneCall, ShieldCheck, Cpu, Zap, Compass } from 'lucide-react';
+import { BorderGlow } from '@/components/ui/BorderGlow';
 
 export const metadata = {
   title: 'Services | NK Velora Ventures',
@@ -39,11 +40,17 @@ export default function ServicesPage() {
           {SERVICES_DATA.map((cat, catIdx) => {
             const Icon = CATEGORY_ICONS[catIdx];
             return (
-              <div
+              <BorderGlow
                 key={cat.id}
-                id={cat.id}
-                className="scroll-mt-32 bg-white rounded-2xl p-8 sm:p-10 border border-border-subtle shadow-md space-y-8"
+                backgroundColor="#ffffff"
+                borderRadius={20}
+                glowRadius={35}
+                className="shadow-md"
               >
+                <div
+                  id={cat.id}
+                  className="scroll-mt-32 p-8 sm:p-10 space-y-8"
+                >
                 {/* Category Header */}
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-gray-100 pb-6">
                   <div className="flex items-center gap-4">
@@ -137,30 +144,38 @@ export default function ServicesPage() {
                   ))}
                 </div>
               </div>
-            );
+            </BorderGlow>
+          );
           })}
         </div>
       </section>
 
       {/* Bottom CTA */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="bg-navy-deep p-8 rounded-2xl text-white text-center space-y-4 border border-navy-surface">
-          <h3 className="text-2xl font-bold">
-            Need a tailored service combination?
-          </h3>
-          <p className="text-sm text-gray-300 max-w-xl mx-auto">
-            We build modular engagement scopes combining HR operations, HRIS implementation, and custom automation based on your exact business needs.
-          </p>
-          <div className="pt-2">
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gold hover:bg-gold-light text-navy-deep font-bold text-sm transition-all"
-            >
-              <span>Book a Discovery Call</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+        <BorderGlow
+          backgroundColor="#0A2240"
+          borderRadius={20}
+          glowRadius={36}
+          className="shadow-2xl"
+        >
+          <div className="p-8 rounded-2xl text-white text-center space-y-4">
+            <h3 className="text-2xl font-bold">
+              Need a tailored service combination?
+            </h3>
+            <p className="text-sm text-gray-300 max-w-xl mx-auto">
+              We build modular engagement scopes combining HR operations, HRIS implementation, and custom automation based on your exact business needs.
+            </p>
+            <div className="pt-2">
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gold hover:bg-gold-light text-navy-deep font-bold text-sm transition-all"
+              >
+                <span>Book a Discovery Call</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
           </div>
-        </div>
+        </BorderGlow>
       </section>
     </main>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, Check } from 'lucide-react';
+import { BorderGlow } from '@/components/ui/BorderGlow';
 
 interface OutcomeShift {
   from: string;
@@ -63,45 +64,57 @@ export const OutcomesSection: React.FC = () => {
         {/* 4 Shift Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
           {OUTCOME_SHIFTS.map((shift) => (
-            <div
+            <BorderGlow
               key={shift.from}
-              className="p-8 border border-border-subtle bg-white flex flex-col justify-between space-y-4 hover:border-gold transition-colors duration-200"
+              backgroundColor="#ffffff"
+              borderRadius={16}
+              glowRadius={30}
+              className="h-full shadow-sm hover:shadow-md transition-shadow"
             >
-              <div className="flex items-center gap-4 text-sm font-serif">
-                <span className="text-gray-400 line-through decoration-red-400/60">
-                  {shift.from}
-                </span>
-                <ArrowRight className="w-4 h-4 text-gold shrink-0" />
-                <span className="text-navy-deep font-semibold border-b border-gold pb-0.5">
-                  {shift.to}
-                </span>
-              </div>
+              <div className="p-8 flex flex-col justify-between space-y-4 h-full">
+                <div className="flex items-center gap-4 text-sm font-serif">
+                  <span className="text-gray-400 line-through decoration-red-400/60">
+                    {shift.from}
+                  </span>
+                  <ArrowRight className="w-4 h-4 text-gold shrink-0" />
+                  <span className="text-navy-deep font-semibold border-b border-gold pb-0.5">
+                    {shift.to}
+                  </span>
+                </div>
 
-              <p className="text-xs text-gray-600 font-light leading-relaxed">
-                {shift.description}
-              </p>
-            </div>
+                <p className="text-xs text-gray-600 font-light leading-relaxed">
+                  {shift.description}
+                </p>
+              </div>
+            </BorderGlow>
           ))}
         </div>
 
-        {/* Outcomes Checklist in Minimalist Banner */}
-        <div className="p-8 lg:p-12 border border-border-subtle bg-gray-50/70">
-          <span className="text-[10px] font-mono tracking-widest uppercase text-gold font-bold mb-4 block">
-            Systemic Advantages
-          </span>
-          <h3 className="text-2xl font-serif font-normal text-navy-deep mb-8">
-            What Changes When You Build Systems With NKVV
-          </h3>
+        {/* Outcomes Checklist in Minimalist Banner wrapped in BorderGlow */}
+        <BorderGlow
+          backgroundColor="#ffffff"
+          borderRadius={20}
+          glowRadius={35}
+          className="shadow-md"
+        >
+          <div className="p-8 lg:p-12">
+            <span className="text-[10px] font-mono tracking-widest uppercase text-gold font-bold mb-4 block">
+              Systemic Advantages
+            </span>
+            <h3 className="text-2xl font-serif font-normal text-navy-deep mb-8">
+              What Changes When You Build Systems With NKVV
+            </h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {TARGET_OUTCOMES.map((outc) => (
-              <div key={outc} className="flex items-start gap-3 text-xs text-gray-700">
-                <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" />
-                <span className="font-light">{outc}</span>
-              </div>
-            ))}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {TARGET_OUTCOMES.map((outc) => (
+                <div key={outc} className="flex items-start gap-3 text-xs text-gray-700">
+                  <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" />
+                  <span className="font-light">{outc}</span>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        </BorderGlow>
       </div>
     </section>
   );

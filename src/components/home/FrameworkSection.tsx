@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { NKVV_FRAMEWORK } from '@/config/framework';
 import { Search, PenTool, Users, Zap, TrendingUp, Check } from 'lucide-react';
+import { BorderGlow } from '@/components/ui/BorderGlow';
 
 const STAGE_ICONS = [Search, PenTool, Users, Zap, TrendingUp];
 
@@ -64,34 +65,50 @@ export const FrameworkSection: React.FC = () => {
           })}
         </div>
 
-        {/* Stage Detail Panel with Golden Ratio 61.8% / 38.2% layout */}
-        <div className="p-8 lg:p-12 border border-border-subtle bg-gray-50/60 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          <div className="lg:col-span-7 space-y-4">
-            <span className="text-[10px] font-mono tracking-widest uppercase text-gold font-bold">
-              Stage {NKVV_FRAMEWORK[activeStep].number} Detail
-            </span>
-            <h4 className="text-2xl sm:text-3xl font-serif font-normal text-navy-deep">
-              {NKVV_FRAMEWORK[activeStep].title} Phase
-            </h4>
-            <p className="text-sm text-gray-600 font-light leading-relaxed">
-              {NKVV_FRAMEWORK[activeStep].description}
-            </p>
-          </div>
+        {/* Stage Detail Panel wrapped in BorderGlow */}
+        <BorderGlow
+          backgroundColor="#ffffff"
+          borderRadius={20}
+          glowRadius={35}
+          className="shadow-md"
+        >
+          <div className="p-8 lg:p-12 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+            <div className="lg:col-span-7 space-y-4">
+              <span className="text-[10px] font-mono tracking-widest uppercase text-gold font-bold">
+                Stage {NKVV_FRAMEWORK[activeStep].number} Detail
+              </span>
+              <h4 className="text-2xl sm:text-3xl font-serif font-normal text-navy-deep">
+                {NKVV_FRAMEWORK[activeStep].title} Phase
+              </h4>
+              <p className="text-sm text-gray-600 font-light leading-relaxed">
+                {NKVV_FRAMEWORK[activeStep].description}
+              </p>
+            </div>
 
-          <div className="lg:col-span-5 p-6 bg-white border border-border-subtle space-y-4 shadow-sm">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-navy-deep font-bold block">
-              Core Deliverables
-            </span>
-            <div className="space-y-3">
-              {NKVV_FRAMEWORK[activeStep].keyOutputs.map((output) => (
-                <div key={output} className="flex items-start gap-3 text-xs text-gray-700">
-                  <Check className="w-3.5 h-3.5 text-gold shrink-0 mt-0.5" />
-                  <span className="font-light">{output}</span>
+            <div className="lg:col-span-5">
+              <BorderGlow
+                backgroundColor="#0A2240"
+                borderRadius={14}
+                glowRadius={28}
+                className="shadow-lg"
+              >
+                <div className="p-6 space-y-4 text-white">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-gold font-bold block">
+                    Core Deliverables
+                  </span>
+                  <div className="space-y-3">
+                    {NKVV_FRAMEWORK[activeStep].keyOutputs.map((output) => (
+                      <div key={output} className="flex items-start gap-3 text-xs text-gray-200">
+                        <Check className="w-3.5 h-3.5 text-gold shrink-0 mt-0.5" />
+                        <span className="font-light">{output}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              ))}
+              </BorderGlow>
             </div>
           </div>
-        </div>
+        </BorderGlow>
       </div>
     </section>
   );

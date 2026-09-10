@@ -1,5 +1,6 @@
 import React from 'react';
 import { FileSpreadsheet, Unplug, BrainCircuit, Hourglass, EyeOff, Sparkles } from 'lucide-react';
+import { BorderGlow } from '@/components/ui/BorderGlow';
 
 interface ProblemCard {
   icon: React.ElementType;
@@ -69,58 +70,71 @@ export const ProblemSection: React.FC = () => {
           {PROBLEMS.map((prob, idx) => {
             const Icon = prob.icon;
             return (
-              <div
+              <BorderGlow
                 key={prob.title}
-                className="p-8 border border-border-subtle bg-white flex flex-col justify-between group hover:border-gold transition-colors duration-300"
+                backgroundColor="#ffffff"
+                borderRadius={16}
+                glowRadius={30}
+                className="h-full shadow-sm hover:shadow-md transition-shadow"
               >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono font-bold text-gold uppercase tracking-widest">
-                      CHALLENGE 0{idx + 1}
-                    </span>
-                    <Icon className="w-4 h-4 text-gray-400 group-hover:text-gold transition-colors" />
+                <div className="p-8 flex flex-col justify-between h-full group">
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-mono font-bold text-gold uppercase tracking-widest">
+                        CHALLENGE 0{idx + 1}
+                      </span>
+                      <Icon className="w-4 h-4 text-gray-400 group-hover:text-gold transition-colors" />
+                    </div>
+
+                    <h3 className="text-xl font-serif font-medium text-navy-deep">
+                      {prob.title}
+                    </h3>
+
+                    <p className="text-xs text-gray-600 leading-relaxed font-light">
+                      {prob.description}
+                    </p>
                   </div>
 
-                  <h3 className="text-xl font-serif font-medium text-navy-deep">
-                    {prob.title}
-                  </h3>
-
-                  <p className="text-xs text-gray-600 leading-relaxed font-light">
-                    {prob.description}
-                  </p>
+                  <div className="mt-8 pt-4 border-t border-gray-100 flex items-start gap-2 text-[11px] font-mono text-gray-500">
+                    <span className="text-gold font-bold">→</span>
+                    <span>{prob.symptom}</span>
+                  </div>
                 </div>
-
-                <div className="mt-8 pt-4 border-t border-gray-100 flex items-start gap-2 text-[11px] font-mono text-gray-500">
-                  <span className="text-gold font-bold">→</span>
-                  <span>{prob.symptom}</span>
-                </div>
-              </div>
+              </BorderGlow>
             );
           })}
 
           {/* Solution Highlight Box */}
-          <div className="p-8 border border-navy-deep bg-navy-deep text-white flex flex-col justify-between">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono font-bold text-gold uppercase tracking-widest">
-                  THE NKVV MODEL
-                </span>
-                <Sparkles className="w-4 h-4 text-gold" />
+          <BorderGlow
+            backgroundColor="#0A2240"
+            borderRadius={16}
+            glowRadius={36}
+            glowIntensity={1.2}
+            className="h-full shadow-xl"
+          >
+            <div className="p-8 text-white flex flex-col justify-between h-full">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono font-bold text-gold uppercase tracking-widest">
+                    THE NKVV MODEL
+                  </span>
+                  <Sparkles className="w-4 h-4 text-gold" />
+                </div>
+
+                <h3 className="text-xl font-serif font-medium text-white">
+                  Engineered Operational Resilience
+                </h3>
+
+                <p className="text-xs text-gray-300 leading-relaxed font-light">
+                  Diagnose bottlenecks, design the operating model, implement the right systems and automate repeatable work.
+                </p>
               </div>
 
-              <h3 className="text-xl font-serif font-medium text-white">
-                Engineered Operational Resilience
-              </h3>
-
-              <p className="text-xs text-gray-300 leading-relaxed font-light">
-                Diagnose bottlenecks, design the operating model, implement the right systems and automate repeatable work.
-              </p>
+              <div className="mt-8 pt-4 border-t border-white/10 text-[10px] font-mono uppercase tracking-widest text-gold">
+                Zero Generic Advice. Real Systems.
+              </div>
             </div>
-
-            <div className="mt-8 pt-4 border-t border-white/10 text-[10px] font-mono uppercase tracking-widest text-gold">
-              Zero Generic Advice. Real Systems.
-            </div>
-          </div>
+          </BorderGlow>
         </div>
       </div>
     </section>
