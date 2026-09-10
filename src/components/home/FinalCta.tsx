@@ -1,11 +1,16 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowRight, Check } from 'lucide-react';
+import { WebThreads } from '@/components/ui/WebThreads';
 
 export const FinalCta: React.FC = () => {
   return (
     <section className="py-24 bg-navy-deep text-white relative overflow-hidden">
-      <div className="max-w-4xl mx-auto px-6 sm:px-8 text-center space-y-8">
+      {/* Interactive WebThreads WebGL Canvas in Background */}
+      <div className="absolute inset-0 pointer-events-auto opacity-30 z-0 overflow-hidden">
+        <WebThreads />
+      </div>
+      <div className="max-w-4xl mx-auto px-6 sm:px-8 text-center space-y-8 relative z-10">
         <span className="text-[10px] font-mono tracking-[0.25em] text-gold uppercase font-bold block">
           Advisory &amp; Systems Implementation
         </span>

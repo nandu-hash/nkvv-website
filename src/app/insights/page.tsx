@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { INSIGHT_CATEGORIES, INSIGHT_ARTICLES } from '@/config/insights';
 import { BookOpen, Clock, ArrowRight, Sparkles } from 'lucide-react';
 import { BorderGlow } from '@/components/ui/BorderGlow';
+import { WebThreads } from '@/components/ui/WebThreads';
 
 export default function InsightsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('All Categories');
@@ -18,6 +19,10 @@ export default function InsightsPage() {
     <main className="pt-28 pb-20 bg-offwhite min-h-screen">
       {/* Page Header */}
       <section className="bg-navy-deep text-white py-16 md:py-20 border-b border-navy-surface relative overflow-hidden">
+        {/* Interactive WebThreads WebGL Canvas in Header Background */}
+        <div className="absolute inset-0 pointer-events-auto opacity-35 z-0 overflow-hidden">
+          <WebThreads />
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-4 text-center max-w-3xl">
           <span className="text-xs font-mono font-bold text-gold uppercase tracking-wider bg-navy-surface px-3.5 py-1.5 rounded-full border border-gold/30">
             NKVV Knowledge & Research

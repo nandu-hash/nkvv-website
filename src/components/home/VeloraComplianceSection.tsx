@@ -6,10 +6,16 @@ import { SITE_CONFIG } from '@/config/site';
 import { GoldenSpiral } from '@/components/ui/GoldenSpiral';
 import { ShieldCheck, FileCheck, Layers, ArrowRight, Activity, CheckCircle2 } from 'lucide-react';
 import { BorderGlow } from '@/components/ui/BorderGlow';
+import { WebThreads } from '@/components/ui/WebThreads';
 
 export const VeloraComplianceSection: React.FC = () => {
   return (
     <section id="velora-compliance" className="py-24 bg-navy-dark text-white border-b border-navy-primary relative overflow-hidden">
+      {/* Interactive WebThreads WebGL Canvas in Background */}
+      <div className="absolute inset-0 pointer-events-auto opacity-25 z-0 overflow-hidden">
+        <WebThreads />
+      </div>
+
       {/* Subtle Background Golden Spiral Watermark */}
       <div className="absolute right-[-5%] bottom-[-10%] w-[60vw] max-w-[800px] pointer-events-none opacity-[0.05] mix-blend-screen">
         <GoldenSpiral variant="subtle" />
