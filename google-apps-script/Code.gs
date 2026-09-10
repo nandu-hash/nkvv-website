@@ -215,10 +215,10 @@ function doPost(e) {
     sheet.appendRow(rowToAppend);
     SpreadsheetApp.flush();
 
-    // 12. INTERNAL NOTIFICATION to nandu@nkvelora.co.in and help@nkvelora.co.in
+    // 12. INTERNAL NOTIFICATION to nandu@nkvelora.co.in
     var internalEmailSent = false;
     var internalEmailError = null;
-    var internalEmailRecipient = 'nandu@nkvelora.co.in, help@nkvelora.co.in';
+    var internalEmailRecipient = 'nandu@nkvelora.co.in';
     var internalEmailSubject = '[NKVV] New Website Enquiry — ' + name;
 
     var internalTextBody = 

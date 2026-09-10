@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 
 const GOOGLE_SHEET_ID = '1GhSVSUxR44iIWxCpKKHmbUT-G-zSxICoev_zKa43Bpc';
-const INTERNAL_NOTIFY_EMAILS = 'nandu@nkvelora.co.in, help@nkvelora.co.in';
+const INTERNAL_NOTIFY_EMAILS = 'nandu@nkvelora.co.in';
 const BUSINESS_SENDER_EMAIL = 'business@nkvelora.co.in';
 
 // Safe directory for backups: /tmp in Vercel/serverless environments, or ./data locally
