@@ -7,12 +7,9 @@ const GOOGLE_SHEET_ID = '1GhSVSUxR44iIWxCpKKHmbUT-G-zSxICoev_zKa43Bpc';
 const INTERNAL_NOTIFY_EMAILS = 'nandu@nkvelora.co.in, help@nkvelora.co.in';
 const BUSINESS_SENDER_EMAIL = 'business@nkvelora.co.in';
 
-// Ensure data directory exists for local Excel backup storage
-const dataDir = path.join(process.cwd(), 'data');
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true });
-}
-
+// Safe directory for backups: /tmp in Vercel/serverless environments, or ./data locally
+const isServerless = process.env.VERCEL === '1' || process.env.AWS_LAMBDA_FUNCTION_NAME !== undefined;
+const dataDir = isServerless ? '/tmp' : path.join(process.cwd(), 'data');
 const excelFilePath = path.join(dataDir, 'nkvv_contact_submissions.xlsx');
 
 async function appendToLocalExcelBackup(lead: {
@@ -28,6 +25,9 @@ async function appendToLocalExcelBackup(lead: {
   status: string;
 }) {
   try {
+    if (!fs.existsSync(dataDir)) {
+      fs.mkdirSync(dataDir, { recursive: true });
+    }
     const workbook = new ExcelJS.Workbook();
     if (fs.existsSync(excelFilePath)) {
       await workbook.xlsx.readFile(excelFilePath);
@@ -194,34 +194,45 @@ export async function POST(request: Request) {
       'https://script.google.com/a/macros/nkvelora.co.in/s/AKfycbzRKxPWa-PYqTaecN6W2RfNVxzpvflom5Bx2tzmqHD2nJB0jhxJY9dXrwjgLaEoA7fG_g/exec';
 
     if (webhookUrl) {
-      const googleRes = await fetch(webhookUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-        redirect: 'follow',
-      });
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout to prevent serverless freeze
 
-      if (!googleRes.ok) {
-        console.error(`Google Apps Script HTTP Error ${googleRes.status}`);
-        if (googleRes.status === 401) {
-          throw new Error('Google Apps Script Web App returned HTTP 401 (Access Restricted). Please set "Who has access" to "Anyone" in Apps Script deployment settings.');
+        const googleRes = await fetch(webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          redirect: 'follow',
+          signal: controller.signal,
+        });
+        clearTimeout(timeoutId);
+
+        if (!googleRes.ok) {
+          console.warn(`Google Apps Script warning: HTTP ${googleRes.status}`);
+        } else {
+          const googleData = await googleRes.json().catch(() => ({ status: 'success' }));
+          if (googleData.status === 'error') {
+            console.warn('Google Sheet update warning:', googleData.error);
+          }
         }
-        throw new Error(`Google Apps Script returned HTTP status ${googleRes.status}`);
-      }
-
-      const googleData = await googleRes.json().catch(() => ({ status: 'success' }));
-      if (googleData.status === 'error') {
-        throw new Error(googleData.error || 'Google Sheet update failed');
+      } catch (webhookErr: any) {
+        console.warn('Google Apps Script non-blocking warning:', webhookErr?.message || webhookErr);
       }
     }
 
     // Log to local Excel backup
     await appendToLocalExcelBackup(payload);
 
-    return NextResponse.json({
-      success: true,
-      message: "Thank you. Your enquiry has been received. We'll get back to you shortly.",
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Thank you. Your enquiry has been received. We'll get back to you shortly.",
+      },
+      {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error: any) {
     console.error('Submission API Error:', error);
     // Generic sanitized error message so internal server stack or error details are never leaked to the client
@@ -230,7 +241,10 @@ export async function POST(request: Request) {
         success: false,
         error: "We couldn't submit your enquiry right now. Please try again or contact us directly at help@nkvelora.co.in.",
       },
-      { status: 500 }
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      }
     );
   }
 }

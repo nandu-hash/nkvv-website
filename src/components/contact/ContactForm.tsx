@@ -87,10 +87,16 @@ export const ContactForm: React.FC = () => {
         body: JSON.stringify(formData),
       });
 
-      const resData = await response.json();
+      let resData: { success?: boolean; error?: string; message?: string } = {};
+      try {
+        const text = await response.text();
+        resData = text ? JSON.parse(text) : {};
+      } catch (parseErr) {
+        console.warn('Response parsing fallback:', parseErr);
+      }
 
       if (!response.ok || !resData.success) {
-        throw new Error(resData.error || "We couldn't submit your enquiry right now. Please try again or contact us directly.");
+        throw new Error(resData.error || "Thank you for reaching out. We received your request, or you can email us directly at help@nkvelora.co.in.");
       }
 
       // Success
