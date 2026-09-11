@@ -172,13 +172,19 @@ export const VeloraComplianceSection: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="pt-6 border-t border-white/10">
+                <div className="pt-6 border-t border-white/10 space-y-3">
                   <Link
-                    href="/contact"
-                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-gold hover:bg-gold-bright text-navy-deep font-semibold text-xs uppercase tracking-widest transition-all duration-300 shadow-md group"
+                    href="/velora/dashboard"
+                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-gold hover:bg-gold-bright text-navy-deep font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-md group"
                   >
-                    <span>Request Compliance Diagnosis</span>
+                    <span>Launch Diagnostic Platform</span>
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                  <Link
+                    href="/velora/login"
+                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-gold font-mono text-[11px] uppercase tracking-wider transition-all"
+                  >
+                    <span>Explore Investor Demo Mode</span>
                   </Link>
                 </div>
               </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Send, CheckCircle2, MapPin, Building, Mail, Phone, User, MessageSquare, AlertCircle, Loader2 } from 'lucide-react';
+import { Send, CheckCircle2, MapPin, Building, Mail, Phone, User, MessageSquare, AlertCircle, Loader2, Calendar, ExternalLink } from 'lucide-react';
 import { SITE_CONFIG } from '@/config/site';
 import { BorderGlow } from '@/components/ui/BorderGlow';
 
@@ -23,7 +23,11 @@ const COMPANY_SIZES = [
   '300+ employees',
 ];
 
-export const ContactForm: React.FC = () => {
+export interface ContactFormProps {
+  onScheduleClick?: () => void;
+}
+
+export const ContactForm: React.FC<ContactFormProps> = ({ onScheduleClick }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -145,6 +149,42 @@ export const ContactForm: React.FC = () => {
           <p className="text-muted text-sm max-w-md mx-auto leading-relaxed font-medium">
             {successMessage || "Thank you. Your enquiry has been received. We'll get back to you shortly."}
           </p>
+
+          {/* Instant Calendar Scheduling Callout */}
+          <div className="my-6 p-6 rounded-2xl bg-navy-deep text-white border border-gold/40 text-center space-y-3 shadow-lg">
+            <span className="text-[11px] font-mono uppercase tracking-widest text-gold font-bold bg-navy-surface px-3 py-1 rounded-full border border-gold/30">
+              Direct Calendar Scheduling
+            </span>
+            <h4 className="text-base sm:text-lg font-bold text-white">
+              Want to block a time immediately?
+            </h4>
+            <p className="text-xs sm:text-sm text-gray-300 max-w-md mx-auto leading-relaxed">
+              Schedule a 1-on-1 discovery appointment directly on the calendar with Nandu Kumar (Founder, NKVV).
+            </p>
+            <div className="pt-2 flex flex-wrap justify-center gap-3">
+              {onScheduleClick ? (
+                <button
+                  type="button"
+                  onClick={onScheduleClick}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gold hover:bg-gold-light text-navy-deep text-xs font-bold transition-all shadow-md"
+                >
+                  <Calendar className="w-4 h-4" />
+                  <span>📅 Open Calendar Scheduler</span>
+                </button>
+              ) : (
+                <a
+                  href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2zm4OHhOPRYA5HaCeWnrg2L17VMx_nc8jIEDa3MJYOJT9ITgKRj22uXQUaA4mAVLlfV_wnvKJc?gv=true"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gold hover:bg-gold-light text-navy-deep text-xs font-bold transition-all shadow-md"
+                >
+                  <Calendar className="w-4 h-4" />
+                  <span>Book on Google Calendar</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              )}
+            </div>
+          </div>
 
           <div className="pt-2">
             <button

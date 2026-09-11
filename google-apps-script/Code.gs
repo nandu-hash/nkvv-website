@@ -215,10 +215,11 @@ function doPost(e) {
     sheet.appendRow(rowToAppend);
     SpreadsheetApp.flush();
 
-    // 12. INTERNAL NOTIFICATION to nandu@nkvelora.co.in
+    // 12. INTERNAL NOTIFICATION to business@nkvelora.co.in (with CC to nandu@nkvelora.co.in)
     var internalEmailSent = false;
     var internalEmailError = null;
-    var internalEmailRecipient = 'nandu@nkvelora.co.in';
+    var internalEmailRecipient = 'business@nkvelora.co.in';
+    var internalEmailCc = 'nandu@nkvelora.co.in';
     var internalEmailSubject = '[NKVV] New Website Enquiry — ' + name;
 
     var internalTextBody = 
@@ -269,11 +270,13 @@ function doPost(e) {
         GmailApp.sendEmail(internalEmailRecipient, internalEmailSubject, internalTextBody, {
           name: 'NKVV Website Enquiry',
           replyTo: email,
+          cc: internalEmailCc,
           htmlBody: internalHtmlBody
         });
       } else {
         MailApp.sendEmail({
           to: internalEmailRecipient,
+          cc: internalEmailCc,
           subject: internalEmailSubject,
           body: internalTextBody,
           htmlBody: internalHtmlBody,
@@ -293,6 +296,9 @@ function doPost(e) {
 
     var clientTextBody =
       'Thank you for contacting NK Velora Ventures. We’ve received your enquiry and our team will review the information provided. We’ll get back to you with the appropriate next step.\n\n' +
+      'Schedule a Meeting Directly:\n' +
+      'If you would like to lock in a time immediately, you can block an appointment directly with Founder Nandu Kumar via Google Calendar:\n' +
+      'https://calendar.google.com/calendar/appointments/schedules/AcZssZ2zm4OHhOPRYA5HaCeWnrg2L17VMx_nc8jIEDa3MJYOJT9ITgKRj22uXQUaA4mAVLlfV_wnvKJc?gv=true\n\n' +
       'Regards,\n' +
       'NKVV Business Team\n' +
       'NK Velora Ventures\n' +
@@ -311,6 +317,13 @@ function doPost(e) {
           '<div style="margin: 20px 0; padding: 16px 20px; background-color: #F8FAFC; border-left: 3px solid #C9972B; border-radius: 4px;">' +
             '<p style="margin: 0 0 6px 0; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #64748B; font-weight: 600;">Enquiry Focus</p>' +
             '<p style="margin: 0; font-size: 14px; color: #071A33;"><strong>Requirement:</strong> ' + requirement + '</p>' +
+          '</div>' +
+          '<!-- Book an Appointment Box -->' +
+          '<div style="margin: 24px 0; padding: 22px; background: #071A33; border: 1px solid #C9972B; border-radius: 8px; text-align: center;">' +
+            '<p style="margin: 0 0 6px 0; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #C9972B; font-weight: 700;">Direct Calendar Scheduling</p>' +
+            '<h4 style="margin: 0 0 8px 0; font-size: 16px; color: #FFFFFF; font-weight: 600;">Prefer to schedule directly with our Founder?</h4>' +
+            '<p style="margin: 0 0 18px 0; font-size: 13px; color: #CBD5E1; line-height: 1.5;">You can block an appointment directly on the calendar with Nandu Kumar (Founder &amp; Principal):</p>' +
+            '<a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2zm4OHhOPRYA5HaCeWnrg2L17VMx_nc8jIEDa3MJYOJT9ITgKRj22uXQUaA4mAVLlfV_wnvKJc?gv=true" target="_blank" style="display: inline-block; padding: 12px 26px; background-color: #C9972B; color: #071A33; font-weight: 700; font-size: 13px; text-decoration: none; border-radius: 6px; letter-spacing: 0.5px;">Book an Appointment on Google Calendar &rarr;</a>' +
           '</div>' +
           '<div style="border-top: 1px solid #E2E8F0; padding-top: 20px; margin-top: 24px;">' +
             '<p style="margin: 0 0 2px 0; font-weight: 600; color: #071A33;">Regards,</p>' +
