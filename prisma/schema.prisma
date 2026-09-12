@@ -1,0 +1,560 @@
+// Prisma Schema for VELORA Compliance MVP
+// Supports SQLite for instant zero-dependency local execution & full testing
+// Designed with standard relational structure compatible with PostgreSQL / Supabase / Neon
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ==========================================
+// TENANT & AUTHENTICATION MODELS
+// ==========================================
+
+model Organization {
+  id                      String                   @id @default(uuid())
+  name                    String
+  slug                    String                   @unique
+  plan                    String                   @default("ENTERPRISE_DEMO")
+  isDemo                  Boolean                  @default(false)
+  createdAt               DateTime                 @default(now())
+  updatedAt               DateTime                 @updatedAt
+
+  memberships             Membership[]
+  businesses              Business[]
+  processes               Process[]
+  diagnostics             Diagnostic[]
+  diagnosticResponses     DiagnosticResponse[]
+  evidences               Evidence[]
+  evidenceDocuments       EvidenceDocument[]
+  evidenceMappings        EvidenceMapping[]
+  assessments             ComplianceAssessment[]
+  findings                ComplianceFinding[]
+  riskAssessments         RiskAssessment[]
+  remediationActions      RemediationAction[]
+  calendarItems           ComplianceCalendarItem[]
+  audits                  Audit[]
+  auditEvents             AuditEvent[]
+  reports                 Report[]
+  serviceRequests         NKVVServiceRequest[]
+}
+
+model User {
+  id            String       @id @default(uuid())
+  email         String       @unique
+  name          String
+  passwordHash  String?
+  avatarUrl     String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  memberships   Membership[]
+}
+
+model Membership {
+  id              String       @id @default(uuid())
+  organizationId  String
+  userId          String
+  role            String       @default("VIEWER") // OWNER, ADMIN, ASSESSOR, VIEWER
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, userId])
+}
+
+// ==========================================
+// BUSINESS & WORKFORCE ENTITIES (TENANT SCOPED)
+// ==========================================
+
+model Business {
+  id                String                   @id @default(uuid())
+  organizationId    String
+  name              String
+  code              String
+  isDemo            Boolean                  @default(false)
+  status            String                   @default("ACTIVE")
+  createdAt         DateTime                 @default(now())
+  updatedAt         DateTime                 @updatedAt
+
+  organization      Organization             @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  profile           BusinessProfile?
+  workforce         WorkforceProfile?
+  processes         Process[]
+  diagnostics       Diagnostic[]
+  evidences         Evidence[]
+  assessments       ComplianceAssessment[]
+  calendarItems     ComplianceCalendarItem[]
+  audits            Audit[]
+  auditEvents       AuditEvent[]
+  reports           Report[]
+  serviceRequests   NKVVServiceRequest[]
+}
+
+model BusinessProfile {
+  id                       String       @id @default(uuid())
+  businessId               String       @unique
+  legalEntityType          String       // Private Limited, Public Limited, LLP, Partnership, Sole Proprietorship
+  industry                 String       // IT / ITES, Manufacturing, Retail, Healthcare, Construction, Services
+  state                    String       // Karnataka, Maharashtra, etc.
+  city                     String       // Bengaluru, Mumbai, etc.
+  establishmentType        String       // Commercial Establishment, Factory, Shop, Branch Office
+  payrollSystem            String?      // RazorpayX, GreytHR, Zoho Payroll, Manual Excel, Outsourced
+  attendanceSystem         String?      // Biometric, Geo-fenced App, Manual Register, Swipe Card
+  hrisSystem               String?      // Darwinbox, Keka, Zoho People, None
+  currentHrProcess         String?      // Manual, Semi-Automated, Fully Automated
+  complianceResponsibility String?      // In-House HR, Finance/Accounts, External Consultant, Founder
+  existingConsultant       String?      // None, Local CA/CS, Dedicated Labour Consultant
+  createdAt                DateTime     @default(now())
+  updatedAt                DateTime     @updatedAt
+
+  business                 Business     @relation(fields: [businessId], references: [id], onDelete: Cascade)
+}
+
+model WorkforceProfile {
+  id                     String       @id @default(uuid())
+  businessId             String       @unique
+  employeeCount          Int          @default(0)
+  workerCount            Int          @default(0)
+  contractWorkerCount    Int          @default(0)
+  migrantWorkerStatus    Boolean      @default(false)
+  factoryStatus          Boolean      @default(false)
+  constructionActivity   Boolean      @default(false)
+  hazardousActivity      Boolean      @default(false)
+  shiftWork              Boolean      @default(false)
+  workingHours           Float        @default(8.0)
+  womenEmployees         Int          @default(0)
+  contractLabourUsage    Boolean      @default(false)
+  createdAt              DateTime     @default(now())
+  updatedAt              DateTime     @updatedAt
+
+  business               Business     @relation(fields: [businessId], references: [id], onDelete: Cascade)
+}
+
+model Process {
+  id              String       @id @default(uuid())
+  organizationId  String
+  businessId      String
+  processName     String
+  category        String       // Recruitment, Payroll, Attendance, Exit, Statutory Filing
+  currentTool     String?
+  maturityLevel   String       @default("DEVELOPING") // AD_HOC, DEVELOPING, STANDARDIZED, OPTIMIZED
+  notes           String?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  business        Business     @relation(fields: [businessId], references: [id], onDelete: Cascade)
+}
+
+// ==========================================
+// LEGAL KNOWLEDGE BASE
+// ==========================================
+
+model LegalSource {
+  id              String             @id @default(uuid())
+  sourceId        String             @unique // e.g. EPF_ACT_1952, ESI_ACT_1948, KA_SHOPS_1961
+  title           String
+  sourceType      String             // CENTRAL_ACT, STATE_ACT, CENTRAL_RULE, STATE_RULE, REGULATION, NOTIFICATION
+  jurisdiction    String             // CENTRAL, KARNATAKA, MAHARASHTRA, ALL_INDIA
+  authorityLevel  String             // STATUTE, DELEGATED_LEGISLATION, EXECUTIVE_ORDER
+  fileReference   String?
+  effectiveDate   String
+  version         String             @default("1.0")
+  status          String             @default("PUBLISHED") // DRAFT, REVIEW, APPROVED, PUBLISHED, SUPERSEDED
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  rules           LegalRule[]
+}
+
+model LegalRule {
+  id                       String               @id @default(uuid())
+  ruleId                   String               @unique // e.g. EPF-REG-01, POSH-IC-01
+  lawId                    String               // e.g. EPF_1952
+  sourceId                 String
+  legalSourceId            String
+  section                  String
+  subsection               String?
+  ruleReference            String?
+  requirement              String
+  applicabilityLogic       String               // Human readable & deterministic rule expression
+  jurisdiction             String               // CENTRAL, STATE
+  state                    String?              // Karnataka, etc. or null for Central
+  industry                 String?              // ALL, or specific
+  establishmentType        String?              // ALL, or specific
+  employeeThreshold        Int?                 // e.g. 20 for EPF, 10 for Gratuity/POSH
+  workerThreshold          Int?
+  contractWorkerThreshold  Int?                 // e.g. 20 for CLRA
+  effectiveFrom            String
+  effectiveTo              String?
+  evidenceRequired         String
+  complianceTest           String
+  riskLevel                String               // CRITICAL, HIGH, MEDIUM, LOW, INFORMATIONAL
+  remediationGuidance      String
+  sourcePage               String?
+  sourceTextReference      String
+  version                  String               @default("1.0")
+  status                   String               @default("PUBLISHED") // DRAFT, REVIEW, APPROVED, PUBLISHED, SUPERSEDED
+  createdAt                DateTime             @default(now())
+  updatedAt                DateTime             @updatedAt
+
+  source                   LegalSource          @relation(fields: [legalSourceId], references: [id], onDelete: Cascade)
+  versions                 LegalRuleVersion[]
+  applicabilityRules       ApplicabilityRule[]
+  evidenceMappings         EvidenceMapping[]
+  findings                 ComplianceFinding[]
+}
+
+model LegalRuleVersion {
+  id             String       @id @default(uuid())
+  legalRuleId    String
+  versionNumber  String
+  changedBy      String
+  changeSummary  String
+  ruleSnapshot   String       // Serialized state of rule at this version
+  status         String
+  createdAt      DateTime     @default(now())
+
+  rule           LegalRule    @relation(fields: [legalRuleId], references: [id], onDelete: Cascade)
+}
+
+model ApplicabilityRule {
+  id                   String       @id @default(uuid())
+  legalRuleId          String
+  ruleKey              String
+  conditionType        String       // EMPLOYEE_COUNT_GTE, CONTRACT_WORKERS_GTE, STATE_EQUALS, INDUSTRY_IN
+  parameter            String
+  operator             String       // GTE, LTE, EQUALS, CONTAINS
+  value                String
+  explanationTemplate  String
+  createdAt            DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
+
+  legalRule            LegalRule    @relation(fields: [legalRuleId], references: [id], onDelete: Cascade)
+}
+
+// ==========================================
+// DIAGNOSTIC ENGINE
+// ==========================================
+
+model DiagnosticQuestion {
+  id                      String               @id @default(uuid())
+  questionCode            String               @unique // e.g. DIAG-PF-01
+  category                String               // Recruitment, Onboarding, Contracts, Records, Attendance, Wages, PF, ESI, Gratuity, Bonus, Maternity, POSH, Contract Labour, Compliance Calendar
+  questionText            String
+  helpText                String?
+  applicableRulesSummary  String?
+  sortOrder               Int                  @default(0)
+  isActive                Boolean              @default(true)
+  createdAt               DateTime             @default(now())
+  updatedAt               DateTime             @updatedAt
+
+  responses               DiagnosticResponse[]
+}
+
+model Diagnostic {
+  id              String               @id @default(uuid())
+  organizationId  String
+  businessId      String
+  title           String               @default("Comprehensive VELORA Diagnostic")
+  status          String               @default("IN_PROGRESS") // NOT_STARTED, IN_PROGRESS, COMPLETED
+  conductedBy     String?
+  completedAt     DateTime?
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+
+  organization    Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  business        Business             @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  responses       DiagnosticResponse[]
+}
+
+model DiagnosticResponse {
+  id               String              @id @default(uuid())
+  organizationId   String
+  diagnosticId     String
+  questionId       String
+  answer           String              // YES, NO, PARTIALLY, UNKNOWN, NOT_APPLICABLE
+  notes            String?
+  confidence       String              @default("HIGH") // HIGH, MEDIUM, LOW
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+
+  organization     Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  diagnostic       Diagnostic          @relation(fields: [diagnosticId], references: [id], onDelete: Cascade)
+  question         DiagnosticQuestion  @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  evidenceMappings EvidenceMapping[]
+
+  @@unique([diagnosticId, questionId])
+}
+
+// ==========================================
+// EVIDENCE & DOCUMENTATION
+// ==========================================
+
+model Evidence {
+  id              String              @id @default(uuid())
+  organizationId  String
+  businessId      String
+  title           String
+  category        String              // Statutory Registration, Monthly Return, Register, Policy, Agreement
+  status          String              @default("UNVERIFIED") // VERIFIED, UNVERIFIED, MISSING, CONTRADICTORY, EXPIRED, NOT_APPLICABLE
+  notes           String?
+  validFrom       DateTime?
+  validTo         DateTime?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  organization    Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  business        Business            @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  documents       EvidenceDocument[]
+  mappings        EvidenceMapping[]
+}
+
+model EvidenceDocument {
+  id                 String       @id @default(uuid())
+  organizationId     String
+  evidenceId         String
+  fileName           String
+  fileType           String       // PDF, DOCX, XLSX, CSV, JPG, PNG
+  fileSize           Int
+  fileUrl            String
+  storageKey         String
+  extractedMetadata  String?      // Serialized classification & extraction metadata
+  uploadedBy         String?
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+
+  organization       Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  evidence           Evidence     @relation(fields: [evidenceId], references: [id], onDelete: Cascade)
+}
+
+model EvidenceMapping {
+  id                    String              @id @default(uuid())
+  organizationId        String
+  evidenceId            String
+  legalRuleId           String?
+  complianceFindingId   String?
+  diagnosticResponseId  String?
+  relevanceScore        Float               @default(1.0)
+  notes                 String?
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+
+  organization          Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  evidence              Evidence            @relation(fields: [evidenceId], references: [id], onDelete: Cascade)
+  legalRule             LegalRule?          @relation(fields: [legalRuleId], references: [id], onDelete: SetNull)
+  finding               ComplianceFinding?  @relation(fields: [complianceFindingId], references: [id], onDelete: SetNull)
+  diagnosticResponse    DiagnosticResponse? @relation(fields: [diagnosticResponseId], references: [id], onDelete: SetNull)
+}
+
+// ==========================================
+// COMPLIANCE & RISK ENGINE
+// ==========================================
+
+model ComplianceAssessment {
+  id                     String              @id @default(uuid())
+  organizationId         String
+  businessId             String
+  status                 String              @default("COMPLETED") // RUNNING, COMPLETED, FAILED
+  overallScore           Float               @default(0.0)
+  legalComplianceScore   Float               @default(0.0)
+  documentationScore     Float               @default(0.0)
+  payrollScore           Float               @default(0.0)
+  statutoryScore         Float               @default(0.0)
+  hrProcessScore         Float               @default(0.0)
+  evidenceReadinessScore Float               @default(0.0)
+  auditReadinessScore    Float               @default(0.0)
+  assessedBy             String?
+  summary                String?
+  createdAt              DateTime            @default(now())
+  updatedAt              DateTime            @updatedAt
+
+  organization           Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  business               Business            @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  findings               ComplianceFinding[]
+  riskAssessments        RiskAssessment[]
+  reports                Report[]
+}
+
+model ComplianceFinding {
+  id                    String               @id @default(uuid())
+  organizationId        String
+  assessmentId          String
+  legalRuleId           String?
+  findingCode           String               // e.g. FND-POSH-01
+  title                 String
+  description           String
+  law                   String               // e.g. POSH Act, 2013
+  section               String               // e.g. Section 4
+  sourceText            String
+  applicabilityReason   String
+  evidenceSummary       String?
+  gapAnalysis           String
+  riskLevel             String               // CRITICAL, HIGH, MEDIUM, LOW, INFORMATIONAL
+  recommendation        String
+  owner                 String?
+  priority              String               @default("HIGH") // CRITICAL, HIGH, MEDIUM, LOW
+  dueDate               DateTime?
+  status                String               @default("NON_COMPLIANT") // COMPLIANT, PARTIALLY_COMPLIANT, NON_COMPLIANT, MISSING_EVIDENCE, NOT_APPLICABLE, HUMAN_REVIEW_REQUIRED, INSUFFICIENT_INFORMATION
+  confidence            String               @default("HIGH")
+  createdAt             DateTime             @default(now())
+  updatedAt             DateTime             @updatedAt
+
+  organization          Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  assessment            ComplianceAssessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  legalRule             LegalRule?           @relation(fields: [legalRuleId], references: [id], onDelete: SetNull)
+  remediationActions    RemediationAction[]
+  riskAssessments       RiskAssessment[]
+  evidenceMappings      EvidenceMapping[]
+}
+
+model RiskAssessment {
+  id                  String               @id @default(uuid())
+  organizationId      String
+  assessmentId        String
+  findingId           String?
+  riskLevel           String               // CRITICAL, HIGH, MEDIUM, LOW, INFORMATIONAL
+  impactDescription   String
+  likelihood          String               // PROBABLE, POSSIBLE, REMOTE
+  potentialExposure   String?
+  mitigationStrategy  String
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+
+  organization        Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  assessment          ComplianceAssessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  finding             ComplianceFinding?   @relation(fields: [findingId], references: [id], onDelete: SetNull)
+}
+
+// ==========================================
+// REMEDIATION & CALENDAR
+// ==========================================
+
+model RemediationAction {
+  id                  String             @id @default(uuid())
+  organizationId      String
+  findingId           String
+  actionTitle         String
+  actionDescription   String
+  owner               String?
+  priority            String             @default("HIGH") // CRITICAL, HIGH, MEDIUM, LOW
+  dueDate             DateTime?
+  status              String             @default("OPEN") // OPEN, IN_PROGRESS, PENDING_REVIEW, RESOLVED, REJECTED
+  notes               String?
+  resolvedAt          DateTime?
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+
+  organization        Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  finding             ComplianceFinding  @relation(fields: [findingId], references: [id], onDelete: Cascade)
+}
+
+model ComplianceCalendarItem {
+  id                  String       @id @default(uuid())
+  organizationId      String
+  businessId          String
+  title               String
+  law                 String
+  formNumber          String?
+  frequency           String       // MONTHLY, QUARTERLY, HALF_YEARLY, ANNUAL, EVENT_BASED
+  dueDate             DateTime
+  statutoryAuthority  String
+  status              String       @default("UPCOMING") // UPCOMING, OVERDUE, COMPLETED
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+
+  organization        Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  business            Business     @relation(fields: [businessId], references: [id], onDelete: Cascade)
+}
+
+// ==========================================
+// AUDIT & GOVERNANCE TRAILS
+// ==========================================
+
+model Audit {
+  id              String       @id @default(uuid())
+  organizationId  String
+  businessId      String
+  auditName       String
+  scope           String
+  auditor         String
+  status          String       @default("PLANNED") // PLANNED, IN_PROGRESS, COMPLETED
+  findingsCount   Int          @default(0)
+  score           Float?
+  startDate       DateTime
+  completedDate   DateTime?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  business        Business     @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  events          AuditEvent[]
+}
+
+model AuditEvent {
+  id              String        @id @default(uuid())
+  organizationId  String
+  auditId         String?
+  businessId      String?
+  eventType       String        // ASSESSMENT_RUN, EVIDENCE_UPLOAD, REMEDIATION_UPDATED, PROFILE_CHANGED
+  entityType      String
+  entityId        String
+  actorId         String?
+  actorEmail      String?
+  details         String        // Serialized context
+  createdAt       DateTime      @default(now())
+
+  organization    Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  audit           Audit?        @relation(fields: [auditId], references: [id], onDelete: SetNull)
+  business        Business?     @relation(fields: [businessId], references: [id], onDelete: SetNull)
+}
+
+// ==========================================
+// REPORTING & NKVV CONVERSION
+// ==========================================
+
+model Report {
+  id                String                @id @default(uuid())
+  organizationId    String
+  businessId        String
+  assessmentId      String?
+  reportType        String                @default("COMPLIANCE_DIAGNOSTIC")
+  title             String
+  executiveSummary  String
+  scoreSnapshot     Float
+  reportData        String                // Complete structured JSON payload of the report
+  generatedBy       String?
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
+
+  organization      Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  business          Business              @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  assessment        ComplianceAssessment? @relation(fields: [assessmentId], references: [id], onDelete: SetNull)
+}
+
+model NKVVServiceRequest {
+  id                     String       @id @default(uuid())
+  organizationId         String
+  businessId             String
+  requestNumber          String       @unique
+  requestedService       String       // HR Process Design, Compliance Implementation, HR Documentation, etc.
+  priority               String       @default("HIGH") // URGENT, HIGH, MEDIUM, NORMAL
+  description            String
+  linkedFindingsSummary  String?
+  status                 String       @default("SUBMITTED") // SUBMITTED, IN_REVIEW, PROPOSAL_SENT, ENGAGED, CLOSED
+  contactName            String
+  contactEmail           String
+  contactPhone           String?
+  createdAt              DateTime     @default(now())
+  updatedAt              DateTime     @updatedAt
+
+  organization           Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  business               Business     @relation(fields: [businessId], references: [id], onDelete: Cascade)
+}
