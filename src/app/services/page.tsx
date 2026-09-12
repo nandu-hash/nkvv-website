@@ -175,7 +175,7 @@ export default function ServicesPage() {
                 href="/contact"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gold hover:bg-gold-light text-navy-deep font-bold text-sm transition-all"
               >
-                <span>Book a Discovery Call</span>
+                <span>Connect With Our Team</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>

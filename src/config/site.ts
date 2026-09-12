@@ -19,7 +19,7 @@ export const SITE_CONFIG = {
     subheadline: 'NKVV helps growing businesses transform fragmented, manual HR operations into structured, technology-enabled systems that are easier to manage, measure and scale.',
     targetAudienceNote: 'Built for founders, operations leads, and finance stakeholders transitioning from reactive work to engineered systems.',
     credibilityBar: 'Process Diagnosis • Operating Models • Labour Compliance • HR Technology • Workflow Automation',
-    primaryCta: 'Book a Discovery Call',
+    primaryCta: 'Connect With Us',
     secondaryCta: 'Explore Solutions',
   },
   product: {
@@ -30,9 +30,9 @@ export const SITE_CONFIG = {
   },
   contact: {
     location: 'Bengaluru, Karnataka, India',
-    primaryCta: 'Book a Consultation',
-    headline: 'Where are your business processes stalling?',
-    subheadline: "Tell us where manual friction is slowing down your organization. We'll diagnose the operational bottleneck, map the underlying workflows, and design the system to solve it.",
+    primaryCta: 'Connect With Our Team',
+    headline: 'Connect With Our Team',
+    subheadline: "Tell us where your business operations need structure and automation. Our team will review your requirements and outline practical next steps.",
   },
   seo: {
     defaultTitle: 'NKVV — Business Process Intelligence & Automation',

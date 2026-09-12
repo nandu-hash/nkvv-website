@@ -200,8 +200,8 @@ export default function HowWeWorkPage() {
                 href="/contact"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gold hover:bg-gold-light text-navy-deep font-bold text-base transition-all shadow-lg"
               >
-                <PhoneCall className="w-5 h-5" />
-                <span>Start With a Discovery Conversation</span>
+                <PhoneCall className="w-5 h-5 text-navy-deep" />
+                <span>Connect With Our Team</span>
                 <ArrowRight className="w-5 h-5" />
               </Link>
             </div>

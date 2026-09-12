@@ -172,24 +172,21 @@ export default function AboutPage() {
 
               <div className="lg:col-span-8 space-y-5 border-t lg:border-t-0 lg:border-l border-navy-surface pt-6 lg:pt-0 lg:pl-8">
                 <div className="inline-block px-3 py-1 rounded bg-navy-primary border border-gold/30 text-gold-light text-xs font-mono font-bold uppercase tracking-wider">
-                  Founder Leadership
+                  Practice Leadership
                 </div>
                 
                 <div className="space-y-4 text-gray-200 text-sm sm:text-base leading-relaxed font-light">
                   <p>
-                    I work at the intersection of HR operations, business processes, technology and automation.
+                    NK Velora Ventures (NKVV) was founded on a straightforward observation: growing businesses don&apos;t usually have an HR problem first — they have an operating system problem.
                   </p>
                   <p>
-                    As the Founder &amp; Principal Consultant at NK Velora Ventures (NKVV), I am building a business focused on helping growing organizations transform fragmented HR operations into structured, technology-enabled systems.
-                  </p>
-                  <p>
-                    My focus is on HR Operations Transformation, HR Technology &amp; HRIS, Process Design, Workflow Automation, and compliance-focused HR process diagnosis.
+                    Our team works at the intersection of business processes, HR technology, and automation. We help organizations replace informal, spreadsheet-heavy workflows with clear architecture and automated execution.
                   </p>
                   
                   {/* Method Framework Highlight */}
                   <div className="py-3 px-4 bg-navy-primary/90 border border-gold/30 rounded-lg space-y-1.5">
                     <span className="text-[11px] font-mono font-semibold uppercase tracking-widest text-gold block">
-                      Practical Framework
+                      Execution Framework
                     </span>
                     <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm font-mono font-semibold text-white">
                       <span>Diagnose</span>
@@ -204,17 +201,10 @@ export default function AboutPage() {
                     </div>
                   </div>
 
-                  <p>
-                    The objective is simple: help businesses move from manual and fragmented HR processes to structured, connected and scalable operating systems.
-                  </p>
                   <p className="text-gray-300 text-xs sm:text-sm pt-1 border-t border-navy-surface/80">
-                    I am also developing <strong className="text-gold font-semibold">VELORA</strong> as NKVV&apos;s product direction for HR operations and compliance diagnosis.
+                    We also develop <strong className="text-gold font-semibold">VELORA Compliance</strong> as NKVV&apos;s product initiative for automated compliance diagnostics and governance.
                   </p>
                 </div>
-
-                <p className="text-xs text-gray-400 leading-relaxed font-light pt-2">
-                  NKVV is a founder-led consulting practice built on direct engagement, technical rigor, and practical business execution for startups and growing enterprises across India.
-                </p>
               </div>
 
             </div>
@@ -289,14 +279,14 @@ export default function AboutPage() {
               Ready to partner with NKVV?
             </h3>
             <p className="text-sm text-gray-300 max-w-xl mx-auto">
-              Book a discovery call directly with our principal team to explore how we can transform your HR operations.
+              Connect with our team to explore how we can structure, automate, and scale your business operations.
             </p>
             <div>
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gold hover:bg-gold-light text-navy-deep font-bold text-sm transition-all"
               >
-                <span>Book a Discovery Call</span>
+                <span>Connect With Our Team</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>

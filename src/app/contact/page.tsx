@@ -1,88 +1,77 @@
 import React from 'react';
-import { ContactTabs } from '@/components/contact/ContactTabs';
+import { ContactForm } from '@/components/contact/ContactForm';
 import { SITE_CONFIG } from '@/config/site';
-import { MapPin, PhoneCall, ShieldCheck, CalendarCheck } from 'lucide-react';
+import { MapPin, PhoneCall, Users, ShieldCheck } from 'lucide-react';
 import { BorderGlow } from '@/components/ui/BorderGlow';
 import { WebThreads } from '@/components/ui/WebThreads';
 
 export const metadata = {
-  title: 'Contact Us | NK Velora Ventures',
-  description: "Let's solve the operational problem behind the HR problem. Book a Discovery Call with NKVV.",
+  title: 'Connect With Us | NK Velora Ventures',
+  description: "Connect with our team to solve operational bottlenecks, structure processes, and automate workflows.",
 };
 
 export default function ContactPage() {
   return (
     <main className="pt-28 pb-20 bg-offwhite min-h-screen">
       {/* Header */}
-      <section className="bg-navy-deep text-white py-16 md:py-20 border-b border-navy-surface relative overflow-hidden">
+      <section className="bg-navy-deep text-white py-14 md:py-20 border-b border-navy-surface relative overflow-hidden">
         {/* Interactive WebThreads WebGL Canvas in Header Background */}
         <div className="absolute inset-0 pointer-events-auto opacity-35 z-0 overflow-hidden">
           <WebThreads />
         </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-4 text-center max-w-3xl">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-3 text-center max-w-2xl">
           <span className="text-xs font-mono font-bold text-gold uppercase tracking-wider bg-navy-surface px-3.5 py-1.5 rounded-full border border-gold/30">
-            Start a Discovery
+            Get in Touch
           </span>
-          <h1 className="text-3xl sm:text-5xl font-serif font-bold tracking-tight text-white leading-[1.15]">
-            Start a Discovery
-            <span className="block italic font-serif font-normal text-gold text-2xl sm:text-4xl mt-2">
-              Where Operations Need Structure
-            </span>
+          <h1 className="text-3xl sm:text-5xl font-serif font-bold tracking-tight text-white leading-tight">
+            Connect With Our Team
           </h1>
-          <div className="w-14 h-0.5 bg-gold mx-auto my-4 rounded-full" />
-          <p className="text-gray-300 text-base sm:text-lg leading-relaxed font-light max-w-2xl mx-auto">
-            Tell us where your HR operations are slowing the business down. We&apos;ll identify the friction, map the underlying process and determine what should be redesigned, enabled or automated.
+          <div className="w-14 h-0.5 bg-gold mx-auto my-3 rounded-full" />
+          <p className="text-gray-300 text-sm sm:text-base leading-relaxed font-light">
+            Tell us where manual friction or operational complexity is slowing down your organization. We&apos;ll map the process and outline practical next steps.
           </p>
         </div>
       </section>
 
       {/* Main Content */}
-      <section className="py-16">
+      <section className="py-12 md:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
             
             {/* Left Info Col */}
-            <div className="lg:col-span-4 space-y-8">
+            <div className="lg:col-span-4 space-y-6">
               <BorderGlow
                 backgroundColor="#ffffff"
                 borderRadius={20}
                 glowRadius={35}
                 className="shadow-md"
               >
-                <div className="p-8 space-y-6">
-                  <h3 className="text-xl font-bold text-navy-deep">
-                    Why Schedule a Call?
+                <div className="p-7 space-y-6">
+                  <h3 className="text-lg font-bold text-navy-deep">
+                    Connect With Us
                   </h3>
 
                   <div className="space-y-4 text-sm text-gray-700">
                     <div className="flex items-start gap-3">
-                      <ShieldCheck className="w-5 h-5 text-gold shrink-0 mt-0.5" />
+                      <Users className="w-5 h-5 text-gold shrink-0 mt-0.5" />
                       <div>
-                        <strong className="text-navy-deep block">Direct Founder & Principal Engagement</strong>
-                        <span className="text-xs text-muted">You speak directly with Nandu Kumar (Founder &amp; Principal) — not junior account executives.</span>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start gap-3">
-                      <CalendarCheck className="w-5 h-5 text-gold shrink-0 mt-0.5" />
-                      <div>
-                        <strong className="text-navy-deep block">Live Google Calendar Scheduling</strong>
-                        <span className="text-xs text-muted">Select an open slot directly on our calendar to immediately confirm a meeting.</span>
+                        <strong className="text-navy-deep block text-sm">Work Directly With Our Team</strong>
+                        <span className="text-xs text-muted">Collaborate directly with experienced process and automation specialists who understand scaling operations.</span>
                       </div>
                     </div>
 
                     <div className="flex items-start gap-3">
                       <PhoneCall className="w-5 h-5 text-gold shrink-0 mt-0.5" />
                       <div>
-                        <strong className="text-navy-deep block">Pragmatic Operational Audit</strong>
-                        <span className="text-xs text-muted">We evaluate real workflows, software utilization, and manual friction points.</span>
+                        <strong className="text-navy-deep block text-sm">Pragmatic Operational Audit</strong>
+                        <span className="text-xs text-muted">We evaluate your current workflows, tool utilization, and points of manual friction.</span>
                       </div>
                     </div>
 
                     <div className="flex items-start gap-3">
                       <MapPin className="w-5 h-5 text-gold shrink-0 mt-0.5" />
                       <div>
-                        <strong className="text-navy-deep block">Location</strong>
+                        <strong className="text-navy-deep block text-sm">Location</strong>
                         <span className="text-xs text-muted">{SITE_CONFIG.location}</span>
                       </div>
                     </div>
@@ -96,20 +85,21 @@ export default function ContactPage() {
                 glowRadius={30}
                 className="shadow-lg"
               >
-                <div className="p-6 text-white space-y-3">
-                  <h4 className="text-xs font-mono uppercase font-bold text-gold">
-                    Privacy & Professional Standards
-                  </h4>
+                <div className="p-6 text-white space-y-2">
+                  <div className="flex items-center gap-2 text-xs font-mono uppercase font-bold text-gold">
+                    <ShieldCheck className="w-4 h-4 text-gold" />
+                    <span>Confidential Advisory</span>
+                  </div>
                   <p className="text-xs text-gray-300 leading-relaxed">
-                    All submitted business data and process descriptions remain strictly confidential under standard non-disclosure guidelines.
+                    All business workflows and operational information shared remain strictly confidential under standard non-disclosure practices.
                   </p>
                 </div>
               </BorderGlow>
             </div>
 
-            {/* Right Form & Calendar Col */}
+            {/* Right Form Col */}
             <div className="lg:col-span-8">
-              <ContactTabs />
+              <ContactForm />
             </div>
 
           </div>

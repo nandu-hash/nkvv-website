@@ -130,15 +130,15 @@ export default function SolutionsPage() {
               Tell us what is breaking. We&apos;ll help design the system.
             </h2>
             <p className="text-base text-gray-300 max-w-2xl mx-auto">
-              Book a 30-minute discovery call to discuss your current operational bottlenecks with our principal consultants.
+              Connect with our team to discuss your operational challenges and design structured, automated solutions.
             </p>
             <div>
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gold hover:bg-gold-light text-navy-deep font-bold text-base transition-all shadow-lg"
               >
-                <PhoneCall className="w-5 h-5" />
-                <span>Start a Conversation</span>
+                <PhoneCall className="w-5 h-5 text-navy-deep" />
+                <span>Connect With Our Team</span>
                 <ArrowRight className="w-5 h-5" />
               </Link>
             </div>

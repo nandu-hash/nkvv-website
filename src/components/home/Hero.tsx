@@ -81,9 +81,9 @@ export const Hero: React.FC = () => {
             <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center gap-3 rounded-full bg-gold hover:bg-gold-bright text-white px-8 sm:px-9 py-4 text-xs sm:text-sm font-semibold tracking-widest uppercase transition-all duration-300 shadow-lg shadow-gold/10 group"
+                className="inline-flex items-center justify-center gap-3 rounded-full bg-gold hover:bg-gold-bright text-navy-deep px-8 sm:px-9 py-4 text-xs sm:text-sm font-bold tracking-widest uppercase transition-all duration-300 shadow-lg shadow-gold/10 group"
               >
-                <span>BOOK A DISCOVERY CALL</span>
+                <span>CONNECT WITH OUR TEAM</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
 
